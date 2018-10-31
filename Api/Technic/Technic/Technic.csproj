@@ -5,6 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Folder Include="DAL\Models\Enums" />
+        <Folder Include="DTO" />
         <Folder Include="wwwroot\" />
     </ItemGroup>
 

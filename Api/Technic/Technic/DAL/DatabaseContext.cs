@@ -1,7 +1,6 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace Technic
+namespace Technic.DAL
 {
     public class DatabaseContext : DbContext
     {
