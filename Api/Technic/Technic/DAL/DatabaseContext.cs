@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Technic.DAL.Models;
 
 namespace Technic.DAL
 {
@@ -7,5 +8,7 @@ namespace Technic.DAL
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
+
+        public DbSet<User> Users { get; set; }
     }
 }
