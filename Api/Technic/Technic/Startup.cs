@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using Technic.DAL;
 using Technic.Interfaces;
@@ -37,9 +40,35 @@ namespace Technic
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = Configuration["JwtIssuer"],
+                        ValidAudience = Configuration["JwtIssuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtKey"])),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1.0", new Info { Title = "Main API v1.0", Version = "v1.0" });
+ 
+                // Swagger 2.+ support
+                var security = new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer", new string[] { }},
+                };
  
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
@@ -48,6 +77,7 @@ namespace Technic
                     In = "header",
                     Type = "apiKey"
                 });
+                c.AddSecurityRequirement(security);
             });
 
             services.AddScoped<IAccountService, AccountService>();
@@ -55,13 +85,15 @@ namespace Technic
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Versioned API v1.0");
+ 
+                    c.DocumentTitle = "Title Documentation";
                     c.DocExpansion(DocExpansion.None);
                 });
             }
@@ -69,7 +101,7 @@ namespace Technic
             {
                 app.UseHsts();
             }
-
+            app.UseAuthentication();
             //app.UseHttpsRedirection();
             
             app.UseMvc();

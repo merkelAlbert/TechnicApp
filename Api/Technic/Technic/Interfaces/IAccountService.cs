@@ -8,5 +8,7 @@ namespace Technic.Interfaces
     {
         Task Register(User user);
         Task<string> Login(User user);
+        Task<User> GetUserById(Guid id);
+        Task<User> GetUserByEmail(string email);
     }
 }

@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -70,6 +71,18 @@ namespace Technic.Services
 
             var token = await GenerateJwtToken(user);
             return token;
+        }
+
+        public async Task<User> GetUserById(Guid id)
+        {
+            var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return user ?? throw new InvalidOperationException("Неверный id");
+        }
+        
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            return user ?? throw new InvalidOperationException("Неверный email");
         }
     }
 }
