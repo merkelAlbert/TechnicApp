@@ -4,86 +4,78 @@ import { Field } from 'react-final-form';
 
 import './style.scss';
 import Form from '../../components/Form';
-import TextInput from '../../components/TextInput';
+import TextField from '../../components/Form/TexField';
+import Password from '../../components/Form/Password';
 import Button from '../../components/Button';
 
 import { registerUser } from '../../store/actions/account';
 
 class Register extends Component {
   state = {
-    password: '',
-    repeatedPassword: '',
-    error: false,
+    disabled: true,
   }
 
-  onPasswordChange = (e) => {
-    const { target } = e;
-    const { repeatedPassword } = this.state;
-    this.setState({
-      password: target.value,
-    });
-    target.value !== repeatedPassword
-      ? this.setState({ error: true })
-      : this.setState({ error: false });
-  }
+  validate = values => {
+    const errors = {};
+    if (!values.email) {
+      errors.email = 'Required';
+    }
+    if (!values.password) {
+      errors.password = 'Required';
+    }
+    if (!values.repeatedPassword) {
+      errors.repeatedPassword = 'Required';
+    }
+    if (values.password !== values.repeatedPassword) {
+      errors.repeatedPassword = 'Must be the same';
+    }
+    Object.keys(errors).length === 0
+      ? this.setState({
+        disabled: false,
+      })
+      : this.setState({
+        disabled: true,
+      });
 
-  onRepeatedPasswordChange = (e) => {
-    const { target } = e;
-    const { password } = this.state;
-    this.setState({
-      repeatedPassword: target.value,
-    });
-    target.value !== password
-      ? this.setState({ error: true })
-      : this.setState({ error: false });
+    return errors;
   }
 
   render = () => {
     const { onSubmit } = this.props;
-    const { error } = this.state;
-
+    const { disabled } = this.state;
     return (
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit} validate={this.validate}>
         {() => (
           <>
             <div>
-              <Field name="email" render={
-                () => (
-                  <TextInput
-                    required
-                    placeholder="email"
-                    type="email"
-                  />
-                )}
+              <Field
+                required
+                name="email"
+                component={TextField}
+                type="email"
+                label="Email"
               />
             </div>
             <div>
-              <Field name="password" render={
-                () => (
-                  <TextInput
-                    required
-                    onChange={this.onPasswordChange}
-                    placeholder="Пароль"
-                    type="password"
-                  />
-                )}
+              <Field
+                required
+                name="password"
+                component={Password}
+                type="password"
+                label="Пароль"
               />
             </div>
             <div>
-              <Field name="password-repeat" render={
-                () => (
-                  <TextInput
-                    onChange={this.onRepeatedPasswordChange}
-                    error={error}
-                    required
-                    placeholder="Повторите пароль"
-                    type="password"
-                  />
-                )}
+              <Field
+                required
+                name="repeatedPassword"
+                component={Password}
+                type="password"
+                label="Повторите пароль"
               />
             </div>
             <div>
-              <Button type="submit">Зарегистрироваться</Button>
+              <Button type="submit" disabled={disabled}>Зарегистрироваться</Button>
             </div>
           </>
         )}

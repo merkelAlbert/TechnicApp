@@ -15,7 +15,7 @@ const styles = theme => ({
 const ContainedButton = ({ children, type, ...props }) => {
   const { classes } = props;
   return (
-    <Button type={type} variant="contained" className={classes.button}>{children}</Button>
+    <Button {...props} type={type} variant="contained" className={classes.button}>{children}</Button>
   );
 }
 

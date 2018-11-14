@@ -12,7 +12,11 @@ export const registerUser = (user) => async (dispatch) => {
     dispatch({ type: REGISTER_SUCCESS });
   }
   catch (err) {
-    const { data: message } = err.response || err;
+    let message = 'Прозошла ошибка';
+
+    if (err.response !== undefined) {
+      message = err.response.data;
+    }
     dispatch({ type: REGISTER_ERROR });
     throw new Error(message);
   }
