@@ -7,13 +7,9 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
   },
-  input: {
-    display: 'none',
-  },
 });
 
-const ContainedButton = ({ children, type, ...props }) => {
-  const { classes } = props;
+const ContainedButton = ({ children, type, classes, ...props }) => {
   return (
     <Button {...props} type={type} variant="contained" className={classes.button}>{children}</Button>
   );

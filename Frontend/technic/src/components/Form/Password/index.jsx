@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import cn from 'classnames';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -34,6 +33,7 @@ class TextInput extends Component {
       input: { name, ...restInput },
       meta,
       classes,
+      className,
       type,
       ...rest
     } = this.props;
@@ -47,7 +47,7 @@ class TextInput extends Component {
           endAdornment: <EndAdornment onClick={this.handleClickShowPassword} isVisible={showPassword} />,
           ...restInput
         }}
-        className={classes.inpzut}
+        className={cn(classes.input, className)}
         type={showPassword ? "text" : type}
       />
     );

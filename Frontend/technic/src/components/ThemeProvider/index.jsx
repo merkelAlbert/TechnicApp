@@ -2,15 +2,10 @@ import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
   palette: {
-    typography: {
-      useNextVariants: true,
-      fontFamily: [
-        'Roboto',
-        'sans-serif',
-      ].join(','),
-      fontSize: 16
-    },
     background: {
       default: '#ffffff',
     },
