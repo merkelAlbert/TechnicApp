@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +29,31 @@ namespace Technic.Services
             _databaseContext = databaseContext;
             _configuration = configuration;
         }
+        
+        private string CreateHash(string password, string salt)  
+        {  
+            var valueBytes = KeyDerivation.Pbkdf2(  
+                password: password,  
+                salt: Encoding.UTF8.GetBytes(salt),  
+                prf: KeyDerivationPrf.HMACSHA512,  
+                iterationCount: 10000,  
+                numBytesRequested: 256 / 8);  
+  
+            return Convert.ToBase64String(valueBytes);  
+        }  
+        
+        private string CreateSalt()  
+        {  
+            byte[] randomBytes = new byte[128 / 8];  
+            using (var generator = RandomNumberGenerator.Create())  
+            {  
+                generator.GetBytes(randomBytes);  
+                return Convert.ToBase64String(randomBytes);  
+            }  
+        }  
+  
+        private bool ValidatePassword(string password, string salt, string hash)  
+            => CreateHash(password, salt) == hash; 
 
         private async Task<string> GenerateJwtToken(User user)
         {
@@ -56,15 +83,27 @@ namespace Technic.Services
         {
             if (await _databaseContext.Users.FirstOrDefaultAsync(x => x.Email == user.Email) != null)
                 throw new InvalidOperationException("Пользователь с данным email уже существует");
-
+                
+            var salt = CreateSalt();
+            var hash = CreateHash(user.Password, salt);
+            user.Password = hash;
+            user.Salt = salt;
             await _databaseContext.Users.AddAsync(user);
             await _databaseContext.SaveChangesAsync();
         }
 
         public async Task<string> Login(User user)
         {
-            if (await _databaseContext.Users
-                    .FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password) == null)
+
+            var storedUser = await _databaseContext.Users
+                .FirstOrDefaultAsync(x => x.Email == user.Email);
+            
+            if (storedUser == null)
+            {
+                throw new InvalidOperationException("Неверный email или пароль");
+            }
+
+            if (!ValidatePassword(user.Password, storedUser.Salt, storedUser.Password))
             {
                 throw new InvalidOperationException("Неверный email или пароль");
             }

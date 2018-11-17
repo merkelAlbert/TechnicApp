@@ -79,6 +79,18 @@ namespace Technic
                 });
                 c.AddSecurityRequirement(security);
             });
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
 
             services.AddScoped<IAccountService, AccountService>();
         }
@@ -101,6 +113,7 @@ namespace Technic
             {
                 app.UseHsts();
             }
+            app.UseCors("AllowAll");
             app.UseAuthentication();
             //app.UseHttpsRedirection();
             
