@@ -4,18 +4,18 @@ const initialState = {}
 const account = (state = initialState, action) => {
   console.log(action.type);
   switch (action.type) {
-    case accountActions.REGISTER_REQUEST:
+    case accountActions.ACCOUNT_REQUEST:
       return {
         ...state,
         isFetching: true,
       }
-    case accountActions.REGISTER_SUCCESS:
+    case accountActions.ACCOUNT_SUCCESS:
       return {
         ...state,
         isFetching: false,
         user: action.payload,
       }
-    case accountActions.REGISTER_ERROR:
+    case accountActions.ACCOUNT_ERROR:
       return {
         ...state,
         isFetching: false

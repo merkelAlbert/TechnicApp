@@ -1,15 +1,15 @@
-import { post, REGISTER } from '../../utils/api';
+import { post, REGISTER, LOGIN } from '../../utils/api';
 
-export const REGISTER_REQUEST = 'REGISTER_REQUEST';
-export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-export const REGISTER_ERROR = 'REGISTER_ERROR';
+export const ACCOUNT_REQUEST = 'ACCOUNT_REQUEST';
+export const ACCOUNT_SUCCESS = 'ACCOUNT_SUCCESS';
+export const ACCOUNT_ERROR = 'ACCOUNT_ERROR';
 
-export const registerUser = (user) => async (dispatch) => {
-  dispatch({ type: REGISTER_REQUEST });
+export const register = (user) => async (dispatch) => {
+  dispatch({ type: ACCOUNT_REQUEST });
 
   try {
     await post(REGISTER, user);
-    dispatch({ type: REGISTER_SUCCESS });
+    dispatch({ type: ACCOUNT_SUCCESS });
   }
   catch (err) {
     let message = 'Прозошла ошибка';
@@ -17,7 +17,25 @@ export const registerUser = (user) => async (dispatch) => {
     if (err.response !== undefined) {
       message = err.response.data;
     }
-    dispatch({ type: REGISTER_ERROR });
+    dispatch({ type: ACCOUNT_ERROR });
+    throw new Error(message);
+  }
+}
+
+export const login = (user) => async (dispatch) => {
+  dispatch({ type: ACCOUNT_ERROR });
+
+  try {
+    await post(LOGIN, user);
+    dispatch({ type: ACCOUNT_SUCCESS });
+  }
+  catch (err) {
+    let message = 'Прозошла ошибка';
+
+    if (err.response !== undefined) {
+      message = err.response.data;
+    }
+    dispatch({ type: ACCOUNT_ERROR });
     throw new Error(message);
   }
 }

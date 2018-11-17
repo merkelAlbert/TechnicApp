@@ -6,7 +6,7 @@ import store from '../store';
 import ThemeProvider from '../components/ThemeProvider';
 import Layout from './Layout';
 import Home from './Home';
-import Register from './Register';
+import Authorization from './Authorization';
 
 const App = () => (
   <Provider store={store}>
@@ -14,7 +14,7 @@ const App = () => (
       <ThemeProvider>
         <Layout>
           <Route exact path='/' component={Home} />
-          <Route exact path='/register' component={Register} />
+          <Route exact path='/auth' component={Authorization} />
         </Layout>
       </ThemeProvider>
     </BrowserRouter>

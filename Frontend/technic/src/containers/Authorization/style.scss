@@ -1,0 +1,21 @@
+.authorization-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.authorization {
+  &__tabs {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    margin-left: 60%;
+  }
+
+  &__picture {
+    width: 60%;
+    height: 100%;
+    position: fixed;
+  }
+}
