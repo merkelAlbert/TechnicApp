@@ -9,9 +9,9 @@ const styles = theme => ({
   },
 });
 
-const ContainedButton = ({ children, type, classes, ...props }) => {
+const ContainedButton = ({ children, type, classes, color, ...props }) => {
   return (
-    <Button {...props} type={type} variant="contained" className={classes.button}>{children}</Button>
+    <Button {...props} type={type} color={color} variant="contained" className={classes.button}>{children}</Button>
   );
 }
 

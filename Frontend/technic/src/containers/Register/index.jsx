@@ -64,6 +64,44 @@ class Register extends Component {
               <div className="form__row">
                 <Field
                   required
+                  name="phone"
+                  component={TextField}
+                  type="phone"
+                  label="Телефон"
+                  className="form__field"
+                />
+              </div>
+              <div className="form__row">
+                <Field
+                  required
+                  name="phone"
+                  component={TextField}
+                  type="phone"
+                  label="Телефон"
+                  className="form__field"
+                />
+              </div><div className="form__row">
+                <Field
+                  required
+                  name="phone"
+                  component={TextField}
+                  type="phone"
+                  label="Телефон"
+                  className="form__field"
+                />
+              </div><div className="form__row">
+                <Field
+                  required
+                  name="phone"
+                  component={TextField}
+                  type="phone"
+                  label="Телефон"
+                  className="form__field"
+                />
+              </div>
+              <div className="form__row">
+                <Field
+                  required
                   name="password"
                   component={Password}
                   type="password"
@@ -82,7 +120,7 @@ class Register extends Component {
                 />
               </div>
               <div className="form__row">
-                <Button type="submit" disabled={disabled}>Зарегистрироваться</Button>
+                <Button type="submit" color="secondary" disabled={disabled}>Зарегистрироваться</Button>
               </div>
             </>
           )}
