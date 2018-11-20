@@ -23,18 +23,19 @@ export const register = (user) => async (dispatch) => {
 }
 
 export const login = (user) => async (dispatch) => {
-  dispatch({ type: ACCOUNT_ERROR });
+  dispatch({ type: ACCOUNT_REQUEST });
 
   try {
-    await post(LOGIN, user);
-    dispatch({ type: ACCOUNT_SUCCESS });
+    const { token, user: userInfo } = await post(LOGIN, user);
+    dispatch({ type: ACCOUNT_SUCCESS, payload: userInfo });
+    localStorage.setItem('token', token);
   }
   catch (err) {
     let message = 'Прозошла ошибка';
 
     if (err.response !== undefined) {
       message = err.response.data;
-    }
+    } else if (err.m)
     dispatch({ type: ACCOUNT_ERROR });
     throw new Error(message);
   }

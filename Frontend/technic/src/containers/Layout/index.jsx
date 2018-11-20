@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react';
 
-import './style.scss';
-import Header from '../../components/Header';
+import Header from './Header';
 
 const Layout = ({ children }) => (
   <Fragment>
-    <Header className="header">Курсач</Header>
+    <Header />
     {children}
   </Fragment>
 );

@@ -11,7 +11,10 @@ import Login from './Login';
 const TABS = ['Регистрация', 'Вход'];
 
 class Authorization extends Component {
+
   render = () => {
+    const { history } = this.props;
+    
     return (
       <div className="authorization-container">
         <img src={Picture} className="authorization__picture" alt="картинка" />
@@ -22,7 +25,7 @@ class Authorization extends Component {
           textColor="secondary"
         >
           <Registration className="authorization__form" />
-          <Login className="authorization__form" />
+          <Login history={history} className="authorization__form" />
         </TabBar>
 
       </div>

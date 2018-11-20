@@ -9,7 +9,7 @@ import TextField from '../../../components/Form/TexField';
 import Password from '../../../components/Form/Password';
 import Button from '../../../components/Button';
 
-import { register } from '../../../store/actions/account';
+import { login } from '../../../store/actions/account';
 
 class Login extends Component {
   state = {
@@ -36,10 +36,10 @@ class Login extends Component {
   }
 
   render = () => {
-    const { onSubmit,  className } = this.props;
+    const { onSubmit, className, history } = this.props;
     const { disabled } = this.state;
     return (
-      <Form onSubmit={onSubmit}  validate={this.validate} className={cn('login-form', className)}>
+      <Form onSubmit={onSubmit} validate={this.validate} className={cn('login-form', className)}>
         {() => (
           <>
             <h1 className="login-form__title">Вход</h1>
@@ -73,16 +73,18 @@ class Login extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: async (user) => {
     try {
-      await dispatch(register(user));
-      alert('Успешно');
+      await dispatch(login(user));
+      const { history } = ownProps;
+      history.push('/');
+      //alert('Успешно');
     }
     catch (err) {
       alert(err);
     }
   }
-})
+});
 
 export default connect(null, mapDispatchToProps)(Login);

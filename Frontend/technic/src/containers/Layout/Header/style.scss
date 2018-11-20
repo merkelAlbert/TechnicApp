@@ -1,0 +1,16 @@
+.header {
+  justify-content: space-between;
+  height: 60px;
+
+  &__title {
+    display: flex;
+  }
+
+  &__auth {
+    display: flex;
+  }
+  &__auth-icon {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
