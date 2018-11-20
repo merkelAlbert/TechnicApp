@@ -10,6 +10,7 @@ namespace Technic
         {
             CreateMap<RegistrationDto, User>();
             CreateMap<LoginDto, User>();
+            CreateMap<User, AuthorizedDto>();
         }
     }
 }

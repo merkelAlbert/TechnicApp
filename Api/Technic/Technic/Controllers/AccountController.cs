@@ -47,7 +47,7 @@ namespace Technic.Controllers
                 return new
                 {
                     token = await _accountService.Login(user),
-                    user = await _accountService.GetUserByEmail(user.Email)
+                    user = _mapper.Map<User, AuthorizedDto>(await _accountService.GetUserByEmail(user.Email))
                 };
             }
             catch (InvalidOperationException e)
@@ -63,7 +63,7 @@ namespace Technic.Controllers
         {
             try
             {
-                return await _accountService.GetUserById(id);
+                return _mapper.Map<User, AuthorizedDto>(await _accountService.GetUserById(id));
             }
             catch (Exception e)
             {
