@@ -8,6 +8,7 @@ import ThemeProvider from '../components/ThemeProvider';
 import Layout from './Layout';
 import Home from './Home';
 import Authorization from './Authorization';
+import AccountProfile from './AccountProfile';
 
 const App = () => (
   <Provider store={store}>
@@ -18,7 +19,7 @@ const App = () => (
             <Layout>
               <Route exact path='/' component={Home} />
               <Route exact path='/auth' component={Authorization} />
-              {/* <Route exact path='/user/:userId' component={User} /> */}
+              <Route exact path='/account/:userId' component={AccountProfile} />
             </Layout>
           </Switch>
         </ThemeProvider>

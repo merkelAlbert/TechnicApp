@@ -1,32 +1,90 @@
 import { connect } from 'react-redux';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash-es/isEmpty';
 import AccountIcon from '@material-ui/icons/AccountCircle';
+import { Menu, MenuItem, IconButton } from '@material-ui/core';
+
+import { ACCOUNT_LOGOUT } from '../../../store/actions/account';
 
 import './style.scss';
 import AppHeader from '../../../components/Header';
 
-const Header = ({ className, user }) => (
-  <AppHeader className={cn('header', className)}>
-    <div className="header__title">
-      course
-    </div>
-    {
-      (user === null || user === undefined || isEmpty(user))
-        ? <div className="header__auth" >
-          <Link to={'/auth'}>
-            <AccountIcon color="secondary" className="header__auth-icon" />
+class Header extends Component {
+  state = {
+    anchorEl: null,
+  }
+
+  onAccountIconClick = (e) => {
+    const { currentTarget } = e;
+    this.setState({
+      anchorEl: currentTarget,
+    });
+  }
+
+  handleUserMenuClose = () => {
+    this.setState({
+      anchorEl: null,
+    });
+  }
+
+  handleUserExit = () => {
+    const { onExit } = this.props;
+    this.handleUserMenuClose();
+    onExit();
+  }
+
+
+
+  render = () => {
+    const { user, className } = this.props;
+    const { anchorEl } = this.state;
+    const isMenuOpen = Boolean(anchorEl);
+
+    return (
+      <AppHeader className={cn('header', className)} >
+        <div className="header__title-container">
+          <Link to="/" className="header__title">
+            course
           </Link>
         </div>
-        : <div className="header__auth">
-          {user.email}
-        </div>
-    }
-  </AppHeader>
-);
+        {
+          (user === null || user === undefined || isEmpty(user))
+            ?
+            <div className="header__auth">
+              <Link to="/auth" className="header__auth-text">
+                Регистрация | Вход
+              </Link>
+            </div>
+            :
+            <div className="header__auth">
+              {user.email}
+              {/* <Link to={`/user/${user.id}`}> */}
+              <IconButton color="secondary" onClick={this.onAccountIconClick}>
+                <AccountIcon className="header__auth-icon" />
+              </IconButton>
+              {/* </Link> */}
+              <Menu
+                anchorEl={anchorEl}
+                open={isMenuOpen}
+                onClose={this.handleUserMenuClose}
+              >
+                <MenuItem onClick={this.handleUserMenuClose}>
+                  <Link to={`/account/${user.id}`} className="header__auth-profile">
+                    Мой профиль
+                </Link>
+                </MenuItem>
+                <MenuItem onClick={this.handleUserExit}>Выйти</MenuItem>
+              </Menu>
+            </div>
+        }
+      </AppHeader >
+    )
+  }
+};
 
 Header.defaultProps = {
   className: null,
@@ -46,4 +104,17 @@ const mapStateToProps = (state) => {
   return { user };
 };
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { history } = ownProps;
+  return ({
+    onExit: () => {
+      dispatch({ type: ACCOUNT_LOGOUT });
+      history.push('/');
+    }
+  })
+};
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(Header);

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { withRouter } from 'react-router-dom';
 import { Field } from 'react-final-form';
 import cn from 'classnames';
 
@@ -87,4 +89,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default compose(
+  withRouter,
+  connect(null, mapDispatchToProps),
+)(Login);

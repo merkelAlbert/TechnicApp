@@ -2,15 +2,41 @@
   justify-content: space-between;
   height: 60px;
 
-  &__title {
+
+  &__title-container {
     display: flex;
+  }
+
+  &__title {
+    text-decoration: none;
+    color: currentColor;
+
+    &:hover {
+      color: #ED1C24;
+    }
   }
 
   &__auth {
     display: flex;
+    align-items: center;
   }
+
+  &__auth-text {
+    text-decoration: none;
+    color: currentColor;
+
+    &:hover {
+      color: #ED1C24;
+    }
+  }
+
   &__auth-icon {
-    width: 40px !important;
-    height: 40px !important;
+    width: 35px !important;
+    height: 35px !important;
+  }
+
+  &__auth-profile {
+    text-decoration: none;
+    color: currentColor;
   }
 }
