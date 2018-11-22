@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Switch, Route } from 'react-router-dom';
+
+import './style.scss';
+import EditAccount from './EditAccount';
+import AccountInfo from './AccountInfo';
+import Sidebar from './Sidebar';
+import AccountMachines from './AccountMachines';
+import AccountFeedbacks from './AccountFeedbacks';
 
 import { getAccountInfo } from '../../store/actions/account';
 
@@ -22,8 +29,19 @@ class AccountProfile extends Component {
 
   render = () => {
     const { user } = this.props;
+
     return (
-      <div>{user.email}</div>
+      <>
+        <Sidebar className="account-profile__sidebar" user={user} />
+        <div className="account-profile__main">
+          <Switch>
+            <Route exact path="/account/:userId" component={AccountInfo} />
+            <Route path="/account/:userId/edit" component={EditAccount} />
+            <Route path="/account/:userId/machines" component={AccountMachines} />
+            <Route path="/account/:userId/feedbacks" component={AccountFeedbacks} />
+          </Switch>
+        </div>
+      </>
     );
   }
 }
