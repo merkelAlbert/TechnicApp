@@ -1,6 +1,11 @@
 import * as accountActions from '../actions/account';
 
-const initialState = {}
+const initialState = {
+  user: null,
+  error: '',
+  isFetching: false,
+  success: false,
+}
 const account = (state = initialState, action) => {
   console.log(action.type);
   switch (action.type) {
@@ -9,12 +14,16 @@ const account = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true,
+        error: '',
+        success: false,
       }
     case accountActions.FETCH_ACCOUNT_INFO_SUCCESS:
     case accountActions.ACCOUNT_AUTH_SUCCESS:
       return {
         ...state,
         isFetching: false,
+        error: '',
+        success: true,
         user: action.payload,
       }
     case accountActions.ACCOUNT_AUTH_ERROR:
@@ -22,11 +31,19 @@ const account = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
+        error: action.payload,
+        success: false,
+      }
+    case accountActions.ACCOUNT_AUTH_FORM_RESET:
+      return {
+        ...state,
+        error: '',
+        isFetching: false,
+        success: false,
       }
     case accountActions.ACCOUNT_LOGOUT:
       return {
-        ...state,
-        user: null,
+        state: initialState,
       }
     default:
       return state;

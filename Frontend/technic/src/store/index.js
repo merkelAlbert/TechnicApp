@@ -1,12 +1,24 @@
+import omit from 'lodash-es/omit';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducers';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistStore, persistReducer, createTransform } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+
+const blackListTransform = createTransform(
+  (inboundState, key) => {
+    if (key === 'account') {
+      return omit(inboundState, ['error', 'success']);
+    }
+    return inboundState;
+  }
+)
 
 const persistConfig = {
   key: 'root',
+  whitelist: ['account'],
+  transforms: [blackListTransform],
   storage,
 };
 

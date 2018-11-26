@@ -3,11 +3,11 @@ import { post, get, REGISTER, LOGIN, USER_INFO } from '../../utils/api';
 export const ACCOUNT_AUTH_REQUEST = 'ACCOUNT_AUTH_REQUEST';
 export const ACCOUNT_AUTH_SUCCESS = 'ACCOUNT_AUTH_SUCCESS';
 export const ACCOUNT_AUTH_ERROR = 'ACCOUN_AUTH_ERROR';
+export const ACCOUNT_AUTH_FORM_RESET = 'ACCOUNT_AUTH_FORM_RESET';
 export const ACCOUNT_LOGOUT = 'ACCOUNT_LOGOUT';
 
 export const register = (user) => async (dispatch) => {
   dispatch({ type: ACCOUNT_AUTH_REQUEST });
-
   try {
     await post(REGISTER, user);
     dispatch({ type: ACCOUNT_AUTH_SUCCESS });
@@ -18,7 +18,7 @@ export const register = (user) => async (dispatch) => {
     if (err.response !== undefined) {
       message = err.response.data;
     }
-    dispatch({ type: ACCOUNT_AUTH_ERROR });
+    dispatch({ type: ACCOUNT_AUTH_ERROR, payload: message });
     throw new Error(message);
   }
 }
@@ -37,7 +37,7 @@ export const login = (user) => async (dispatch) => {
     if (err.response !== undefined) {
       message = err.response.data;
     }
-    dispatch({ type: ACCOUNT_AUTH_ERROR });
+    dispatch({ type: ACCOUNT_AUTH_ERROR, payload: message });
     throw new Error(message);
   }
 }
@@ -60,7 +60,6 @@ export const getAccountInfo = (userId) => async (dispatch) => {
     if (err.response !== undefined) {
       message = err.response.data;
     }
-    dispatch({ type: FETCH_ACCOUNT_INFO_ERROR });
-    throw new Error(message);
+    dispatch({ type: FETCH_ACCOUNT_INFO_ERROR, payload: message });
   }
 }
