@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -73,14 +74,13 @@ class Login extends Component {
                   required
                   name="password"
                   component={Password}
-                  type="password"
                   label="Пароль"
                   className="login-form__field"
                 />
               </div>
               <div className="login-form__row">
-                <Loader isFetching={isFetching} color="secondary">
-                  <Button type="submit" color="secondary" disabled={disabled}>Войти</Button>
+                <Loader isFetching={isFetching}>
+                  <Button type="submit" disabled={disabled}>Войти</Button>
                 </Loader>
               </div>
             </>
@@ -90,6 +90,18 @@ class Login extends Component {
     )
   }
 }
+
+Login.defaultProps = {
+  className: null,
+  error: null,
+};
+
+Login.propTypes = {
+  className: PropTypes.string,
+  error: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   error: state.account.error,

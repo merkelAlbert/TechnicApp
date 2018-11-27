@@ -9,7 +9,7 @@ import storage from 'redux-persist/lib/storage';
 const blackListTransform = createTransform(
   (inboundState, key) => {
     if (key === 'account') {
-      return omit(inboundState, ['error', 'success']);
+      return omit(inboundState, ['error', 'isSuccess']);
     }
     return inboundState;
   }

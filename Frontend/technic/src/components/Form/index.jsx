@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form } from 'react-final-form';
+import PropTypes from 'prop-types';
+import { Form as FinalForm } from 'react-final-form';
 
-const FinalForm = ({
+const Form = ({
   onSubmit,
   children,
   validate,
@@ -9,7 +10,7 @@ const FinalForm = ({
   info,
   ...props
 }) => (
-  <Form {...props} validate={validate} onSubmit={onSubmit}>
+  <FinalForm {...props} validate={validate} onSubmit={onSubmit}>
     {({ handleSubmit, className }) => (
       <form onSubmit={handleSubmit} className={className}>
         <p
@@ -35,7 +36,22 @@ const FinalForm = ({
         {children(props)}
       </form>
     )}
-  </Form>
+  </FinalForm>
 );
 
-export default FinalForm;
+Form.defaultProps = {
+  error: null,
+  info: null,
+  validate: null,
+};
+
+Form.propTypes = {
+  error: PropTypes.string,
+  info: PropTypes.string,
+  validate: PropTypes.func,
+  children: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+}
+
+
+export default Form;

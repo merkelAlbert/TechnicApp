@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -17,9 +18,14 @@ const EndAdornment = ({ onClick, isVisible }) => (
   <IconButton onClick={onClick}>
     {isVisible ? <Visibility /> : <VisibilityOff />}
   </IconButton>
-)
+);
 
-class TextInput extends Component {
+EndAdornment.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  isVisible: PropTypes.bool.isRequired,
+};
+
+class Password extends Component {
   state = {
     showPassword: false,
   }
@@ -48,10 +54,20 @@ class TextInput extends Component {
           ...restInput
         }}
         className={cn(classes.input, className)}
-        type={showPassword ? "text" : type}
+        type={showPassword ? 'text' : type}
       />
     );
   }
 };
 
-export default withStyles(styles)(TextInput);
+Password.defaultProps = {
+  type: 'password',
+  className: null,
+};
+
+Password.proptypes = {
+  type: PropTypes.string,
+  className: PropTypes.string,
+};
+
+export default withStyles(styles)(Password);

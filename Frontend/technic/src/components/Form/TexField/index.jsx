@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import cn from 'classnames';
-import TextField from '@material-ui/core/TextField';
+import Text from '@material-ui/core/TextField';
 
 const styles = theme => ({
   input: {
@@ -10,13 +10,14 @@ const styles = theme => ({
   },
 });
 
-const TextInput = ({
+const TextField = ({
   input: { name, ...restInput },
   meta,
   classes,
   className,
-  ...rest }) => (
-    <TextField
+  ...rest
+}) => (
+    <Text
       {...rest}
       name={name}
       error={meta.error && meta.touched}
@@ -25,4 +26,12 @@ const TextInput = ({
     />
   );
 
-export default withStyles(styles)(TextInput);
+TextField.defaultProps = {
+  className: null,
+};
+
+TextField.propTypes = {
+  className: PropTypes.string,
+};
+
+export default withStyles(styles)(TextField);

@@ -49,4 +49,18 @@ class TabBar extends Component {
   };
 };
 
+TabBar.defaultProps = {
+  className: null,
+  textColor: 'secondary',
+  indicatorColor: 'secondary',
+};
+
+TabBar.propTypes = {
+  className: PropTypes.string,
+  textColor: PropTypes.string,
+  indicatorColor: PropTypes.string,
+  values: PropTypes.arrayOf(PropTypes.string).isRequired,
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+}
+
 export default TabBar;

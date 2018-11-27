@@ -4,7 +4,7 @@ const initialState = {
   user: null,
   error: '',
   isFetching: false,
-  success: false,
+  isSuccess: false,
 }
 const account = (state = initialState, action) => {
   console.log(action.type);
@@ -15,7 +15,7 @@ const account = (state = initialState, action) => {
         ...state,
         isFetching: true,
         error: '',
-        success: false,
+        isSuccess: false,
       }
     case accountActions.FETCH_ACCOUNT_INFO_SUCCESS:
     case accountActions.ACCOUNT_AUTH_SUCCESS:
@@ -23,7 +23,7 @@ const account = (state = initialState, action) => {
         ...state,
         isFetching: false,
         error: '',
-        success: true,
+        isSuccess: true,
         user: action.payload,
       }
     case accountActions.ACCOUNT_AUTH_ERROR:
@@ -32,14 +32,14 @@ const account = (state = initialState, action) => {
         ...state,
         isFetching: false,
         error: action.payload,
-        success: false,
+        isSuccess: false,
       }
     case accountActions.ACCOUNT_AUTH_FORM_RESET:
       return {
         ...state,
         error: '',
         isFetching: false,
-        success: false,
+        isSuccess: false,
       }
     case accountActions.ACCOUNT_LOGOUT:
       return {

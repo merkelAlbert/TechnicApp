@@ -21,8 +21,13 @@ const Header = ({ children, classes, className, ...props }) => (
   </div>
 );
 
+Header.defaultProps = {
+  className: null,
+}
+
 Header.propTypes = {
-  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
 };
 
 export default withStyles(styles)(Header);

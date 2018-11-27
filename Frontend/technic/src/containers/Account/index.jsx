@@ -12,7 +12,7 @@ import AccountFeedbacks from './AccountFeedbacks';
 
 import { getAccountInfo } from '../../store/actions/account';
 
-class AccountProfile extends Component {
+class Account extends Component {
 
   componentDidMount = () => {
     const {
@@ -64,4 +64,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps),
-)(AccountProfile);
+)(Account);

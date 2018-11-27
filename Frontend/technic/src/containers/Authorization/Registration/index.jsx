@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field } from 'react-final-form';
 import cn from 'classnames';
@@ -12,7 +13,7 @@ import Loader from '../../../components/Loader';
 
 import { register, ACCOUNT_AUTH_FORM_RESET } from '../../../store/actions/account';
 
-class Register extends Component {
+class Registration extends Component {
   state = {
     disabled: true,
   }
@@ -48,7 +49,7 @@ class Register extends Component {
   }
 
   render = () => {
-    const { className, error, success, isFetching, onSubmit } = this.props;
+    const { className, error, isSuccess, isFetching, onSubmit } = this.props;
     const { disabled } = this.state;
     return (
       <>
@@ -57,7 +58,7 @@ class Register extends Component {
           onSubmit={onSubmit}
           validate={this.validate}
           error={error}
-          info={success && 'Регистрация прошла успешно'}
+          info={isSuccess ? 'Регистрация прошла успешно' : ''}
           className={cn('registration-form', className)}
         >
           {() => (
@@ -87,7 +88,6 @@ class Register extends Component {
                   required
                   name="password"
                   component={Password}
-                  type="password"
                   label="Пароль"
                   className="registration-form__field"
                 />
@@ -97,14 +97,13 @@ class Register extends Component {
                   required
                   name="repeatedPassword"
                   component={Password}
-                  type="password"
                   label="Повторите пароль"
                   className="registration-form__field"
                 />
               </div>
               <div className="registration-form__row">
-                <Loader isFetching={isFetching} color="secondary">
-                  <Button type="submit" color="secondary" disabled={disabled}>Зарегистрироваться</Button>
+                <Loader isFetching={isFetching}>
+                  <Button type="submit" disabled={disabled}>Зарегистрироваться</Button>
                 </Loader>
               </div>
             </>
@@ -115,9 +114,24 @@ class Register extends Component {
   }
 }
 
+Registration.defaultProps = {
+  className: null,
+  error: null,
+  isSuccess: false,
+};
+
+Registration.propTypes = {
+  className: PropTypes.string,
+  error: PropTypes.string,
+  isSuccess: PropTypes.bool,
+  onSubmit: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+};
+
+
 const mapStateToProps = (state) => ({
   error: state.account.error,
-  success: state.account.success,
+  isSuccess: state.account.isSuccess,
   isFetching: state.account.isFetching,
 })
 
@@ -135,4 +149,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);

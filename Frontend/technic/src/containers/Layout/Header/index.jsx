@@ -62,11 +62,9 @@ class Header extends Component {
             :
             <div className="header__auth">
               {user.email}
-              {/* <Link to={`/user/${user.id}`}> */}
               <IconButton color="secondary" onClick={this.onAccountIconClick}>
                 <AccountIcon className="header__auth-icon" />
               </IconButton>
-              {/* </Link> */}
               <Menu
                 anchorEl={anchorEl}
                 open={isMenuOpen}
@@ -74,7 +72,7 @@ class Header extends Component {
               >
                 <MenuItem onClick={this.handleUserMenuClose}>
                   <Link to={`/account/${user.id}`} className="header__auth-profile">
-                    Мой профиль
+                    Личный кабинет
                 </Link>
                 </MenuItem>
                 <MenuItem onClick={this.handleUserExit}>Выйти</MenuItem>

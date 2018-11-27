@@ -15,4 +15,15 @@ const ContainedButton = ({ children, type, classes, color, ...props }) => {
   );
 }
 
+ContainedButton.defaultProps = {
+  type: 'button',
+  color: 'secondary',
+};
+
+ContainedButton.propTypes = {
+  type: PropTypes.string,
+  color: PropTypes.string,
+  children: PropTypes.node.isRequired,
+}
+
 export default withStyles(styles)(ContainedButton);
