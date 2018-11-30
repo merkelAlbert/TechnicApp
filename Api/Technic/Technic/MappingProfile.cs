@@ -8,9 +8,9 @@ namespace Technic
     {
         public MappingProfile()
         {
-            CreateMap<RegistrationDto, User>();
-            CreateMap<LoginDto, User>();
-            CreateMap<User, AuthorizedDto>();
+            CreateMap<RegistrationDto, Account>();
+            CreateMap<LoginDto, Account>();
+            CreateMap<Account, AuthorizedDto>();
         }
     }
 }

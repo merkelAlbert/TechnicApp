@@ -10,8 +10,8 @@ using Technic.DAL;
 namespace Technic.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20181104133956_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20181130143335_Roles")]
+    partial class Roles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,26 +21,24 @@ namespace Technic.Migrations
                 .HasAnnotation("ProductVersion", "2.2.0-preview1-35029")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("Technic.DAL.Models.User", b =>
+            modelBuilder.Entity("Technic.DAL.Models.Account", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Email");
+                    b.Property<int>("AccountRole");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Email");
 
                     b.Property<string>("Password");
 
                     b.Property<string>("Phone");
 
-                    b.Property<string>("Token");
-
-                    b.Property<string>("Username");
+                    b.Property<string>("Salt");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Accounts");
                 });
 #pragma warning restore 612, 618
         }

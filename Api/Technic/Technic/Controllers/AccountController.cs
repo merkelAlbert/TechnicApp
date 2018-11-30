@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Technic.DAL.Models;
+using Technic.DAL.Models.Enums;
 using Technic.DTO;
 using Technic.Interfaces;
 
@@ -25,10 +26,10 @@ namespace Technic.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegistrationDto registrationDto)
         {
-            var user = _mapper.Map<RegistrationDto, User>(registrationDto);
+            var account = _mapper.Map<RegistrationDto, Account>(registrationDto);
             try
             {
-                await _accountService.Register(user);
+                await _accountService.Register(account);
                 return Ok();
             }
             catch (InvalidOperationException e)
@@ -41,13 +42,13 @@ namespace Technic.Controllers
         [Route("Login")]
         public async Task<object> Login([FromBody] LoginDto loginDto)
         {
-            var user = _mapper.Map<LoginDto, User>(loginDto);
+            var account = _mapper.Map<LoginDto, Account>(loginDto);
             try
             {
                 return new
                 {
-                    token = await _accountService.Login(user),
-                    user = _mapper.Map<User, AuthorizedDto>(await _accountService.GetUserByEmail(user.Email))
+                    token = await _accountService.Login(account),
+                    account = _mapper.Map<Account, AuthorizedDto>(await _accountService.GetAccountByEmail(account.Email))
                 };
             }
             catch (InvalidOperationException e)
@@ -63,7 +64,7 @@ namespace Technic.Controllers
         {
             try
             {
-                return _mapper.Map<User, AuthorizedDto>(await _accountService.GetUserById(id));
+                return _mapper.Map<Account, AuthorizedDto>(await _accountService.GetAccountById(id));
             }
             catch (Exception e)
             {

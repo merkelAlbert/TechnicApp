@@ -78,6 +78,7 @@ namespace Technic
                     Type = "apiKey"
                 });
                 c.AddSecurityRequirement(security);
+                c.DescribeAllEnumsAsStrings();
             });
             
             services.AddCors(options =>
@@ -104,7 +105,6 @@ namespace Technic
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Versioned API v1.0");
- 
                     c.DocumentTitle = "Title Documentation";
                     c.DocExpansion(DocExpansion.None);
                 });

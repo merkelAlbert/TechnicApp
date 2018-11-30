@@ -19,14 +19,14 @@ namespace Technic.Migrations
                 .HasAnnotation("ProductVersion", "2.2.0-preview1-35029")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("Technic.DAL.Models.User", b =>
+            modelBuilder.Entity("Technic.DAL.Models.Account", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Email");
+                    b.Property<int>("AccountRole");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Email");
 
                     b.Property<string>("Password");
 
@@ -34,11 +34,9 @@ namespace Technic.Migrations
 
                     b.Property<string>("Salt");
 
-                    b.Property<string>("Username");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Accounts");
                 });
 #pragma warning restore 612, 618
         }
