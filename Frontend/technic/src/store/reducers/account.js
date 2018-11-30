@@ -1,13 +1,8 @@
 import * as accountActions from '../actions/account';
+import initialState from '../initialState';
 
-const initialState = {
-  user: null,
-  error: '',
-  isFetching: false,
-  isSuccess: false,
-}
-const account = (state = initialState, action) => {
-  console.log(action.type);
+const account = (state = initialState.account, action) => {
+  console.log(action);
   switch (action.type) {
     case accountActions.ACCOUNT_AUTH_REQUEST:
     case accountActions.FETCH_ACCOUNT_INFO_REQUEST:
@@ -42,9 +37,7 @@ const account = (state = initialState, action) => {
         isSuccess: false,
       }
     case accountActions.ACCOUNT_LOGOUT:
-      return {
-        state: initialState,
-      }
+      return initialState.account;
     default:
       return state;
   }

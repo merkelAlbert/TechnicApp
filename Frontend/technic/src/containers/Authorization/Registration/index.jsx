@@ -5,11 +5,13 @@ import { Field } from 'react-final-form';
 import cn from 'classnames';
 
 import './style.scss';
+import accountRoles from '../../../constants/roles';
 import Form from '../../../components/Form';
 import TextField from '../../../components/Form/TexField';
 import Password from '../../../components/Form/Password';
 import Button from '../../../components/Button';
 import Loader from '../../../components/Loader';
+import Select from '../../../components/Form/Select';
 
 import { register, ACCOUNT_AUTH_FORM_RESET } from '../../../store/actions/account';
 
@@ -23,6 +25,10 @@ class Registration extends Component {
     resetForm();
   }
 
+  handleChange = event => {
+    this.setState({ name: event.target.value });
+  };
+
   validate = values => {
     const errors = {};
     if (!values.email) {
@@ -33,6 +39,9 @@ class Registration extends Component {
     }
     if (!values.repeatedPassword) {
       errors.repeatedPassword = 'Required';
+    }
+    if (!values.accountRole && values.accountRole!==0) {
+      errors.role = 'Required';
     }
     if (values.password !== values.repeatedPassword) {
       errors.repeatedPassword = 'Must be the same';
@@ -51,6 +60,10 @@ class Registration extends Component {
   render = () => {
     const { className, error, isSuccess, isFetching, onSubmit } = this.props;
     const { disabled } = this.state;
+    const roles = Object.keys(accountRoles).map(role => {
+      return accountRoles[role];
+    });
+
     return (
       <>
         <h1 className="registration-form__title">Регистрация</h1>
@@ -102,6 +115,16 @@ class Registration extends Component {
                 />
               </div>
               <div className="registration-form__row">
+                <Field
+                  required
+                  name="accountRole"
+                  label="Тип"
+                  component={Select}
+                  items={roles}
+                  className="registration-form__field"
+                />
+              </div>
+              <div className="registration-form__row">
                 <Loader isFetching={isFetching}>
                   <Button type="submit" disabled={disabled}>Зарегистрироваться</Button>
                 </Loader>
@@ -138,6 +161,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onSubmit: async (user) => {
     try {
+      console.log(user);
       await dispatch(register(user));
     }
     catch (err) {

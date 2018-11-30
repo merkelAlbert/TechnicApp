@@ -27,7 +27,7 @@ export const login = (user) => async (dispatch) => {
   dispatch({ type: ACCOUNT_AUTH_REQUEST });
 
   try {
-    const { token, user: userInfo } = await post(LOGIN, user);
+    const { token, account: userInfo } = await post(LOGIN, user);
     dispatch({ type: ACCOUNT_AUTH_SUCCESS, payload: userInfo });
     localStorage.setItem('token', token);
   }

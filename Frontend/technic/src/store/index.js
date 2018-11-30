@@ -2,9 +2,10 @@ import omit from 'lodash-es/omit';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import reducer from './reducers';
 import { persistStore, persistReducer, createTransform } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+
+import reducer from './reducers';
 
 const blackListTransform = createTransform(
   (inboundState, key) => {
