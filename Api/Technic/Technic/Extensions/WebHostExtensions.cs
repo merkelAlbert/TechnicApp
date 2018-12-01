@@ -17,5 +17,15 @@ namespace Technic.Extensions
 
             return host;
         }
+        
+        public static IWebHost Initialize<T>(this IWebHost host, Action<T> setUp)
+        {
+            using (var scope = host.Services.CreateScope())
+            {
+                var service = scope.ServiceProvider.GetRequiredService<T>();
+                setUp(service);
+            }
+            return host;
+        }
     }
 }

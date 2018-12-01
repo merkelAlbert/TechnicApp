@@ -19,6 +19,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Technic.DAL;
 using Technic.Interfaces;
 using Technic.Services;
+using Technic.Utils;
 
 namespace Technic
 {
@@ -94,6 +95,8 @@ namespace Technic
             });
 
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<SpecificationsInitializer>();
+            services.AddScoped<MachineTypesInitializer>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

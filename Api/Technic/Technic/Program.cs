@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Technic.DAL;
 using Technic.Extensions;
+using Technic.Utils;
 
 namespace Technic
 {
@@ -19,6 +20,8 @@ namespace Technic
             CreateWebHostBuilder(args)
                 .Build()
                 .MigrateDatabase<DatabaseContext>()
+                .Initialize<SpecificationsInitializer>(x => Task.WaitAll(x.InitializeAsync()))
+                .Initialize<MachineTypesInitializer>(x => Task.WaitAll(x.InitializeAsync()))
                 .Run();
         }
 
