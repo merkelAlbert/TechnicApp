@@ -11,7 +11,8 @@ namespace Technic.DAL
         {
         }
 
-        public DbSet<Account> Accounts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Machine> Machines { get; set; }
         public DbSet<MachineType> MachineTypes { get; set; }
         public DbSet<Specification> Specifications { get; set; }
 
@@ -21,15 +22,15 @@ namespace Technic.DAL
 
             #region MachineType-specification
 
-            builder.Entity<MachineTypeSpecification>()
+            builder.Entity<MachineType_Specification>()
                 .HasKey(mt => new {mt.MachineTypeId, mt.SpecificationId});
 
-            builder.Entity<MachineTypeSpecification>()
+            builder.Entity<MachineType_Specification>()
                 .HasOne(mt => mt.MachineType)
                 .WithMany(mt => mt.AllowedSpecifications)
                 .HasForeignKey(mt => mt.MachineTypeId);
 
-            builder.Entity<MachineTypeSpecification>()
+            builder.Entity<MachineType_Specification>()
                 .HasOne(mt => mt.Specification)
                 .WithMany(mt => mt.MachineTypes)
                 .HasForeignKey(mt => mt.SpecificationId);

@@ -8,9 +8,9 @@ namespace Technic.DAL.Models
     public class MachineType
     {
         public Guid Id { get; set; }
+        
         public string Name { get; set; }
-
-        public ICollection<MachineTypeSpecification> AllowedSpecifications { get; set; } =
-            new List<MachineTypeSpecification>();
+        public ICollection<MachineType_Specification> AllowedSpecifications { get; set; } =
+            new List<MachineType_Specification>();
     }
 }

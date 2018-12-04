@@ -56,16 +56,13 @@ namespace Technic.Services
         private bool ValidatePassword(string password, string salt, string hash)  
             => CreateHash(password, salt) == hash; 
 
-        private async Task<string> GenerateJwtToken(Account account)
+        private async Task<string> GenerateJwtToken(User user)
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, account.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()),
-                new Claim(ClaimTypes.Role, account.AccountRole.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, user.UserRole.ToString())
             };
-
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JwtExpireDays"]));
@@ -81,49 +78,49 @@ namespace Technic.Services
             return await Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
         }
 
-        public async Task Register(Account account)
+        public async Task Register(User user)
         {
-            if (await _databaseContext.Accounts.FirstOrDefaultAsync(x => x.Email == account.Email) != null)
+            if (await _databaseContext.Users.FirstOrDefaultAsync(x => x.Email == user.Email) != null)
                 throw new InvalidOperationException("Пользователь с данным email уже существует");
                 
             var salt = CreateSalt();
-            var hash = CreateHash(account.Password, salt);
-            account.Password = hash;
-            account.Salt = salt;
-            await _databaseContext.Accounts.AddAsync(account);
+            var hash = CreateHash(user.Password, salt);
+            user.Password = hash;
+            user.Salt = salt;
+            await _databaseContext.Users.AddAsync(user);
             await _databaseContext.SaveChangesAsync();
         }
 
-        public async Task<string> Login(Account account)
+        public async Task<string> Login(User user)
         {
 
-            var storedAccount = await _databaseContext.Accounts
-                .FirstOrDefaultAsync(x => x.Email == account.Email);
+            var storedUser = await _databaseContext.Users
+                .FirstOrDefaultAsync(x => x.Email == user.Email);
             
-            if (storedAccount == null)
+            if (storedUser == null)
             {
                 throw new InvalidOperationException("Неверный email или пароль");
             }
 
-            if (!ValidatePassword(account.Password, storedAccount.Salt, storedAccount.Password))
+            if (!ValidatePassword(user.Password, storedUser.Salt, storedUser.Password))
             {
                 throw new InvalidOperationException("Неверный email или пароль");
             }
 
-            var token = await GenerateJwtToken(storedAccount);
+            var token = await GenerateJwtToken(storedUser);
             return token;
         }
 
-        public async Task<Account> GetAccountById(Guid id)
+        public async Task<User> GetUserById(Guid id)
         {
-            var account = await _databaseContext.Accounts.FirstOrDefaultAsync(x => x.Id == id);
-            return account ?? throw new InvalidOperationException("Неверный id");
+            var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return user ?? throw new InvalidOperationException("Неверный id");
         }
         
-        public async Task<Account> GetAccountByEmail(string email)
+        public async Task<User> GetUserByEmail(string email)
         {
-            var account = await _databaseContext.Accounts.FirstOrDefaultAsync(x => x.Email == email);
-            return account ?? throw new InvalidOperationException("Неверный email");
+            var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            return user ?? throw new InvalidOperationException("Неверный email");
         }
     }
 }

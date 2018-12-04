@@ -3,26 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Technic.Migrations
 {
-    public partial class SpecsTypes : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Accounts",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    Salt = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    AccountRole = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Accounts", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "MachineTypes",
                 columns: table => new
@@ -48,25 +32,23 @@ namespace Technic.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Machine",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    MachineTypeId = table.Column<Guid>(nullable: true)
+                    Email = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    Salt = table.Column<string>(nullable: true),
+                    UserRole = table.Column<int>(nullable: false),
+                    Phone = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Machine", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Machine_MachineTypes_MachineTypeId",
-                        column: x => x.MachineTypeId,
-                        principalTable: "MachineTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MachineTypeSpecification",
+                name: "MachineType_Specification",
                 columns: table => new
                 {
                     MachineTypeId = table.Column<Guid>(nullable: false),
@@ -74,17 +56,40 @@ namespace Technic.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MachineTypeSpecification", x => new { x.MachineTypeId, x.SpecificationId });
+                    table.PrimaryKey("PK_MachineType_Specification", x => new { x.MachineTypeId, x.SpecificationId });
                     table.ForeignKey(
-                        name: "FK_MachineTypeSpecification_MachineTypes_MachineTypeId",
+                        name: "FK_MachineType_Specification_MachineTypes_MachineTypeId",
                         column: x => x.MachineTypeId,
                         principalTable: "MachineTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MachineTypeSpecification_Specifications_SpecificationId",
+                        name: "FK_MachineType_Specification_Specifications_SpecificationId",
                         column: x => x.SpecificationId,
                         principalTable: "Specifications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Machines",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    MachineTypeId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(nullable: false),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Machines", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Machines_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -101,9 +106,9 @@ namespace Technic.Migrations
                 {
                     table.PrimaryKey("PK_MachineSpecification", x => new { x.MachineId, x.SpecificationId });
                     table.ForeignKey(
-                        name: "FK_MachineSpecification_Machine_MachineId",
+                        name: "FK_MachineSpecification_Machines_MachineId",
                         column: x => x.MachineId,
-                        principalTable: "Machine",
+                        principalTable: "Machines",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -115,9 +120,9 @@ namespace Technic.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Machine_MachineTypeId",
-                table: "Machine",
-                column: "MachineTypeId");
+                name: "IX_Machines_UserId",
+                table: "Machines",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MachineSpecification_SpecificationId",
@@ -125,30 +130,30 @@ namespace Technic.Migrations
                 column: "SpecificationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MachineTypeSpecification_SpecificationId",
-                table: "MachineTypeSpecification",
+                name: "IX_MachineType_Specification_SpecificationId",
+                table: "MachineType_Specification",
                 column: "SpecificationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Accounts");
-
-            migrationBuilder.DropTable(
                 name: "MachineSpecification");
 
             migrationBuilder.DropTable(
-                name: "MachineTypeSpecification");
+                name: "MachineType_Specification");
 
             migrationBuilder.DropTable(
-                name: "Machine");
+                name: "Machines");
+
+            migrationBuilder.DropTable(
+                name: "MachineTypes");
 
             migrationBuilder.DropTable(
                 name: "Specifications");
 
             migrationBuilder.DropTable(
-                name: "MachineTypes");
+                name: "Users");
         }
     }
 }

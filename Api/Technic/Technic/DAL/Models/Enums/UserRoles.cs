@@ -1,6 +1,6 @@
 namespace Technic.DAL.Models.Enums
 {
-    public enum AccountRole
+    public enum UserRole
     {
         Person,
         Company,

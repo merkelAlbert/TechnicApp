@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Technic.DAL.Models;
 using Technic.DAL.Models.Enums;
 using Technic.DTO;
+using Technic.Extensions;
 using Technic.Interfaces;
 
 namespace Technic.Controllers
@@ -26,10 +27,10 @@ namespace Technic.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegistrationDto registrationDto)
         {
-            var account = _mapper.Map<RegistrationDto, Account>(registrationDto);
+            var user = _mapper.Map<RegistrationDto, User>(registrationDto);
             try
             {
-                await _accountService.Register(account);
+                await _accountService.Register(user);
                 return Ok();
             }
             catch (InvalidOperationException e)
@@ -42,13 +43,13 @@ namespace Technic.Controllers
         [Route("Login")]
         public async Task<object> Login([FromBody] LoginDto loginDto)
         {
-            var account = _mapper.Map<LoginDto, Account>(loginDto);
+            var user = _mapper.Map<LoginDto, User>(loginDto);
             try
             {
                 return new
                 {
-                    token = await _accountService.Login(account),
-                    account = _mapper.Map<Account, AuthorizedDto>(await _accountService.GetAccountByEmail(account.Email))
+                    token = await _accountService.Login(user),
+                    account = _mapper.Map<User, AuthorizedDto>(await _accountService.GetUserByEmail(loginDto.Email))
                 };
             }
             catch (InvalidOperationException e)
@@ -57,19 +58,19 @@ namespace Technic.Controllers
             }
         }
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("{id}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<object> GetUserInfo([FromRoute] Guid id)
         {
             try
             {
-                return _mapper.Map<Account, AuthorizedDto>(await _accountService.GetAccountById(id));
+                return _mapper.Map<User, AuthorizedDto>(await _accountService.GetAccountById(id));
             }
             catch (Exception e)
             {
                 return new BadRequestObjectResult(e.Message);
             }
-        }
+        }*/
     }
 }

@@ -10,8 +10,8 @@ using Technic.DAL;
 namespace Technic.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20181201132622_SpecsTypes")]
-    partial class SpecsTypes
+    [Migration("20181204192209_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,26 +20,6 @@ namespace Technic.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.2.0-preview1-35029")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            modelBuilder.Entity("Technic.DAL.Models.Account", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccountRole");
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("Password");
-
-                    b.Property<string>("Phone");
-
-                    b.Property<string>("Salt");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Accounts");
-                });
 
             modelBuilder.Entity("Technic.DAL.Models.IntermediateModels.MachineSpecification", b =>
                 {
@@ -56,7 +36,7 @@ namespace Technic.Migrations
                     b.ToTable("MachineSpecification");
                 });
 
-            modelBuilder.Entity("Technic.DAL.Models.IntermediateModels.MachineTypeSpecification", b =>
+            modelBuilder.Entity("Technic.DAL.Models.IntermediateModels.MachineType_Specification", b =>
                 {
                     b.Property<Guid>("MachineTypeId");
 
@@ -66,7 +46,7 @@ namespace Technic.Migrations
 
                     b.HasIndex("SpecificationId");
 
-                    b.ToTable("MachineTypeSpecification");
+                    b.ToTable("MachineType_Specification");
                 });
 
             modelBuilder.Entity("Technic.DAL.Models.Machine", b =>
@@ -74,13 +54,23 @@ namespace Technic.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("MachineTypeId");
+                    b.Property<string>("Description");
+
+                    b.Property<Guid>("MachineTypeId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<int>("Status");
+
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MachineTypeId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Machine");
+                    b.ToTable("Machines");
                 });
 
             modelBuilder.Entity("Technic.DAL.Models.MachineType", b =>
@@ -107,6 +97,26 @@ namespace Technic.Migrations
                     b.ToTable("Specifications");
                 });
 
+            modelBuilder.Entity("Technic.DAL.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Password");
+
+                    b.Property<string>("Phone");
+
+                    b.Property<string>("Salt");
+
+                    b.Property<int>("UserRole");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("Technic.DAL.Models.IntermediateModels.MachineSpecification", b =>
                 {
                     b.HasOne("Technic.DAL.Models.Machine", "Machine")
@@ -120,7 +130,7 @@ namespace Technic.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Technic.DAL.Models.IntermediateModels.MachineTypeSpecification", b =>
+            modelBuilder.Entity("Technic.DAL.Models.IntermediateModels.MachineType_Specification", b =>
                 {
                     b.HasOne("Technic.DAL.Models.MachineType", "MachineType")
                         .WithMany("AllowedSpecifications")
@@ -135,9 +145,10 @@ namespace Technic.Migrations
 
             modelBuilder.Entity("Technic.DAL.Models.Machine", b =>
                 {
-                    b.HasOne("Technic.DAL.Models.MachineType", "MachineType")
-                        .WithMany()
-                        .HasForeignKey("MachineTypeId");
+                    b.HasOne("Technic.DAL.Models.User", "User")
+                        .WithMany("Machines")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

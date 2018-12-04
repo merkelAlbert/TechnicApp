@@ -95,6 +95,7 @@ namespace Technic
             });
 
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IMachineService, MachineService>();
             services.AddScoped<SpecificationsInitializer>();
             services.AddScoped<MachineTypesInitializer>();
         }

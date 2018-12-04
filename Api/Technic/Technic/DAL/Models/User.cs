@@ -1,15 +1,19 @@
 using System;
+using System.Collections.Generic;
 using Technic.DAL.Models.Enums;
 
 namespace Technic.DAL.Models
 {
-    public class Account
+    public class User
     {
         public Guid Id { get; set; }
+        
         public string Email { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
+        public UserRole UserRole { get; set; }
+        
         public string Phone { get; set; }
-        public AccountRole AccountRole { get; set; }
+        public ICollection<Machine> Machines { get; set; } = new List<Machine>();
     }
 }

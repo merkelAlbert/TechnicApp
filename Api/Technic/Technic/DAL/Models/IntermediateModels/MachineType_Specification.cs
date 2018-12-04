@@ -2,7 +2,7 @@ using System;
 
 namespace Technic.DAL.Models.IntermediateModels
 {
-    public class MachineTypeSpecification
+    public class MachineType_Specification
     {
         public Guid MachineTypeId { get; set; }
         public MachineType MachineType { get; set; }

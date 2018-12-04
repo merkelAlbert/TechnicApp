@@ -84,7 +84,7 @@ namespace Technic.Utils
                 {
                     foreach (var spec in specs)
                     {
-                        var typeSpec  = new MachineTypeSpecification();
+                        var typeSpec  = new MachineType_Specification();
                         typeSpec.Specification = spec;
                         machineType.AllowedSpecifications.Add(typeSpec);
                     }
