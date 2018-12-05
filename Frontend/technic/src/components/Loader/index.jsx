@@ -9,7 +9,7 @@ const Loader = ({ isFetching, color, children }) => (
 );
 
 Loader.defaultProps = {
-  color: 'secondary',
+  color: 'primary',
 };
 
 Loader.propTypes = {

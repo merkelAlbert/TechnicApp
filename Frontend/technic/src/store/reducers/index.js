@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import account from './account';
+import user from './user';
+import machines from './machines';
 
 export default combineReducers({
-  account,
+  user,
+  machines,
 });

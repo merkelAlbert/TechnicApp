@@ -13,7 +13,7 @@ import Password from '../../../components/Form/Password';
 import Button from '../../../components/Button';
 import Loader from '../../../components/Loader';
 
-import { login, ACCOUNT_AUTH_FORM_RESET } from '../../../store/actions/account';
+import { login, USER_AUTH_FORM_RESET } from '../../../store/actions/user';
 
 class Login extends Component {
   state = {
@@ -104,9 +104,9 @@ Login.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  error: state.account.error,
-  success: state.account.success,
-  isFetching: state.account.isFetching,
+  error: state.user.error,
+  success: state.user.success,
+  isFetching: state.user.isFetching,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -123,7 +123,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }
     },
     resetForm: () => {
-      dispatch({ type: ACCOUNT_AUTH_FORM_RESET });
+      dispatch({ type: USER_AUTH_FORM_RESET });
     }
   }
 };

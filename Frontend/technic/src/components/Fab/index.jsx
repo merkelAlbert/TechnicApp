@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,21 +10,29 @@ const styles = theme => ({
   },
 });
 
-const ContainedButton = ({ children, type, classes, color, ...props }) => {
+const Fab = ({ children, type, className, classes, color, ...props }) => {
   return (
-    <Button {...props} type={type} color={color} variant="contained" className={classes.button}>{children}</Button>
+    <Button
+      {...props}
+      type={type}
+      color={color}
+      variant="fab"
+      className={cn(classes.button, className)}
+    >
+      {children}
+    </Button>
   );
 }
 
-ContainedButton.defaultProps = {
+Fab.defaultProps = {
   type: 'button',
   color: 'primary',
 };
 
-ContainedButton.propTypes = {
+Fab.propTypes = {
   type: PropTypes.string,
   color: PropTypes.string,
   children: PropTypes.node.isRequired,
 }
 
-export default withStyles(styles)(ContainedButton);
+export default withStyles(styles)(Fab);

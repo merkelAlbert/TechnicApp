@@ -8,7 +8,7 @@ import isEmpty from 'lodash-es/isEmpty';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import { Menu, MenuItem, IconButton } from '@material-ui/core';
 
-import { ACCOUNT_LOGOUT } from '../../../store/actions/account';
+import { USER_LOGOUT } from '../../../store/actions/user';
 
 import './style.scss';
 import AppHeader from '../../../components/Header';
@@ -62,7 +62,7 @@ class Header extends Component {
             :
             <div className="header__auth">
               {user.email}
-              <IconButton color="secondary" onClick={this.onAccountIconClick}>
+              <IconButton color="primary" onClick={this.onAccountIconClick}>
                 <AccountIcon className="header__auth-icon" />
               </IconButton>
               <Menu
@@ -71,7 +71,7 @@ class Header extends Component {
                 onClose={this.handleUserMenuClose}
               >
                 <MenuItem onClick={this.handleUserMenuClose}>
-                  <Link to={`/account/${user.id}`} className="header__auth-profile">
+                  <Link to={`/user/${user.id}`} className="header__auth-profile">
                     Личный кабинет
                 </Link>
                 </MenuItem>
@@ -94,7 +94,7 @@ Header.propTypes = {
 
 const mapStateToProps = (state) => {
   const {
-    account: {
+    user: {
       user,
     }
   } = state;
@@ -106,7 +106,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const { history } = ownProps;
   return ({
     onExit: () => {
-      dispatch({ type: ACCOUNT_LOGOUT });
+      dispatch({ type: USER_LOGOUT });
       history.push('/');
     }
   })

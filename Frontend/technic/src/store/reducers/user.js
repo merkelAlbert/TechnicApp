@@ -1,19 +1,19 @@
-import * as accountActions from '../actions/account';
+import * as userActions from '../actions/user';
 import initialState from '../initialState';
 
-const account = (state = initialState.account, action) => {
+const user = (state = initialState.user, action) => {
   console.log(action);
   switch (action.type) {
-    case accountActions.ACCOUNT_AUTH_REQUEST:
-    case accountActions.FETCH_ACCOUNT_INFO_REQUEST:
+    case userActions.USER_AUTH_REQUEST:
+    case userActions.FETCH_USER_INFO_REQUEST:
       return {
         ...state,
         isFetching: true,
         error: '',
         isSuccess: false,
       }
-    case accountActions.FETCH_ACCOUNT_INFO_SUCCESS:
-    case accountActions.ACCOUNT_AUTH_SUCCESS:
+    case userActions.FETCH_USER_INFO_SUCCESS:
+    case userActions.USER_AUTH_SUCCESS:
       return {
         ...state,
         isFetching: false,
@@ -21,26 +21,26 @@ const account = (state = initialState.account, action) => {
         isSuccess: true,
         user: action.payload,
       }
-    case accountActions.ACCOUNT_AUTH_ERROR:
-    case accountActions.FETCH_ACCOUNT_INFO_ERROR:
+    case userActions.USER_AUTH_ERROR:
+    case userActions.FETCH_USER_INFO_ERROR:
       return {
         ...state,
         isFetching: false,
         error: action.payload,
         isSuccess: false,
       }
-    case accountActions.ACCOUNT_AUTH_FORM_RESET:
+    case userActions.USER_AUTH_FORM_RESET:
       return {
         ...state,
         error: '',
         isFetching: false,
         isSuccess: false,
       }
-    case accountActions.ACCOUNT_LOGOUT:
+    case userActions.USER_LOGOUT:
       return initialState.account;
     default:
       return state;
   }
 };
 
-export default account;
+export default user;

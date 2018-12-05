@@ -17,32 +17,32 @@ const isSelected = (location, path) => {
   return location.pathname === path;
 }
 
-const AccountSidebar = ({ className, user, location }) => {
+const UserSidebar = ({ className, user, location }) => {
   return (
-    <div className={cn('account-sidebar', className)}>
-      <Link to={`/account/${user.id}`} className="account-sidebar__item-link">
+    <div className={cn('user-sidebar', className)}>
+      <Link to={`/user/${user.id}`} className="user-sidebar__item-link">
         <Item
           icon={AccountCircle}
           caption="Мой аккаунт"
-          isSelected={isSelected(location, `/account/${user.id}`)}
+          isSelected={isSelected(location, `/user/${user.id}`)}
         />
       </Link>
-      <Link to={`/account/${user.id}/machines`} className="account-sidebar__item-link">
+      <Link to={`/user/${user.id}/machines`} className="user-sidebar__item-link">
         <Item
           icon={Commute}
           caption="Моя техника"
-          isSelected={isSelected(location, `/account/${user.id}/machines`)}
+          isSelected={isSelected(location, `/user/${user.id}/machines`)}
         />
       </Link>
-      <Link to={`/account/${user.id}/feedbacks`} className="account-sidebar__item-link">
+      <Link to={`/user/${user.id}/feedbacks`} className="user-sidebar__item-link">
         <Item
           icon={Comment}
           caption="Отклики"
-          isSelected={isSelected(location, `/account/${user.id}/feedbacks`)}
+          isSelected={isSelected(location, `/user/${user.id}/feedbacks`)}
         />
       </Link>
     </div>
   );
 };
 
-export default withRouter(AccountSidebar);
+export default withRouter(UserSidebar);

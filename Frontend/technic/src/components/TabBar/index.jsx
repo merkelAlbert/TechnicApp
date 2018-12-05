@@ -51,8 +51,8 @@ class TabBar extends Component {
 
 TabBar.defaultProps = {
   className: null,
-  textColor: 'secondary',
-  indicatorColor: 'secondary',
+  textColor: 'primary',
+  indicatorColor: 'primary',
 };
 
 TabBar.propTypes = {

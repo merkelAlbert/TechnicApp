@@ -5,7 +5,7 @@ import { Field } from 'react-final-form';
 import cn from 'classnames';
 
 import './style.scss';
-import accountRoles from '../../../constants/roles';
+import userRoles from '../../../constants/roles';
 import Form from '../../../components/Form';
 import TextField from '../../../components/Form/TexField';
 import Password from '../../../components/Form/Password';
@@ -13,7 +13,7 @@ import Button from '../../../components/Button';
 import Loader from '../../../components/Loader';
 import Select from '../../../components/Form/Select';
 
-import { register, ACCOUNT_AUTH_FORM_RESET } from '../../../store/actions/account';
+import { register, USER_AUTH_FORM_RESET } from '../../../store/actions/user';
 
 class Registration extends Component {
   state = {
@@ -40,7 +40,7 @@ class Registration extends Component {
     if (!values.repeatedPassword) {
       errors.repeatedPassword = 'Required';
     }
-    if (!values.accountRole && values.accountRole!==0) {
+    if (!values.userRole && values.userRole!==0) {
       errors.role = 'Required';
     }
     if (values.password !== values.repeatedPassword) {
@@ -60,8 +60,8 @@ class Registration extends Component {
   render = () => {
     const { className, error, isSuccess, isFetching, onSubmit } = this.props;
     const { disabled } = this.state;
-    const roles = Object.keys(accountRoles).map(role => {
-      return accountRoles[role];
+    const roles = Object.keys(userRoles).map(role => {
+      return userRoles[role];
     });
 
     return (
@@ -117,7 +117,7 @@ class Registration extends Component {
               <div className="registration-form__row">
                 <Field
                   required
-                  name="accountRole"
+                  name="userRole"
                   label="Тип"
                   component={Select}
                   items={roles}
@@ -153,9 +153,9 @@ Registration.propTypes = {
 
 
 const mapStateToProps = (state) => ({
-  error: state.account.error,
-  isSuccess: state.account.isSuccess,
-  isFetching: state.account.isFetching,
+  error: state.user.error,
+  isSuccess: state.user.isSuccess,
+  isFetching: state.user.isFetching,
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -169,7 +169,7 @@ const mapDispatchToProps = (dispatch) => ({
     }
   },
   resetForm: () => {
-    dispatch({ type: ACCOUNT_AUTH_FORM_RESET });
+    dispatch({ type: USER_AUTH_FORM_RESET });
   }
 })
 

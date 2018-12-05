@@ -4,15 +4,15 @@ import { compose } from 'redux';
 import { withRouter, Switch, Route } from 'react-router-dom';
 
 import './style.scss';
-import EditAccount from './EditAccount';
-import AccountInfo from './AccountInfo';
+import EditUser from './EditUser';
+import UserInfo from './UserInfo';
 import Sidebar from './Sidebar';
-import AccountMachines from './AccountMachines';
-import AccountFeedbacks from './AccountFeedbacks';
+import UserMachines from './UserMachines';
+import UserFeedbacks from './UserFeedbacks';
 
-import { getAccountInfo } from '../../store/actions/account';
+import { getUserInfo } from '../../store/actions/user';
 
-class Account extends Component {
+class User extends Component {
 
   componentDidMount = () => {
     const {
@@ -32,13 +32,13 @@ class Account extends Component {
 
     return (
       <>
-        <Sidebar className="account-profile__sidebar" user={user} />
-        <div className="account-profile__main">
+        <Sidebar className="user-profile__sidebar" user={user} />
+        <div className="user-profile__main">
           <Switch>
-            <Route exact path="/account/:userId" component={AccountInfo} />
-            <Route path="/account/:userId/edit" component={EditAccount} />
-            <Route path="/account/:userId/machines" component={AccountMachines} />
-            <Route path="/account/:userId/feedbacks" component={AccountFeedbacks} />
+            <Route exact path="/user/:userId" component={UserInfo} />
+            <Route path="/user/:userId/edit" component={EditUser} />
+            <Route path="/user/:userId/machines" component={UserMachines} />
+            <Route path="/user/:userId/feedbacks" component={UserFeedbacks} />
           </Switch>
         </div>
       </>
@@ -47,13 +47,13 @@ class Account extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.account.user
+  user: state.user.user
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadData: async (userId) => {
     try {
-      await dispatch(getAccountInfo(userId));
+      await dispatch(getUserInfo(userId));
     }
     catch (err) {
       alert(err);
@@ -64,4 +64,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps),
-)(Account);
+)(User);

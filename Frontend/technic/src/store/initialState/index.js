@@ -1,5 +1,7 @@
-import account from './account';
+import user from './user';
+import machines from './machines';
 
 export default {
-  account,
+  user,
+  machines,
 };

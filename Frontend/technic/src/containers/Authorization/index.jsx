@@ -33,7 +33,7 @@ class Authorization extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.account.user,
+  user: state.user.user,
 });
 
 export default connect(mapStateToProps, null)(Authorization);

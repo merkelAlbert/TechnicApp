@@ -13,7 +13,7 @@ const styles = {
 
 const Header = ({ children, classes, className, ...props }) => (
   <div className={className}>
-    <AppBar position="fixed" color="primary" {...props}>
+    <AppBar position="fixed" color="secondary" {...props}>
       <Toolbar className={cn(classes.toolbar, className)}>
         {children}
       </Toolbar>

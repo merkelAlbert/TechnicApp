@@ -9,7 +9,7 @@ import reducer from './reducers';
 
 const blackListTransform = createTransform(
   (inboundState, key) => {
-    if (key === 'account') {
+    if (key === 'user') {
       return omit(inboundState, ['error', 'isSuccess']);
     }
     return inboundState;
@@ -18,7 +18,7 @@ const blackListTransform = createTransform(
 
 const persistConfig = {
   key: 'root',
-  whitelist: ['account'],
+  whitelist: ['user'],
   transforms: [blackListTransform],
   storage,
 };

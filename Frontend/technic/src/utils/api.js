@@ -5,6 +5,7 @@ const BASE_URL = 'http://localhost:5000/';
 export const REGISTER = BASE_URL + 'account/register/';
 export const LOGIN = BASE_URL + 'account/login/';
 export const USER_INFO = BASE_URL + 'account/';
+export const ADD_MACHINE = BASE_URL + 'machines/';
 
 export const post = async (url, payload, auth) => {
   let options = {};
