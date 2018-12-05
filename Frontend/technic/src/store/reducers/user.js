@@ -37,7 +37,7 @@ const user = (state = initialState.user, action) => {
         isSuccess: false,
       }
     case userActions.USER_LOGOUT:
-      return initialState.account;
+      return initialState.user;
     default:
       return state;
   }

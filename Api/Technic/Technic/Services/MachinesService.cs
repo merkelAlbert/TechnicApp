@@ -11,11 +11,11 @@ using Technic.Interfaces;
 
 namespace Technic.Services
 {
-    public class MachineService : IMachineService
+    public class MachinesService : IMachineService
     {
         private readonly DatabaseContext _databaseContext;
 
-        public MachineService(DatabaseContext databaseContext)
+        public MachinesService(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
         }

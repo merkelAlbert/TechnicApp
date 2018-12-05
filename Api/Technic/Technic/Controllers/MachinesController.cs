@@ -13,12 +13,12 @@ using Technic.Interfaces;
 namespace Technic.Controllers
 {
     [Route("[controller]")]
-    public class MachineController : Controller
+    public class MachinesController : Controller
     {
         private readonly IMachineService _machineService;
         private readonly IMapper _mapper;
 
-        public MachineController(IMachineService machineService, IMapper mapper)
+        public MachinesController(IMachineService machineService, IMapper mapper)
         {
             _machineService = machineService;
             _mapper = mapper;
