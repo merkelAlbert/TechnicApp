@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Technic.DAL.Models;
 using Technic.DTO;
+using Technic.DTO.Machines;
 
 namespace Technic.Interfaces
 {
     public interface IMachineService
     {
-        Task AddMachine(Guid userId, Machine machine, List<SpecificationDto> specifications);
+        Task<MachineDto> GetMachine(Guid machineId);
+        Task AddMachine(Guid userId, MachineDto machineDto);
     }
 }

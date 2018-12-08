@@ -1,6 +1,6 @@
 using System;
 
-namespace Technic.DTO
+namespace Technic.DTO.Account
 {
     public class AuthorizedDto
     {

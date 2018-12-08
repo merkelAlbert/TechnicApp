@@ -48,7 +48,7 @@ namespace Technic.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MachineType_Specification",
+                name: "MachineType_Specifications",
                 columns: table => new
                 {
                     MachineTypeId = table.Column<Guid>(nullable: false),
@@ -56,15 +56,15 @@ namespace Technic.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MachineType_Specification", x => new { x.MachineTypeId, x.SpecificationId });
+                    table.PrimaryKey("PK_MachineType_Specifications", x => new { x.MachineTypeId, x.SpecificationId });
                     table.ForeignKey(
-                        name: "FK_MachineType_Specification_MachineTypes_MachineTypeId",
+                        name: "FK_MachineType_Specifications_MachineTypes_MachineTypeId",
                         column: x => x.MachineTypeId,
                         principalTable: "MachineTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MachineType_Specification_Specifications_SpecificationId",
+                        name: "FK_MachineType_Specifications_Specifications_SpecificationId",
                         column: x => x.SpecificationId,
                         principalTable: "Specifications",
                         principalColumn: "Id",
@@ -95,7 +95,7 @@ namespace Technic.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MachineSpecification",
+                name: "MachineSpecifications",
                 columns: table => new
                 {
                     MachineId = table.Column<Guid>(nullable: false),
@@ -104,15 +104,15 @@ namespace Technic.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MachineSpecification", x => new { x.MachineId, x.SpecificationId });
+                    table.PrimaryKey("PK_MachineSpecifications", x => new { x.MachineId, x.SpecificationId });
                     table.ForeignKey(
-                        name: "FK_MachineSpecification_Machines_MachineId",
+                        name: "FK_MachineSpecifications_Machines_MachineId",
                         column: x => x.MachineId,
                         principalTable: "Machines",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MachineSpecification_Specifications_SpecificationId",
+                        name: "FK_MachineSpecifications_Specifications_SpecificationId",
                         column: x => x.SpecificationId,
                         principalTable: "Specifications",
                         principalColumn: "Id",
@@ -125,23 +125,23 @@ namespace Technic.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MachineSpecification_SpecificationId",
-                table: "MachineSpecification",
+                name: "IX_MachineSpecifications_SpecificationId",
+                table: "MachineSpecifications",
                 column: "SpecificationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MachineType_Specification_SpecificationId",
-                table: "MachineType_Specification",
+                name: "IX_MachineType_Specifications_SpecificationId",
+                table: "MachineType_Specifications",
                 column: "SpecificationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MachineSpecification");
+                name: "MachineSpecifications");
 
             migrationBuilder.DropTable(
-                name: "MachineType_Specification");
+                name: "MachineType_Specifications");
 
             migrationBuilder.DropTable(
                 name: "Machines");

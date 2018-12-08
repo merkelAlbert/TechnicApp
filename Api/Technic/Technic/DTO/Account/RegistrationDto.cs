@@ -1,6 +1,6 @@
 using Technic.DAL.Models.Enums;
 
-namespace Technic.DTO
+namespace Technic.DTO.Account
 {
     public class RegistrationDto
     {

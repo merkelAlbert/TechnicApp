@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Technic.DAL.Models;
 using Technic.DTO;
+using Technic.DTO.Machines;
 using Technic.Extensions;
 using Technic.Interfaces;
 
@@ -16,23 +18,35 @@ namespace Technic.Controllers
     public class MachinesController : Controller
     {
         private readonly IMachineService _machineService;
-        private readonly IMapper _mapper;
 
-        public MachinesController(IMachineService machineService, IMapper mapper)
+        public MachinesController(IMachineService machineService)
         {
             _machineService = machineService;
-            _mapper = mapper;
+        }
+
+        [HttpGet]
+        [Route("{machineId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<object> GetMachine([FromRoute] Guid machineId)
+        {
+            try
+            {
+                return await _machineService.GetMachine(machineId);
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public IActionResult AddMachine([FromBody] MachineDto machineDto)
+        public async Task<IActionResult> AddMachine([FromBody] MachineDto machineDto)
         {
-            
-            var machine = _mapper.Map<MachineDto, Machine>(machineDto);
             try
             {
-                _machineService.AddMachine(this.GetUserId(), machine, machineDto.Specifications);
+                await _machineService.AddMachine(this.GetUserId(), machineDto);
                 return Ok();
             }
             catch (Exception e)

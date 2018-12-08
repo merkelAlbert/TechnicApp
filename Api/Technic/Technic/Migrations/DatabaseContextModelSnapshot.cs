@@ -31,7 +31,7 @@ namespace Technic.Migrations
 
                     b.HasIndex("SpecificationId");
 
-                    b.ToTable("MachineSpecification");
+                    b.ToTable("MachineSpecifications");
                 });
 
             modelBuilder.Entity("Technic.DAL.Models.IntermediateModels.MachineType_Specification", b =>
@@ -44,7 +44,7 @@ namespace Technic.Migrations
 
                     b.HasIndex("SpecificationId");
 
-                    b.ToTable("MachineType_Specification");
+                    b.ToTable("MachineType_Specifications");
                 });
 
             modelBuilder.Entity("Technic.DAL.Models.Machine", b =>

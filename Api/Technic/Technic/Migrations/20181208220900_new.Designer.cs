@@ -10,7 +10,7 @@ using Technic.DAL;
 namespace Technic.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20181204192209_new")]
+    [Migration("20181208220900_new")]
     partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace Technic.Migrations
 
                     b.HasIndex("SpecificationId");
 
-                    b.ToTable("MachineSpecification");
+                    b.ToTable("MachineSpecifications");
                 });
 
             modelBuilder.Entity("Technic.DAL.Models.IntermediateModels.MachineType_Specification", b =>
@@ -46,7 +46,7 @@ namespace Technic.Migrations
 
                     b.HasIndex("SpecificationId");
 
-                    b.ToTable("MachineType_Specification");
+                    b.ToTable("MachineType_Specifications");
                 });
 
             modelBuilder.Entity("Technic.DAL.Models.Machine", b =>

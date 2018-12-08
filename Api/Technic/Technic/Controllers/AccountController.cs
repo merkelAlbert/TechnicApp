@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Technic.DAL.Models;
 using Technic.DAL.Models.Enums;
 using Technic.DTO;
+using Technic.DTO.Account;
 using Technic.Extensions;
 using Technic.Interfaces;
 
@@ -15,22 +16,19 @@ namespace Technic.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
-        private readonly IMapper _mapper;
 
-        public AccountController(IAccountService accountService, IMapper mapper)
+        public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
-            _mapper = mapper;
         }
 
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegistrationDto registrationDto)
         {
-            var user = _mapper.Map<RegistrationDto, User>(registrationDto);
             try
             {
-                await _accountService.Register(user);
+                await _accountService.Register(registrationDto);
                 return Ok();
             }
             catch (InvalidOperationException e)
@@ -43,13 +41,12 @@ namespace Technic.Controllers
         [Route("Login")]
         public async Task<object> Login([FromBody] LoginDto loginDto)
         {
-            var user = _mapper.Map<LoginDto, User>(loginDto);
             try
             {
                 return new
                 {
-                    token = await _accountService.Login(user),
-                    account = _mapper.Map<User, AuthorizedDto>(await _accountService.GetUserByEmail(loginDto.Email))
+                    token = await _accountService.Login(loginDto),
+                    account = await _accountService.GetUserByEmail(loginDto.Email)
                 };
             }
             catch (InvalidOperationException e)

@@ -15,6 +15,8 @@ namespace Technic.DAL
         public DbSet<Machine> Machines { get; set; }
         public DbSet<MachineType> MachineTypes { get; set; }
         public DbSet<Specification> Specifications { get; set; }
+        public DbSet<MachineType_Specification> MachineType_Specifications { get; set; }
+        public DbSet<MachineSpecification> MachineSpecifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
