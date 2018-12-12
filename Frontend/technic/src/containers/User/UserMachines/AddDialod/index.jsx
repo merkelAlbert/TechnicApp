@@ -12,7 +12,6 @@ class UserMachinesAddDialog extends Component {
 
   handleDialogClose = () => {
     const { history } = this.props;
-    console.log(this.props);
     history.goBack();
   }
 
@@ -20,7 +19,7 @@ class UserMachinesAddDialog extends Component {
     const { onSubmit } = this.props;
     return (
       <Dialog title="Добавить технику" onClose={this.handleDialogClose} open={true}>
-        <Form onSubmit={onSubmit} />
+        <Form onSubmit={onSubmit}/>
       </Dialog>
     );
   }
@@ -31,6 +30,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onSubmit: async (machine) => {
       try {
+        console.log(machine);
         await dispatch(addMachine(machine));
         const { history } = ownProps;
         history.goBack();

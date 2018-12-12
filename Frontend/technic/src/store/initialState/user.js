@@ -1,5 +1,1 @@
-export default {
-    error: '',
-    isFetching: false,
-    isSuccess: false,
-};
+export default {};

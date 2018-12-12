@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
+import { Field } from 'react-final-form';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
@@ -35,25 +36,33 @@ class Password extends Component {
 
   render = () => {
     const {
-      input: { name, ...restInput },
-      meta,
       classes,
       className,
-      type,
       ...rest
     } = this.props;
     const { showPassword } = this.state;
+
     return (
-      <TextField
-        {...rest}
-        name={name}
-        error={meta.error && meta.touched}
-        InputProps={{
-          endAdornment: <EndAdornment onClick={this.handleClickShowPassword} isVisible={showPassword} />,
-          ...restInput
-        }}
-        className={cn(classes.input, className)}
-        type={showPassword ? 'text' : type}
+    <Field
+      {...rest}
+      render={({
+        input: { name, ...restInput },
+        meta,
+        type,
+        ...rest
+      }) => (
+          <TextField
+            {...rest}
+            name={name}
+            error={meta.error && meta.touched}
+            InputProps={{
+              endAdornment: <EndAdornment onClick={this.handleClickShowPassword} isVisible={showPassword} />,
+              ...restInput
+            }}
+            className={cn(classes.input, className)}
+            type={showPassword ? 'text' : type}
+          />
+        )}
       />
     );
   }

@@ -7,8 +7,7 @@ export const addMachine = (machine) => async (dispatch) => {
   dispatch({ type: ADD_MACHINE_REQUEST });
 
   try {
-    const auth = true;
-    await post(ADD_MACHINE, machine, auth);
+    await post(ADD_MACHINE, machine);
     dispatch({ type: ADD_MACHINE_SUCCESS, payload: machine });
   }
   catch (err) {

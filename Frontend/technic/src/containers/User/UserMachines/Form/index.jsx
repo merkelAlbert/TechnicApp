@@ -1,23 +1,28 @@
+import { isEmpty } from 'lodash-es';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Field } from 'react-final-form';
 import cn from 'classnames';
 
 //import './style.scss';
 import Form from '../../../../components/Form';
-import TextField from '../../../../components/Form/TexField';
-import Password from '../../../../components/Form/Password';
+import Text from '../../../../components/Form/Text';
+import Select from '../../../../components/Form/Select';
 import Button from '../../../../components/Button';
 import Loader from '../../../../components/Loader';
 
-//import { login, USER_AUTH_FORM_RESET } from '../../../store/actions/user';
+import { getMachineTypes } from '../../../../store/actions/machineTypes';
 
 class HomeUserMachinesForm extends Component {
   state = {
     disabled: true,
+  }
+
+  componentDidMount = () => {
+    const { loadData } = this.props;
+    loadData();
   }
 
   validate = values => {
@@ -37,9 +42,8 @@ class HomeUserMachinesForm extends Component {
   }
 
   render = () => {
-    const { onSubmit, error, isFetching } = this.props;
+    const { onSubmit, error, isFetching, machineTypes } = this.props;
     const { disabled } = this.state;
-    console.log(this.props);
 
     return (
       <>
@@ -48,15 +52,23 @@ class HomeUserMachinesForm extends Component {
           validate={this.validate}
           error={error}
         >
-          {() => (
+          {({ values }) => (
             <>
               <div className="login-form__row">
-                <Field
+                <Text
                   required
                   name="name"
-                  component={TextField}
                   label="Имя техники"
                   className="login-form__field"
+                />
+              </div>
+              <div className="registration-form__row">
+                <Select
+                  required
+                  name="machineType"
+                  label="Тип техники"
+                  items={machineTypes}
+                  className="registration-form__field"
                 />
               </div>
               <div className="login-form__row">
@@ -84,13 +96,40 @@ HomeUserMachinesForm.propTypes = {
   isFetching: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  error: state.machines.error,
-  success: state.machines.success,
-  isFetching: state.machines.isFetching,
-});
+const mapStateToProps = (state) => {
+
+  const { machineTypes: types } = state;
+  let machineTypes = [];
+  if (!isEmpty(types)) {
+    machineTypes = types.map(type => ({
+      id: type.id,
+      title: type.name,
+    }));
+  }
+
+  return {
+    error: state.common.machines.error,
+    success: state.common.machines.success,
+    isFetching: state.common.machines.isFetching,
+    machineTypes,
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+
+  return {
+    loadData: async () => {
+      try {
+        await dispatch(getMachineTypes());
+      }
+      catch (err) {
+        console.log(err);
+      }
+    },
+  }
+};
 
 export default compose(
   withRouter,
-  connect(mapStateToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 )(HomeUserMachinesForm);

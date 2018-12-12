@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Field } from 'react-final-form';
 import cn from 'classnames';
 
 import './style.scss';
 import userRoles from '../../../constants/roles';
 import Form from '../../../components/Form';
-import TextField from '../../../components/Form/TexField';
+import Text from '../../../components/Form/Text';
 import Password from '../../../components/Form/Password';
 import Button from '../../../components/Button';
 import Loader from '../../../components/Loader';
@@ -77,49 +76,44 @@ class Registration extends Component {
           {() => (
             <>
               <div className="registration-form__row">
-                <Field
+                <Text
                   required
                   name="email"
-                  component={TextField}
                   type="email"
                   label="Email"
                   className="registration-form__field"
                 />
               </div>
               <div className="registration-form__row">
-                <Field
+                <Text
                   required
                   name="phone"
-                  component={TextField}
                   type="phone"
                   label="Телефон"
                   className="registration-form__field"
                 />
               </div>
               <div className="registration-form__row">
-                <Field
+                <Password
                   required
                   name="password"
-                  component={Password}
                   label="Пароль"
                   className="registration-form__field"
                 />
               </div>
               <div className="registration-form__row">
-                <Field
+                <Password
                   required
                   name="repeatedPassword"
-                  component={Password}
                   label="Повторите пароль"
                   className="registration-form__field"
                 />
               </div>
               <div className="registration-form__row">
-                <Field
+                <Select
                   required
                   name="userRole"
                   label="Тип"
-                  component={Select}
                   items={roles}
                   className="registration-form__field"
                 />
@@ -153,15 +147,14 @@ Registration.propTypes = {
 
 
 const mapStateToProps = (state) => ({
-  error: state.user.error,
-  isSuccess: state.user.isSuccess,
-  isFetching: state.user.isFetching,
-})
+  error: state.common.user.error,
+  isSuccess: state.common.user.isSuccess,
+  isFetching: state.common.user.isFetching,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit: async (user) => {
     try {
-      console.log(user);
       await dispatch(register(user));
     }
     catch (err) {

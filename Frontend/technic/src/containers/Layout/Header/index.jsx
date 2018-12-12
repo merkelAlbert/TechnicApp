@@ -8,7 +8,7 @@ import isEmpty from 'lodash-es/isEmpty';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import { Menu, MenuItem, IconButton } from '@material-ui/core';
 
-import { USER_LOGOUT } from '../../../store/actions/user';
+import { logout } from '../../../store/actions/user';
 
 import './style.scss';
 import AppHeader from '../../../components/Header';
@@ -43,7 +43,7 @@ class Header extends Component {
     const { user, className } = this.props;
     const { anchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
-
+    console.log(user);
     return (
       <AppHeader className={cn('header', className)} >
         <div className="header__title-container">
@@ -52,7 +52,7 @@ class Header extends Component {
           </Link>
         </div>
         {
-          (user === null || user === undefined || isEmpty(user))
+          (!user || isEmpty(user))
             ?
             <div className="header__auth">
               <Link to="/auth" className="header__auth-text">
@@ -94,11 +94,8 @@ Header.propTypes = {
 
 const mapStateToProps = (state) => {
   const {
-    user: {
-      user,
-    }
+    user
   } = state;
-  console.log(state);
   return { user };
 };
 
@@ -106,7 +103,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const { history } = ownProps;
   return ({
     onExit: () => {
-      dispatch({ type: USER_LOGOUT });
+      dispatch(logout());
       history.push('/');
     }
   })

@@ -11,7 +11,7 @@ const Form = ({
   ...props
 }) => (
   <FinalForm {...props} validate={validate} onSubmit={onSubmit}>
-    {({ handleSubmit, className }) => (
+    {({ handleSubmit, className, ...formRenderProps }) => (
       <form onSubmit={handleSubmit} className={className}>
         <p
           style={{
@@ -33,7 +33,7 @@ const Form = ({
         >
           {info}
         </p>
-        {children(props)}
+        {children(formRenderProps)}
       </form>
     )}
   </FinalForm>

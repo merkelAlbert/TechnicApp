@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Field } from 'react-final-form';
 import cn from 'classnames';
 
 import './style.scss';
 import Form from '../../../components/Form';
-import TextField from '../../../components/Form/TexField';
+import Text from '../../../components/Form/Text';
 import Password from '../../../components/Form/Password';
 import Button from '../../../components/Button';
 import Loader from '../../../components/Loader';
@@ -60,20 +59,18 @@ class Login extends Component {
           {() => (
             <>
               <div className="login-form__row">
-                <Field
+                <Text
                   required
                   name="email"
-                  component={TextField}
                   type="email"
                   label="Email"
                   className="login-form__field"
                 />
               </div>
               <div className="login-form__row">
-                <Field
+                <Password
                   required
                   name="password"
-                  component={Password}
                   label="Пароль"
                   className="login-form__field"
                 />
@@ -104,9 +101,9 @@ Login.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  error: state.user.error,
-  success: state.user.success,
-  isFetching: state.user.isFetching,
+  error: state.common.user.error,
+  success: state.common.user.success,
+  isFetching: state.common.user.isFetching,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {

@@ -17,7 +17,7 @@ class Authorization extends Component {
   render = () => {
     const { user } = this.props;
     return (
-      (user === null || user === undefined || isEmpty(user))
+      (user || isEmpty(user))
         ?
         < div className="authorization-container" >
           <img src={Picture} className="authorization__picture" alt="картинка" />
@@ -33,7 +33,7 @@ class Authorization extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user.user,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, null)(Authorization);

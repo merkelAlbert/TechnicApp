@@ -2,7 +2,7 @@ import { post, get, REGISTER, LOGIN, USER_INFO } from '../../utils/api';
 
 export const USER_AUTH_REQUEST = 'USER_AUTH_REQUEST';
 export const USER_AUTH_SUCCESS = 'USER_AUTH_SUCCESS';
-export const USER_AUTH_ERROR = 'ACCOUN_AUTH_ERROR';
+export const USER_AUTH_ERROR = 'USER_AUTH_ERROR';
 export const USER_AUTH_FORM_RESET = 'USER_AUTH_FORM_RESET';
 export const USER_LOGOUT = 'USER_LOGOUT';
 
@@ -42,6 +42,11 @@ export const login = (user) => async (dispatch) => {
   }
 }
 
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('token');
+  dispatch({ type: USER_LOGOUT });
+}
+
 export const FETCH_USER_INFO_REQUEST = 'FETCH_USER_INFO_REQUEST';
 export const FETCH_USER_INFO_SUCCESS = 'FETCH_USER_INFO_SUCCESS';
 export const FETCH_USER_INFO_ERROR = 'FETCH_USER_INFO_ERROR';
@@ -50,8 +55,7 @@ export const getUserInfo = (userId) => async (dispatch) => {
   dispatch({ type: FETCH_USER_INFO_REQUEST });
 
   try {
-    const auth = true;
-    const user = await get(USER_INFO, userId, auth);
+    const user = await get(USER_INFO, userId);
     dispatch({ type: FETCH_USER_INFO_SUCCESS, payload: user });
   }
   catch (err) {
