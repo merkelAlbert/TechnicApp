@@ -15,7 +15,7 @@ import Item from './SidebarItem';
 
 const isSelected = (location, path) => {
   return location.pathname === path;
-}
+};
 
 const UserSidebar = ({ className, user, location }) => {
   return (
@@ -27,14 +27,20 @@ const UserSidebar = ({ className, user, location }) => {
           isSelected={isSelected(location, `/user/${user.id}`)}
         />
       </Link>
-      <Link to={`/user/${user.id}/machines`} className="user-sidebar__item-link">
+      <Link
+        to={`/user/${user.id}/machines`}
+        className="user-sidebar__item-link"
+      >
         <Item
           icon={Commute}
           caption="Моя техника"
           isSelected={isSelected(location, `/user/${user.id}/machines`)}
         />
       </Link>
-      <Link to={`/user/${user.id}/feedbacks`} className="user-sidebar__item-link">
+      <Link
+        to={`/user/${user.id}/feedbacks`}
+        className="user-sidebar__item-link"
+      >
         <Item
           icon={Comment}
           caption="Отклики"

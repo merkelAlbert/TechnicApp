@@ -3,7 +3,7 @@ import { post, get, ADD_MACHINE } from '../../utils/api';
 export const ADD_MACHINE_REQUEST = 'ADD_MACHINE_REQUEST';
 export const ADD_MACHINE_SUCCESS = 'ADD_MACHINE_SUCCESS';
 export const ADD_MACHINE_ERROR = 'ADD_MACHINE_ERROR';
-export const addMachine = (machine) => async (dispatch) => {
+export const add = (machine) => async (dispatch) => {
   dispatch({ type: ADD_MACHINE_REQUEST });
 
   try {

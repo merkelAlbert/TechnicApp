@@ -3,7 +3,7 @@ import { post, get, FETCH_MACHINE_TYPES } from '../../utils/api';
 export const FETCH_ALL_REQUEST = 'machineTypes/FETCH_ALL_REQUEST';
 export const FETCH_ALL_SUCCESS = 'machineTypes/FETCH_ALL_SUCCESS';
 export const FETCH_ALL_ERROR = 'machineTypes/FETCH_ALL_ERROR';
-export const getMachineTypes = () => async (dispatch) => {
+export const fetchAll = () => async (dispatch) => {
   dispatch({ type: FETCH_ALL_REQUEST });
 
   try {

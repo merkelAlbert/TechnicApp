@@ -2,33 +2,30 @@ import cn from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Field } from 'react-final-form';
+import { OnChange } from 'react-final-form-listeners';
 import SelectField from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel'
+import InputLabel from '@material-ui/core/InputLabel';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
   formControl: {
-    margin: theme.spacing.unit,
-  },
+    margin: theme.spacing.unit
+  }
 });
 
-const Select = ({
-  items,
-  className,
-  classes,
-  ...rest
-}) => (
-    <Field
-      {...rest}
-      render={({
-        input: { name, value, ...restInput },
-        label,
-        meta,
-        required,
-        ...rest
-      }) => (
+const Select = ({ items, className, classes, onMutation, ...rest }) => (
+  <Field
+    {...rest}
+    render={({
+      input: { name, value, ...restInput },
+      label,
+      meta,
+      required,
+      ...rest
+    }) => (
+      <>
         <FormControl
           required={required}
           className={cn(classes.formControl, className)}
@@ -40,13 +37,23 @@ const Select = ({
             inputProps={restInput}
             {...rest}
           >
-            {
-              items.map(item => <MenuItem key={item.id} value={item.id}>{item.title}</MenuItem>)
-            }
+            {items.map(item => (
+              <MenuItem key={item.id} value={item.id}>
+                {item.title}
+              </MenuItem>
+            ))}
+            <OnChange name={name}>
+              {value => {
+                if (onMutation && value) {
+                  onMutation(value);
+                }
+              }}
+            </OnChange>
           </SelectField>
         </FormControl>
-      )}
-    />
-  );
+      </>
+    )}
+  />
+);
 
 export default withStyles(styles)(Select);

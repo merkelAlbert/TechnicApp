@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { addMachine } from '../../../../store/actions/machines';
+import { add } from '../../../../store/actions/machines';
 
 import Dialog from '../../../../components/Dialog';
 import Form from '../Form';
@@ -18,7 +18,7 @@ class UserMachinesAddDialog extends Component {
   render = () => {
     const { onSubmit } = this.props;
     return (
-      <Dialog title="Добавить технику" onClose={this.handleDialogClose} open={true}>
+      <Dialog title="Добавить технику" onClose={this.handleDialogClose} open={true} fullWidth>
         <Form onSubmit={onSubmit}/>
       </Dialog>
     );
@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onSubmit: async (machine) => {
       try {
         console.log(machine);
-        await dispatch(addMachine(machine));
+        await dispatch(add(machine));
         const { history } = ownProps;
         history.goBack();
       }

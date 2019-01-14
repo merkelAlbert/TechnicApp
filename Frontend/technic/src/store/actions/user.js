@@ -51,7 +51,7 @@ export const FETCH_USER_INFO_REQUEST = 'FETCH_USER_INFO_REQUEST';
 export const FETCH_USER_INFO_SUCCESS = 'FETCH_USER_INFO_SUCCESS';
 export const FETCH_USER_INFO_ERROR = 'FETCH_USER_INFO_ERROR';
 
-export const getUserInfo = (userId) => async (dispatch) => {
+export const fetchOne = (userId) => async (dispatch) => {
   dispatch({ type: FETCH_USER_INFO_REQUEST });
 
   try {

@@ -10,7 +10,7 @@ import Sidebar from './Sidebar';
 import UserMachines from './UserMachines';
 import UserFeedbacks from './UserFeedbacks';
 
-import { getUserInfo } from '../../store/actions/user';
+import { fetchOne } from '../../store/actions/user';
 
 class User extends Component {
 
@@ -53,7 +53,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   loadData: async (userId) => {
     try {
-      await dispatch(getUserInfo(userId));
+      await dispatch(fetchOne(userId));
     }
     catch (err) {
       alert(err);

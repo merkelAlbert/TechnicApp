@@ -6,39 +6,31 @@ import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 const styles = theme => ({
   input: {
-    margin: theme.spacing.unit,
-  },
+    margin: theme.spacing.unit
+  }
 });
 
-const Text = ({
-  classes,
-  className,
-  ...rest
-}) => (
+const Text = ({ classes, className, ...restProps }) => (
   <Field
-    {...rest}
-    render={({
-      input: { name, ...restInput },
-      meta,
-      ...rest
-    }) => (
-        <TextField
-          {...rest}
-          name={name}
-          error={meta.error && meta.touched}
-          InputProps={restInput}
-          className={cn(classes.input, className)}
-        />
-      )}
+    {...restProps}
+    render={({ input: { name, ...restInput }, meta, ...rest }) => (
+      <TextField
+        {...rest}
+        name={name}
+        error={meta.error && meta.touched}
+        InputProps={restInput}
+        className={cn(classes.input, className)}
+      />
+    )}
   />
 );
 
 Text.defaultProps = {
-  className: null,
+  className: null
 };
 
 Text.propTypes = {
-  className: PropTypes.string,
+  className: PropTypes.string
 };
 
 export default withStyles(styles)(Text);
