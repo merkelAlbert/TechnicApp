@@ -7,8 +7,9 @@ using Technic.DTO.Machines;
 
 namespace Technic.Interfaces
 {
-    public interface IMachineService
+    public interface IMachinesService
     {
+        Task<List<MachineDto>> GetMachines(Guid userId);
         Task<MachineDto> GetMachine(Guid machineId);
         Task AddMachine(Guid userId, MachineDto machineDto);
     }

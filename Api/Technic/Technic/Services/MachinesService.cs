@@ -14,7 +14,7 @@ using Technic.Interfaces;
 
 namespace Technic.Services
 {
-    public class MachinesService : IMachineService
+    public class MachinesService : IMachinesService
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
@@ -23,6 +23,22 @@ namespace Technic.Services
         {
             _databaseContext = databaseContext;
             _mapper = mapper;
+        }
+
+        public async Task<List<MachineDto>> GetMachines(Guid userId)
+        {
+            var machines = await _databaseContext.Machines
+                .Where(m => m.UserId == userId)
+                .Include(m => m.Specifications)
+                .ThenInclude(s=>s.Specification)
+                .ToListAsync();
+            var machinesDtos = new List<MachineDto>();
+            foreach (var machine in machines)
+            {
+                machinesDtos.Add(_mapper.Map<Machine, MachineDto>(machine));
+            }
+
+            return machinesDtos;
         }
 
         public async Task<MachineDto> GetMachine(Guid machineId)

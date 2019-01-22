@@ -17,11 +17,25 @@ namespace Technic.Controllers
     [Route("[controller]")]
     public class MachinesController : Controller
     {
-        private readonly IMachineService _machineService;
+        private readonly IMachinesService _machinesService;
 
-        public MachinesController(IMachineService machineService)
+        public MachinesController(IMachinesService machinesService)
         {
-            _machineService = machineService;
+            _machinesService = machinesService;
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<object> GetMachines()
+        {
+            try
+            {
+                return await _machinesService.GetMachines(this.GetUserId());
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet]
@@ -31,7 +45,7 @@ namespace Technic.Controllers
         {
             try
             {
-                return await _machineService.GetMachine(machineId);
+                return await _machinesService.GetMachine(machineId);
             }
             catch (InvalidOperationException e)
             {
@@ -46,7 +60,7 @@ namespace Technic.Controllers
         {
             try
             {
-                await _machineService.AddMachine(this.GetUserId(), machineDto);
+                await _machinesService.AddMachine(this.GetUserId(), machineDto);
                 return Ok();
             }
             catch (Exception e)
