@@ -19,6 +19,7 @@ class UserMachinesView extends Component {
 
     return (
       <div className="user-machines-view">
+        cars
         <Link to={`/user/${userId}/machines/add`}>
           <Fab className="user-machines-view__fab">
             <Add />

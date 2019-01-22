@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FieldArray } from 'react-final-form-arrays';
-import arrayMutators from 'final-form-arrays';
 import cn from 'classnames';
 
 import './style.scss';
@@ -30,9 +29,11 @@ class HomeUserMachinesForm extends Component {
 
   validate = values => {
     const errors = {};
-    console.log(values);
     if (!values.name) {
       errors.name = 'Required';
+    }
+    if (!values.description) {
+      errors.description = 'Required';
     }
     if (!values.machineTypeId) {
       errors.machineTypeId = 'Required';
@@ -48,6 +49,21 @@ class HomeUserMachinesForm extends Component {
     return errors;
   };
 
+  onSubmit = machine => {
+    const { onSubmit } = this.props;
+    const { specifications } = this.state;
+    const machineCopy = { ...machine };
+    debugger;
+    machineCopy.specifications = machine.specifications.map((spec, index) => {
+      const { value } = spec;
+      const id = specifications[index].id;
+
+      return { id, value };
+    });
+
+    onSubmit(machineCopy);
+  };
+
   handleMachineTypeChange = id => {
     const { machineTypes } = this.props;
     const selectedType = find(machineTypes, type => type.id === id);
@@ -57,13 +73,13 @@ class HomeUserMachinesForm extends Component {
   };
 
   render = () => {
-    const { onSubmit, error, isFetching, machineTypes } = this.props;
+    const { error, isFetching, machineTypes } = this.props;
     const { specifications, disabled } = this.state;
 
     return (
       <>
         <Form
-          onSubmit={onSubmit}
+          onSubmit={this.onSubmit}
           validate={this.validate}
           error={error}
           className="add-machine-form"
@@ -74,7 +90,16 @@ class HomeUserMachinesForm extends Component {
                 <Text
                   required
                   name="name"
-                  label="Имя техники"
+                  label="Название"
+                  className="add-machine-form__field"
+                />
+              </div>
+              <div className="add-machine-form__row">
+                <Text
+                  required
+                  multiline
+                  name="description"
+                  label="Описание"
                   className="add-machine-form__field"
                 />
               </div>
@@ -95,7 +120,6 @@ class HomeUserMachinesForm extends Component {
                       return (
                         <Fragment key={specification.title}>
                           <Text
-                            required
                             name={`specifications[${index}].value`}
                             label={specifications[index].title}
                             className="add-machine-form__field"

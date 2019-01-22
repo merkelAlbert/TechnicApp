@@ -43,7 +43,7 @@ class Header extends Component {
     const { user, className } = this.props;
     const { anchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
-    console.log(user);
+
     return (
       <AppHeader className={cn('header', className)} >
         <div className="header__title-container">
