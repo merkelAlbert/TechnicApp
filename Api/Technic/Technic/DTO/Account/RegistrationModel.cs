@@ -2,7 +2,7 @@ using Technic.DAL.Models.Enums;
 
 namespace Technic.DTO.Account
 {
-    public class RegistrationDto
+    public class RegistrationModel
     {
         public string Email { get; set; }
         public string Phone { get; set; }

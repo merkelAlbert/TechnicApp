@@ -82,9 +82,9 @@ namespace Technic.Services
             return await Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
         }
 
-        public async Task Register(RegistrationDto registrationDto)
+        public async Task Register(RegistrationModel registrationModel)
         {
-            var user = _mapper.Map<RegistrationDto, User>(registrationDto);
+            var user = _mapper.Map<RegistrationModel, User>(registrationModel);
             if (await _databaseContext.Users.FirstOrDefaultAsync(x => x.Email == user.Email) != null)
                 throw new InvalidOperationException("Пользователь с данным email уже существует");
 
@@ -96,9 +96,9 @@ namespace Technic.Services
             await _databaseContext.SaveChangesAsync();
         }
 
-        public async Task<string> Login(LoginDto loginDto)
+        public async Task<string> Login(LoginModel loginModel)
         {
-            var user = _mapper.Map<LoginDto, User>(loginDto);
+            var user = _mapper.Map<LoginModel, User>(loginModel);
 
             var storedUser = await _databaseContext.Users
                 .FirstOrDefaultAsync(x => x.Email == user.Email);
@@ -117,17 +117,17 @@ namespace Technic.Services
             return token;
         }
 
-        public async Task<AuthorizedDto> GetUserById(Guid id)
+        public async Task<AuthorizedInfo> GetUserById(Guid id)
         {
             var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Id == id);
-            var authorizedDto = _mapper.Map<User, AuthorizedDto>(user);
+            var authorizedDto = _mapper.Map<User, AuthorizedInfo>(user);
             return authorizedDto ?? throw new InvalidOperationException("Неверный id");
         }
 
-        public async Task<AuthorizedDto> GetUserByEmail(string email)
+        public async Task<AuthorizedInfo> GetUserByEmail(string email)
         {
             var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Email == email);
-            var authorizedDto = _mapper.Map<User, AuthorizedDto>(user);
+            var authorizedDto = _mapper.Map<User, AuthorizedInfo>(user);
             return authorizedDto ?? throw new InvalidOperationException("Неверный email");
         }
     }

@@ -2,7 +2,7 @@ using System;
 
 namespace Technic.DTO.MachineTypes
 {
-    public class SpecificationsDto
+    public class SpecificationsInfo
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

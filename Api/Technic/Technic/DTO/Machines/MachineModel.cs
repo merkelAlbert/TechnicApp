@@ -4,14 +4,15 @@ using Technic.DAL.Models.Enums;
 
 namespace Technic.DTO.Machines
 {
-    public class MachineDto
+    public class MachineModel
     {
+        public Guid Id { get; set; }
         public Guid MachineTypeId { get; set; }
         
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
         public MachineStatus Status { get; set; }
-        public List<SpecificationDto> Specifications { get; set; } = new List<SpecificationDto>();
+        public List<SpecificationModel> Specifications { get; set; } = new List<SpecificationModel>();
     }
 }

@@ -16,7 +16,7 @@ import Loader from '../../../../components/Loader';
 
 import { fetchAll } from '../../../../store/actions/machineTypes';
 
-class HomeUserMachinesForm extends Component {
+class UserMachinesForm extends Component {
   state = {
     disabled: true,
     specifications: []
@@ -53,7 +53,6 @@ class HomeUserMachinesForm extends Component {
     const { onSubmit } = this.props;
     const { specifications } = this.state;
     const machineCopy = { ...machine };
-    debugger;
     machineCopy.specifications = machine.specifications.map((spec, index) => {
       const { value } = spec;
       const id = specifications[index].id;
@@ -145,12 +144,12 @@ class HomeUserMachinesForm extends Component {
   };
 }
 
-HomeUserMachinesForm.defaultProps = {
+UserMachinesForm.defaultProps = {
   className: null,
   error: null
 };
 
-HomeUserMachinesForm.propTypes = {
+UserMachinesForm.propTypes = {
   className: PropTypes.string,
   error: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
@@ -197,4 +196,4 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   )
-)(HomeUserMachinesForm);
+)(UserMachinesForm);

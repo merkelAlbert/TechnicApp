@@ -1,6 +1,6 @@
 namespace Technic.DTO.Account
 {
-    public class LoginDto
+    public class LoginModel
     {
         public string Email { get; set; }
         public string Password { get; set; }

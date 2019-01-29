@@ -25,21 +25,20 @@ namespace Technic.Services
             _mapper = mapper;
         }
 
-        public async Task<List<MachineTypeDto>> GetMachineTypes()
+        public async Task<List<MachineTypeInfo>> GetMachineTypes()
         {
             var machineTypes = await _databaseContext.MachineTypes
                 .Include(t => t.AllowedSpecifications)
                 .ThenInclude(t => t.Specification)
                 .ToListAsync();
             
-            var machineTypesDtos = new List<MachineTypeDto>();
+            var machineTypeInfos = new List<MachineTypeInfo>();
             foreach (var machineType in machineTypes)
             {
-                var machineTypeDto = _mapper.Map<MachineType, MachineTypeDto>(machineType);
-                machineTypesDtos.Add(machineTypeDto);
+                machineTypeInfos.Add(_mapper.Map<MachineType, MachineTypeInfo>(machineType));
             }
 
-            return machineTypesDtos;
+            return machineTypeInfos;
         }
     }
 }

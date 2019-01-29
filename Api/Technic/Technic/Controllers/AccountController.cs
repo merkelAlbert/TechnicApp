@@ -24,11 +24,11 @@ namespace Technic.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task<IActionResult> Register([FromBody] RegistrationDto registrationDto)
+        public async Task<IActionResult> Register([FromBody] RegistrationModel registrationModel)
         {
             try
             {
-                await _accountService.Register(registrationDto);
+                await _accountService.Register(registrationModel);
                 return Ok();
             }
             catch (InvalidOperationException e)
@@ -39,14 +39,14 @@ namespace Technic.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<object> Login([FromBody] LoginDto loginDto)
+        public async Task<object> Login([FromBody] LoginModel loginModel)
         {
             try
             {
                 return new
                 {
-                    token = await _accountService.Login(loginDto),
-                    account = await _accountService.GetUserByEmail(loginDto.Email)
+                    token = await _accountService.Login(loginModel),
+                    account = await _accountService.GetUserByEmail(loginModel.Email)
                 };
             }
             catch (InvalidOperationException e)

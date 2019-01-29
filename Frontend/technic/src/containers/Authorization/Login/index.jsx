@@ -102,7 +102,7 @@ Login.propTypes = {
 
 const mapStateToProps = (state) => ({
   error: state.common.user.error,
-  success: state.common.user.success,
+  isSuccess: state.common.user.isSuccess,
   isFetching: state.common.user.isFetching,
 });
 

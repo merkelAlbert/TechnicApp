@@ -4,12 +4,12 @@ using Technic.DAL.Models;
 
 namespace Technic.DTO.MachineTypes
 {
-    public class MachineTypeDto
+    public class MachineTypeInfo
     {
         public Guid Id { get; set; }
         
         public string Name { get; set; }
-        public List<SpecificationsDto> AllowedSpecifications { get; set; } =
-            new List<SpecificationsDto>();
+        public List<SpecificationsInfo> AllowedSpecifications { get; set; } =
+            new List<SpecificationsInfo>();
     }
 }

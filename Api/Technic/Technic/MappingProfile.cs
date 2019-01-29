@@ -13,26 +13,28 @@ namespace Technic
     {
         public MappingProfile()
         {
-            CreateMap<RegistrationDto, User>();
-            CreateMap<LoginDto, User>();
-            CreateMap<User, AuthorizedDto>();
-            
-            CreateMap<MachineDto, Machine>()
+            CreateMap<RegistrationModel, User>();
+            CreateMap<LoginModel, User>();
+            CreateMap<User, AuthorizedInfo>();
+
+            CreateMap<MachineModel, Machine>()
                 .ForMember(m => m.Specifications, o => o.Ignore());
-            
-            CreateMap<Machine, MachineDto>();
-            
-            CreateMap<MachineSpecification, SpecificationDto>()
+
+            CreateMap<Machine, MachineModel>();
+            CreateMap<Machine, MachineInfo>()
+                .ForMember(m => m.Type, o => o.Ignore());
+
+            CreateMap<MachineSpecification, SpecificationModel>()
                 .ForMember(s => s.Id, o => o.MapFrom(ms => ms.SpecificationId))
                 .ForMember(s => s.Name, o => o.MapFrom(ms => ms.Specification.Name))
                 .ForMember(s => s.Value, o => o.MapFrom(ms => ms.Value));
-            
-            CreateMap<MachineType, MachineTypeDto>()
+
+            CreateMap<MachineType, MachineTypeInfo>()
                 .ForMember(t => t.AllowedSpecifications,
                     o => o.MapFrom(t => t.AllowedSpecifications.Select(s => s.Specification)));
-            
-            CreateMap<Specification, SpecificationsDto>();
-            CreateMap<SpecificationDto, Specification>();
+
+            CreateMap<Specification, SpecificationsInfo>();
+            CreateMap<SpecificationModel, Specification>();
         }
     }
 }

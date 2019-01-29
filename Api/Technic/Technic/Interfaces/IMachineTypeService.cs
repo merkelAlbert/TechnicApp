@@ -8,6 +8,6 @@ namespace Technic.Interfaces
 {
     public interface IMachineTypeService
     {
-        Task<List<MachineTypeDto>> GetMachineTypes();
+        Task<List<MachineTypeInfo>> GetMachineTypes();
     }
 }

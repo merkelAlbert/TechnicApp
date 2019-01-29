@@ -56,12 +56,12 @@ namespace Technic.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> AddMachine([FromBody] MachineDto machineDto)
+        public async Task<object> AddMachine([FromBody] MachineModel machineModel)
         {
             try
             {
-                await _machinesService.AddMachine(this.GetUserId(), machineDto);
-                return Ok();
+                var machine = await _machinesService.AddMachine(this.GetUserId(), machineModel);
+                return machine;
             }
             catch (Exception e)
             {
