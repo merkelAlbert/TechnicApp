@@ -1,8 +1,12 @@
 .user-profile {
+
   &__sidebar {
     width: 250px;
+    height: 100%;
   }
   &__main {
     margin-left: 250px;
+    height: 100%;
+    flex: 1;
   }
 }

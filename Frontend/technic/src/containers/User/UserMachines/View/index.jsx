@@ -8,6 +8,9 @@ import { fetchAll } from '../../../../store/actions/machines';
 
 import './style.scss';
 import Fab from '../../../../components/Fab';
+import Loader from '../../../../components/Loader';
+
+import MachineCard from './MachineCard';
 
 class UserMachinesView extends Component {
   state = {
@@ -19,7 +22,6 @@ class UserMachinesView extends Component {
 
     loadData();
   };
-
   onSuccess = message => {
     console.log(message);
     this.setState({
@@ -33,21 +35,29 @@ class UserMachinesView extends Component {
       match: {
         params: { userId }
       },
-      data: { machines }
+      data: { machines },
+      isFetching
     } = this.props;
 
     return (
       <div className="user-machines-view">
-        <ul>
-          {machines.map(machine => (
-            <li>{machine.type}</li>
-          ))}
-        </ul>
-        <Link to={`/user/${userId}/machines/add`}>
-          <Fab className="user-machines-view__fab">
-            <Add />
-          </Fab>
-        </Link>
+        <Loader isFetching={isFetching}>
+          <div className="user-machines-view__container">
+            {machines.map(machine => (
+              <MachineCard
+                key={machine.id}
+                name={machine.name}
+                description={machine.description}
+                type={machine.type}
+              />
+            ))}
+          </div>
+          <Link to={`/user/${userId}/machines/add`}>
+            <Fab className="user-machines-view__fab">
+              <Add />
+            </Fab>
+          </Link>
+        </Loader>
       </div>
     );
   };
@@ -55,8 +65,9 @@ class UserMachinesView extends Component {
 
 const mapStateToProps = state => {
   const { machines = [] } = state;
-  console.log(machines);
-  return { data: { machines } };
+  const { isFetching } = state.common.machines;
+
+  return { data: { machines }, isFetching };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {

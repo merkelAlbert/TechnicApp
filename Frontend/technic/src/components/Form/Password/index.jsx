@@ -15,7 +15,7 @@ const styles = theme => ({
 });
 
 const EndAdornment = ({ onClick, isVisible }) => (
-  <IconButton onClick={onClick}>
+  <IconButton onClick={onClick} style={{padding:0}}>
     {isVisible ? <Visibility /> : <VisibilityOff />}
   </IconButton>
 );

@@ -53,13 +53,14 @@ class UserMachinesForm extends Component {
     const { onSubmit } = this.props;
     const { specifications } = this.state;
     const machineCopy = { ...machine };
-    machineCopy.specifications = machine.specifications.map((spec, index) => {
-      const { value } = spec;
-      const id = specifications[index].id;
+    if (!isEmpty(machine.specifications)) {
+      machineCopy.specifications = machine.specifications.map((spec, index) => {
+        const { value } = spec;
+        const id = specifications[index].id;
 
-      return { id, value };
-    });
-
+        return { id, value };
+      });
+    }
     onSubmit(machineCopy);
   };
 

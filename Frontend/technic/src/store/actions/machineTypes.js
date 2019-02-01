@@ -7,8 +7,8 @@ export const fetchAll = () => async (dispatch) => {
   dispatch({ type: FETCH_ALL_REQUEST });
 
   try {
-    const machineTypes = await get(FETCH_MACHINE_TYPES);
-    dispatch({ type: FETCH_ALL_SUCCESS, payload: machineTypes });
+    const data = await get(FETCH_MACHINE_TYPES);
+    dispatch({ type: FETCH_ALL_SUCCESS, payload: data });
   }
   catch (err) {
     let message = 'Прозошла ошибка';

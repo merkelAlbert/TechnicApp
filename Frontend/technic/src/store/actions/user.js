@@ -32,7 +32,7 @@ export const login = (user) => async (dispatch) => {
     localStorage.setItem('token', token);
   }
   catch (err) {
-    let message = 'Прозошла ошибка';
+    let message = 'Произошла ошибка';
 
     if (err.response !== undefined) {
       message = err.response.data;
@@ -55,8 +55,8 @@ export const fetchOne = (userId) => async (dispatch) => {
   dispatch({ type: FETCH_USER_INFO_REQUEST });
 
   try {
-    const user = await get(USER_INFO, userId);
-    dispatch({ type: FETCH_USER_INFO_SUCCESS, payload: user });
+    const data = await get(USER_INFO, userId);
+    dispatch({ type: FETCH_USER_INFO_SUCCESS, payload: data });
   }
   catch (err) {
     let message = 'Прозошла ошибка';
