@@ -25,17 +25,17 @@ namespace Technic.Services
             _mapper = mapper;
         }
 
-        public async Task<List<MachineInfo>> GetMachines(Guid userId)
+        public async Task<List<MachinesInfo>> GetMachines(Guid userId, bool isPrivateOffice)
         {
             var machines = await _databaseContext.Machines
-                .Where(m => m.UserId == userId)
+                .Where(m => !isPrivateOffice || m.UserId == userId)
                 .Include(m => m.Specifications)
                 .ThenInclude(s => s.Specification)
                 .ToListAsync();
-            var machineInfos = new List<MachineInfo>();
+            var machineInfos = new List<MachinesInfo>();
             foreach (var machine in machines)
             {
-                var machineInfo = _mapper.Map<Machine, MachineInfo>(machine);
+                var machineInfo = _mapper.Map<Machine, MachinesInfo>(machine);
                 machineInfo.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
                     ?.Name;
                 machineInfos.Add(machineInfo);

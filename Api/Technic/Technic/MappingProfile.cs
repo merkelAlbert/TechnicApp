@@ -23,6 +23,9 @@ namespace Technic
             CreateMap<Machine, MachineModel>();
             CreateMap<Machine, MachineInfo>()
                 .ForMember(m => m.Type, o => o.Ignore());
+            
+            CreateMap<Machine, MachinesInfo>()
+                .ForMember(m => m.Type, o => o.Ignore());
 
             CreateMap<MachineSpecification, SpecificationModel>()
                 .ForMember(s => s.Id, o => o.MapFrom(ms => ms.SpecificationId))

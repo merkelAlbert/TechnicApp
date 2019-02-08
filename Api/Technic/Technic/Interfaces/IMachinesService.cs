@@ -9,7 +9,7 @@ namespace Technic.Interfaces
 {
     public interface IMachinesService
     {
-        Task<List<MachineInfo>> GetMachines(Guid userId);
+        Task<List<MachinesInfo>> GetMachines(Guid userId, bool isPrivateOffice);
         Task<MachineInfo> GetMachine(Guid machineId);
         Task<MachineInfo> AddMachine(Guid userId, MachineModel machineModel);
     }

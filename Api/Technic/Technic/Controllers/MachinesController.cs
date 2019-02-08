@@ -26,11 +26,11 @@ namespace Technic.Controllers
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<object> GetMachines()
+        public async Task<object> GetMachines([FromQuery] bool isPrivateOffice)
         {
             try
             {
-                return await _machinesService.GetMachines(this.GetUserId());
+                return await _machinesService.GetMachines(this.GetUserId(), isPrivateOffice);
             }
             catch (InvalidOperationException e)
             {
