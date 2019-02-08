@@ -12,16 +12,11 @@ import Button from '../../../components/Button';
 import Loader from '../../../components/Loader';
 import Select from '../../../components/Form/Select';
 
-import { register, USER_AUTH_FORM_RESET } from '../../../store/actions/user';
+import { register } from '../../../store/actions/user';
 
 class Registration extends Component {
   state = {
     disabled: true,
-  }
-
-  componentWillUnmount() {
-    const { resetForm } = this.props;
-    resetForm();
   }
 
   handleChange = event => {
@@ -161,9 +156,6 @@ const mapDispatchToProps = (dispatch) => ({
       console.log(err);
     }
   },
-  resetForm: () => {
-    dispatch({ type: USER_AUTH_FORM_RESET });
-  }
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);

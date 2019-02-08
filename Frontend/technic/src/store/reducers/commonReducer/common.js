@@ -1,40 +1,41 @@
+import { RESET_COMMON_STATE } from '../../actions/service';
+
 const initialState = {
   isFetching: false,
   error: '',
-  isSuccess: false,
-}
+  isSuccess: false
+};
 
 const common = actions => (state = initialState, action) => {
-  console.log(action.type);
-  if (actions.request && actions.request.includes(action.type)){
+  if (actions.request && actions.request.includes(action.type)) {
     return {
       ...state,
       isFetching: true,
       error: '',
-      isSuccess: false,
-    }
+      isSuccess: false
+    };
   }
-  if (actions.success && actions.success.includes(action.type)){
+  if (actions.success && actions.success.includes(action.type)) {
     return {
       ...state,
       isFetching: false,
       error: '',
-      isSuccess: true,
-    }
+      isSuccess: true
+    };
   }
-  if (actions.error && actions.error.includes(action.type)){
+  if (actions.error && actions.error.includes(action.type)) {
     return {
       ...state,
       isFetching: false,
       error: action.payload,
-      isSuccess: false,
-    }
+      isSuccess: false
+    };
   }
-  if (actions.reset && actions.reset.includes(action.type)){
+  if (action.type === RESET_COMMON_STATE) {
     return initialState;
   }
-  //console.log(actions.request);
+
   return state;
-}
+};
 
 export default common;

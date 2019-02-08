@@ -6,39 +6,39 @@ import cn from 'classnames';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash-es/isEmpty';
 import AccountIcon from '@material-ui/icons/AccountCircle';
-import { Menu, MenuItem, IconButton } from '@material-ui/core';
+import { Menu, MenuItem } from '@material-ui/core';
 
 import { logout } from '../../../store/actions/user';
 
-import './style.scss';
 import AppHeader from '../../../components/Header';
-import Link from '../../../components/Link'
+import Link from '../../../components/Link';
+import IconButton from '../../../components/IconButton';
+
+import './style.scss';
 
 class Header extends Component {
   state = {
-    anchorEl: null,
-  }
+    anchorEl: null
+  };
 
-  onAccountIconClick = (e) => {
+  onAccountIconClick = e => {
     const { currentTarget } = e;
     this.setState({
-      anchorEl: currentTarget,
+      anchorEl: currentTarget
     });
-  }
+  };
 
   handleUserMenuClose = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     });
-  }
+  };
 
   handleUserExit = () => {
     const { onExit } = this.props;
     this.handleUserMenuClose();
     onExit();
-  }
-
-
+  };
 
   render = () => {
     const { user, className } = this.props;
@@ -46,71 +46,66 @@ class Header extends Component {
     const isMenuOpen = Boolean(anchorEl);
 
     return (
-      <AppHeader className={cn('header', className)} >
+      <AppHeader className={cn('header', className)}>
         <div className="header__title-container">
-          <Link to="/">
-            course
-          </Link>
+          <Link to="/">course</Link>
         </div>
-        {
-          (!user || isEmpty(user))
-            ?
-            <div className="header__auth">
-              <Link to="/auth">
-                Регистрация | Вход
-              </Link>
-            </div>
-            :
-            <div className="header__auth">
-              {user.email}
-              <IconButton color="primary" onClick={this.onAccountIconClick}>
-                <AccountIcon className="header__auth-icon" />
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                open={isMenuOpen}
-                onClose={this.handleUserMenuClose}
-              >
-                <MenuItem onClick={this.handleUserMenuClose}>
-                  <Link to={`/user/${user.id}`} className="header__auth-profile">
-                    Личный кабинет
+        {!user || isEmpty(user) ? (
+          <div className="header__auth">
+            <Link to="/auth">Регистрация | Вход</Link>
+          </div>
+        ) : (
+          <div className="header__auth">
+            {user.email}
+            <IconButton color="primary" onClick={this.onAccountIconClick}>
+              <AccountIcon className="header__auth-icon" />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={isMenuOpen}
+              onClose={this.handleUserMenuClose}
+            >
+              <MenuItem onClick={this.handleUserMenuClose}>
+                <Link to={`/user/${user.id}`} className="header__auth-profile">
+                  Личный кабинет
                 </Link>
-                </MenuItem>
-                <MenuItem onClick={this.handleUserExit}>Выйти</MenuItem>
-              </Menu>
-            </div>
-        }
-      </AppHeader >
-    )
-  }
-};
+              </MenuItem>
+              <MenuItem onClick={this.handleUserExit}>Выйти</MenuItem>
+            </Menu>
+          </div>
+        )}
+      </AppHeader>
+    );
+  };
+}
 
 Header.defaultProps = {
-  className: null,
-}
+  className: null
+};
 
 Header.propTypes = {
-  className: PropTypes.string,
-}
+  className: PropTypes.string
+};
 
-const mapStateToProps = (state) => {
-  const {
-    user
-  } = state;
+const mapStateToProps = state => {
+  const { user } = state;
   return { user };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { history } = ownProps;
-  return ({
+  return {
     onExit: () => {
       dispatch(logout());
       history.push('/');
     }
-  })
+  };
 };
 
 export default compose(
   withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(Header);

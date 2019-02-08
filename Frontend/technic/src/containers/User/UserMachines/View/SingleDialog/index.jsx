@@ -27,7 +27,12 @@ class UserMachinesSingleDialog extends Component {
     } = this.props;
 
     return (
-      <Dialog title="Просмотр техники" open onClose={this.handleDialogClose} fullWidth>
+      <Dialog
+        title="Просмотр техники"
+        open
+        onClose={this.handleDialogClose}
+        fullWidth
+      >
         <Loader isFetching={isFetching} error={error}>
           <div className="single-dialog-content">
             <p>
@@ -42,13 +47,15 @@ class UserMachinesSingleDialog extends Component {
             <ul>
               {machine.specifications &&
                 machine.specifications.map(specification => (
-                  <li>
+                  <li key={specification.id}>
                     {specification.name}: {specification.value}
                   </li>
                 ))}
             </ul>
             <p className="single-dialog-content__section-title">Описание: </p>
-            <p className="single-dialog-content__description">{machine.description}</p>
+            <p className="single-dialog-content__description">
+              {machine.description}
+            </p>
           </div>
         </Loader>
       </Dialog>

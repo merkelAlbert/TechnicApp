@@ -3,7 +3,6 @@ import { post, get, REGISTER, LOGIN, USER_INFO } from '../../utils/api';
 export const USER_AUTH_REQUEST = 'USER_AUTH_REQUEST';
 export const USER_AUTH_SUCCESS = 'USER_AUTH_SUCCESS';
 export const USER_AUTH_ERROR = 'USER_AUTH_ERROR';
-export const USER_AUTH_FORM_RESET = 'USER_AUTH_FORM_RESET';
 export const USER_LOGOUT = 'USER_LOGOUT';
 
 export const register = (user) => async (dispatch) => {

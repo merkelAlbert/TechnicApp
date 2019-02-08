@@ -7,6 +7,7 @@ import CardImage from '../../../../../components/Card/CardImage';
 import CardActions from '../../../../../components/Card/CardActions';
 import Button from '../../../../../components/Button';
 import Link from '../../../../../components/Link';
+import Switch from '../../../../../components/Switch';
 
 import './style.scss';
 import Image from './technic.jpg';
@@ -27,8 +28,11 @@ const UserMachineCard = ({ machine: { id, name, price, type }, userId }) => (
         </CardContent>
       </Link>
     </CardContentArea>
+    <div>
+      Статус: <Switch />
+    </div>
     <CardActions className="user-machine-card__actions">
-      <Button>biba</Button>
+      <Button color="secondary">biba</Button>
       <Button>boba</Button>
       <Button>2 dolboeba</Button>
     </CardActions>

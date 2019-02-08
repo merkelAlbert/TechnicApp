@@ -7,12 +7,13 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FieldArray } from 'react-final-form-arrays';
 
-import './style.scss';
 import Form from '../../../../components/Form';
 import Text from '../../../../components/Form/Text';
 import Select from '../../../../components/Form/Select';
 import Button from '../../../../components/Button';
 import Loader from '../../../../components/Loader';
+
+import './style.scss';
 
 import { fetchAll } from '../../../../store/actions/machineTypes';
 

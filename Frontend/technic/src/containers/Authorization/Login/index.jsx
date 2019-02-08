@@ -12,16 +12,11 @@ import Password from '../../../components/Form/Password';
 import Button from '../../../components/Button';
 import Loader from '../../../components/Loader';
 
-import { login, USER_AUTH_FORM_RESET } from '../../../store/actions/user';
+import { login } from '../../../store/actions/user';
 
 class Login extends Component {
   state = {
     disabled: true,
-  }
-
-  componentWillUnmount() {
-    const { resetForm } = this.props;
-    resetForm();
   }
 
   validate = values => {
@@ -119,9 +114,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         console.log(err);
       }
     },
-    resetForm: () => {
-      dispatch({ type: USER_AUTH_FORM_RESET });
-    }
   }
 };
 
