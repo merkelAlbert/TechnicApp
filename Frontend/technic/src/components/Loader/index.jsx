@@ -9,7 +9,7 @@ const style = {
   alignItems: 'center'
 };
 
-const Loader = ({ isFetching, color, children }) => (
+const Loader = ({ isFetching, error, color, children }) => (
   <>
     {isFetching ? (
       <div style={style}>
@@ -18,6 +18,7 @@ const Loader = ({ isFetching, color, children }) => (
     ) : (
       children
     )}
+    {error && <p style={{ ...style, color: 'red' }}>{error}</p>}
   </>
 );
 
@@ -28,7 +29,6 @@ Loader.defaultProps = {
 Loader.propTypes = {
   color: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired
 };
 
 export default Loader;

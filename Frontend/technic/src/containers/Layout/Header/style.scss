@@ -7,28 +7,11 @@
     display: flex;
   }
 
-  &__title {
-    text-decoration: none;
-    color: currentColor;
-
-    &:hover {
-      color: #7953d2;
-    }
-  }
-
   &__auth {
     display: flex;
     align-items: center;
   }
 
-  &__auth-text {
-    text-decoration: none;
-    color: currentColor;
-
-    &:hover {
-      color: #7953d2;
-    }
-  }
 
   &__auth-icon {
     width: 35px !important;

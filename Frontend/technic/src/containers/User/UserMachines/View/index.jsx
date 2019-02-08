@@ -1,31 +1,32 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { Add } from '@material-ui/icons';
 
 import { fetchAll } from '../../../../store/actions/machines';
 
-import './style.scss';
 import Fab from '../../../../components/Fab';
 import Loader from '../../../../components/Loader';
+import Link from '../../../../components/Link';
 
+import './style.scss';
 import MachineCard from './MachineCard';
 
 class UserMachinesView extends Component {
   state = {
-    open: false,
+    isSnackBarOpen: false,
     message: ''
   };
+
   componentDidMount = () => {
     const { loadData } = this.props;
 
     loadData();
   };
+
   onSuccess = message => {
-    console.log(message);
     this.setState({
-      open: true,
+      isSnackBarOpen: true,
       message
     });
   };
@@ -36,20 +37,16 @@ class UserMachinesView extends Component {
         params: { userId }
       },
       data: { machines },
-      isFetching
+      isFetching,
+      error
     } = this.props;
 
     return (
       <div className="user-machines-view">
-        <Loader isFetching={isFetching}>
+        <Loader isFetching={isFetching} error={error}>
           <div className="user-machines-view__container">
             {machines.map(machine => (
-              <MachineCard
-                key={machine.id}
-                name={machine.name}
-                description={machine.description}
-                type={machine.type}
-              />
+              <MachineCard key={machine.id} userId={userId} machine={machine} />
             ))}
           </div>
           <Link to={`/user/${userId}/machines/add`}>
@@ -64,17 +61,17 @@ class UserMachinesView extends Component {
 }
 
 const mapStateToProps = state => {
-  const { machines = [] } = state;
-  const { isFetching } = state.common.machines;
+  const { list: machines = [] } = state.machines;
+  const { isFetching, error } = state.common.machines;
 
-  return { data: { machines }, isFetching };
+  return { data: { machines }, isFetching, error };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loadData: async () => {
       try {
-        await dispatch(fetchAll());
+        await dispatch(fetchAll({ isPrivateOffice: true }));
       } catch (err) {
         console.log(err);
       }

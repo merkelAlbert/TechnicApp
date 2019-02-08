@@ -6,26 +6,33 @@ import CardContentArea from '../../../../../components/Card/CardContentArea';
 import CardImage from '../../../../../components/Card/CardImage';
 import CardActions from '../../../../../components/Card/CardActions';
 import Button from '../../../../../components/Button';
+import Link from '../../../../../components/Link';
 
 import './style.scss';
 import Image from './technic.jpg';
 
-const UserMachineCard = ({ name, description, type }) => {
-  return (
-    <Card className="user-machine-card">
-      <CardContentArea>
-        <CardImage  image={Image} title="traktor" className="user-machine-card__image"/>
+const UserMachineCard = ({ machine: { id, name, price, type }, userId }) => (
+  <Card className="user-machine-card">
+    <CardContentArea>
+      <Link to={`/user/${userId}/machines/${id}/view`}>
+        <CardImage
+          image={Image}
+          title="traktor"
+          className="user-machine-card__image"
+        />
         <CardContent>
           <div>{name}</div>
-          <pre>{description}</pre>
+          <div>{price} ₽</div>
           <div>{type}</div>
         </CardContent>
-      </CardContentArea>
-      <CardActions className="user-machine-card__actions">
-        <Button>biba</Button>
-      </CardActions>
-    </Card>
-  );
-};
+      </Link>
+    </CardContentArea>
+    <CardActions className="user-machine-card__actions">
+      <Button>biba</Button>
+      <Button>boba</Button>
+      <Button>2 dolboeba</Button>
+    </CardActions>
+  </Card>
+);
 
 export default UserMachineCard;

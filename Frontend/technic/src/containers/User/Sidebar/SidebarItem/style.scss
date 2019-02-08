@@ -3,13 +3,12 @@
   align-items: center;
   padding: 0 30px;
   height: 60px;
-  &--selected {
-    background-color: #7953d2;
-  }
+  color: white;
+
   &:hover {
     cursor: pointer;
-    background-color: #7953d2;
   }
+
   &__icon {
     width: 35px !important;
     height: 35px !important;

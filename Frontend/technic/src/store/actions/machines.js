@@ -24,12 +24,33 @@ export const add = machine => async dispatch => {
 export const FETCH_ALL_REQUEST = 'machines/FETCH_ALL_REQUEST';
 export const FETCH_ALL_SUCCESS = 'machines/FETCH_ALL_SUCCESS';
 export const FETCH_ALL_ERROR = 'machines/FETCH_ALL_ERROR';
-export const fetchAll = () => async dispatch => {
+export const fetchAll = options => async dispatch => {
   dispatch({ type: FETCH_ALL_REQUEST });
 
   try {
-    const data = await get(MACHINES);
+    const data = await get(MACHINES, null, options);
     dispatch({ type: FETCH_ALL_SUCCESS, payload: data });
+  } catch (err) {
+    let message = 'Прозошла ошибка';
+
+    if (err.response !== undefined) {
+      message = err.response.data;
+    }
+    console.log(message);
+    dispatch({ type: FETCH_ALL_ERROR, payload: message });
+    throw new Error(message);
+  }
+};
+
+export const FETCH_ONE_REQUEST = 'machines/FETCH_ONE_REQUEST';
+export const FETCH_ONE_SUCCESS = 'machines/FETCH_ONE_SUCCESS';
+export const FETCH_ONE_ERROR = 'machines/FETCH_ONE_ERROR';
+export const fetchOne = id => async dispatch => {
+  dispatch({ type: FETCH_ONE_REQUEST });
+
+  try {
+    const data = await get(MACHINES, id);
+    dispatch({ type: FETCH_ONE_SUCCESS, payload: data });
   } catch (err) {
     let message = 'Прозошла ошибка';
 

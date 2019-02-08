@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import {
   AccountCircle,
   Commute,
@@ -10,6 +10,9 @@ import {
   StarBorder
 } from '@material-ui/icons';
 
+import SideBar from '../../../components/SideBar';
+import Link from '../../../components/Link';
+
 import './style.scss';
 import Item from './SidebarItem';
 
@@ -17,10 +20,10 @@ const isSelected = (location, path) => {
   return location.pathname === path;
 };
 
-const UserSidebar = ({ className, user, location }) => {
+const UserSideBar = ({ className, user, location }) => {
   return (
-    <div className={cn('user-sidebar', className)}>
-      <Link to={`/user/${user.id}`} className="user-sidebar__item-link">
+    <SideBar className={cn('user-sidebar', className)} >
+      <Link to={`/user/${user.id}`}>
         <Item
           icon={AccountCircle}
           caption="Мой аккаунт"
@@ -29,7 +32,6 @@ const UserSidebar = ({ className, user, location }) => {
       </Link>
       <Link
         to={`/user/${user.id}/machines`}
-        className="user-sidebar__item-link"
       >
         <Item
           icon={Commute}
@@ -39,7 +41,6 @@ const UserSidebar = ({ className, user, location }) => {
       </Link>
       <Link
         to={`/user/${user.id}/feedbacks`}
-        className="user-sidebar__item-link"
       >
         <Item
           icon={Comment}
@@ -47,8 +48,8 @@ const UserSidebar = ({ className, user, location }) => {
           isSelected={isSelected(location, `/user/${user.id}/feedbacks`)}
         />
       </Link>
-    </div>
+    </SideBar>
   );
 };
 
-export default withRouter(UserSidebar);
+export default withRouter(UserSideBar);

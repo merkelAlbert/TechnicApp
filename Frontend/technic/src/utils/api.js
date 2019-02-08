@@ -23,18 +23,19 @@ export const post = async (url, payload) => {
   return data;
 }
 
-export const get = async (url, params) => {
+export const get = async (url, param, params) => {
   let options = {};
 
   const token = localStorage.getItem('token');
 
   if (token) {
     options = {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
+      params,
     }
   }
 
-  const { data } = await axios.get(url + (params || ''), options);
+  const { data } = await axios.get(url + (param || ''), options);
 
   return data;
 }

@@ -1,13 +1,15 @@
 import React from 'react';
 import cn from 'classnames';
 
+import Item from '../../../../components/SideBar/SideBarItem';
+
 import './style.scss';
 
 const SidebarItem = ({ isSelected, icon: Icon, caption }) => (
-  <div className={cn('sidebar-item', { 'sidebar-item--selected': isSelected })}>
+  <Item className="sidebar-item" isSelected={isSelected}>
     <Icon className="sidebar-item__icon" />
     {caption}
-  </div>
+  </Item>
 );
 
 export default SidebarItem;

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
@@ -12,6 +12,7 @@ import { logout } from '../../../store/actions/user';
 
 import './style.scss';
 import AppHeader from '../../../components/Header';
+import Link from '../../../components/Link'
 
 class Header extends Component {
   state = {
@@ -47,7 +48,7 @@ class Header extends Component {
     return (
       <AppHeader className={cn('header', className)} >
         <div className="header__title-container">
-          <Link to="/" className="header__title">
+          <Link to="/">
             course
           </Link>
         </div>
@@ -55,7 +56,7 @@ class Header extends Component {
           (!user || isEmpty(user))
             ?
             <div className="header__auth">
-              <Link to="/auth" className="header__auth-text">
+              <Link to="/auth">
                 Регистрация | Вход
               </Link>
             </div>

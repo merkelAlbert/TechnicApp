@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { isEmpty, find } from 'lodash-es';
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
@@ -5,7 +6,6 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FieldArray } from 'react-final-form-arrays';
-import cn from 'classnames';
 
 import './style.scss';
 import Form from '../../../../components/Form';
@@ -37,6 +37,9 @@ class UserMachinesForm extends Component {
     }
     if (!values.machineTypeId) {
       errors.machineTypeId = 'Required';
+    }
+    if (!values.price) {
+      errors.price = 'Required';
     }
     Object.keys(errors).length === 0
       ? this.setState({
@@ -73,7 +76,7 @@ class UserMachinesForm extends Component {
   };
 
   render = () => {
-    const { error, isFetching, machineTypes } = this.props;
+    const { error, isFetching, machineTypes, initialValues } = this.props;
     const { specifications, disabled } = this.state;
 
     return (
@@ -82,6 +85,7 @@ class UserMachinesForm extends Component {
           onSubmit={this.onSubmit}
           validate={this.validate}
           error={error}
+          initialValues={initialValues}
           className="add-machine-form"
         >
           {() => (
@@ -130,6 +134,14 @@ class UserMachinesForm extends Component {
                   </div>
                 )}
               </FieldArray>
+              <div className="add-machine-form__row">
+                  <Text
+                    required
+                    name="price"
+                    label="Цена"
+                    className="add-machine-form__field"
+                  />
+                </div>
               <div className="add-machine-form__row">
                 <Loader isFetching={isFetching}>
                   <Button type="submit" disabled={disabled}>

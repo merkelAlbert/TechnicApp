@@ -43,7 +43,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onSubmit: async machine => {
       try {
-        console.log(machine);
         await dispatch(add(machine));
         const { history } = ownProps;
         onSuccess('Техника успешно добавлена');
