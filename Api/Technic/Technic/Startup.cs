@@ -80,6 +80,7 @@ namespace Technic
                 });
                 c.AddSecurityRequirement(security);
                 c.DescribeAllEnumsAsStrings();
+                c.OperationFilter<FileOperation>();
             });
             
             services.AddCors(options =>
@@ -97,6 +98,7 @@ namespace Technic
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IMachinesService, MachinesService>();
             services.AddScoped<IMachineTypeService, MachineTypeService>();
+            services.AddScoped<IFilesService, FilesService>();
             services.AddScoped<SpecificationsInitializer>();
             services.AddScoped<MachineTypesInitializer>();
         }

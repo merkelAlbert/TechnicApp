@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Technic.DAL.Models;
 using Technic.DTO;
 using Technic.DTO.Machines;

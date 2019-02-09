@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Technic.DAL;
 using Technic.DAL.Models;
@@ -18,6 +20,7 @@ namespace Technic.Services
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
+        private const string IMAGESFOLDER = "wwwroot/Images";
 
         public MachinesService(DatabaseContext databaseContext, IMapper mapper)
         {
@@ -35,10 +38,10 @@ namespace Technic.Services
             var machineInfos = new List<MachinesInfo>();
             foreach (var machine in machines)
             {
-                var machineInfo = _mapper.Map<Machine, MachinesInfo>(machine);
-                machineInfo.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
+                var machinesInfo = _mapper.Map<Machine, MachinesInfo>(machine);
+                machinesInfo.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
                     ?.Name;
-                machineInfos.Add(machineInfo);
+                machineInfos.Add(machinesInfo);
             }
 
             return machineInfos;

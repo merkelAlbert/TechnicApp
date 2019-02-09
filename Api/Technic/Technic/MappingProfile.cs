@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using AutoMapper;
 using Technic.DAL.Models;
@@ -23,9 +24,14 @@ namespace Technic
             CreateMap<Machine, MachineModel>();
             CreateMap<Machine, MachineInfo>()
                 .ForMember(m => m.Type, o => o.Ignore());
-            
+
             CreateMap<Machine, MachinesInfo>()
-                .ForMember(m => m.Type, o => o.Ignore());
+                .ForMember(m => m.Type, o => o.Ignore())
+                .ForMember(m => m.ImageId,
+                    o => o.MapFrom(m =>
+                        (m.ImagesIds != null && m.ImagesIds.Count > 0 && m.ImagesIds[0] != Guid.Empty)
+                            ? m.ImagesIds[0]
+                            : (Guid?) null));
 
             CreateMap<MachineSpecification, SpecificationModel>()
                 .ForMember(s => s.Id, o => o.MapFrom(ms => ms.SpecificationId))
