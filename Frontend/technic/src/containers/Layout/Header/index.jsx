@@ -8,7 +8,7 @@ import isEmpty from 'lodash-es/isEmpty';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import { Menu, MenuItem } from '@material-ui/core';
 
-import { logout } from '../../../store/actions/user';
+import { logout } from '../../../store/actions/service';
 
 import AppHeader from '../../../components/Header';
 import Link from '../../../components/Link';

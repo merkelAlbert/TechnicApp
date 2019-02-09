@@ -7,6 +7,7 @@ export const LOGIN = BASE_URL + 'account/login/';
 export const USER_INFO = BASE_URL + 'user/';
 export const MACHINES = BASE_URL + 'machines/';
 export const FETCH_MACHINE_TYPES = BASE_URL + 'machineTypes/';
+export const IMAGES = BASE_URL + 'files/';
 
 export const post = async (url, payload) => {
   let options = {};

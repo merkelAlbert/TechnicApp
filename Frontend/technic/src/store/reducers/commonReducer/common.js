@@ -1,4 +1,4 @@
-import { RESET_COMMON_STATE } from '../../actions/service';
+import { RESET_COMMON_STATE, USER_LOGOUT } from '../../actions/service';
 
 const initialState = {
   isFetching: false,
@@ -31,7 +31,7 @@ const common = actions => (state = initialState, action) => {
       isSuccess: false
     };
   }
-  if (action.type === RESET_COMMON_STATE) {
+  if (action.type === RESET_COMMON_STATE || action.type === USER_LOGOUT) {
     return initialState;
   }
 

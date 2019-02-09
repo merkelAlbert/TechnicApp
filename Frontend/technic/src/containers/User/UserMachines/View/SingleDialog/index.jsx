@@ -5,6 +5,7 @@ import Dialog from '../../../../../components/Dialog';
 import Loader from '../../../../../components/Loader';
 
 import { fetchOne } from '../../../../../store/actions/machines';
+import { IMAGES } from '../../../../../utils/api';
 
 import './style.scss';
 
@@ -35,11 +36,27 @@ class UserMachinesSingleDialog extends Component {
       >
         <Loader isFetching={isFetching} error={error}>
           <div className="single-dialog-content">
+            <div className="single-dialog-content__images">
+              {machine.imagesIds &&
+                machine.imagesIds.map(machineId => (
+                  <img
+                    className="single-dialog-content__image"
+                    src={`${IMAGES}${machineId}`}
+                    alt={machine.name}
+                  />
+                ))}
+            </div>
             <p>
               <span className="single-dialog-content__section-title">
                 Название:
               </span>{' '}
               {machine.name}
+            </p>
+            <p>
+              <span className="single-dialog-content__section-title">
+                Тип:
+              </span>{' '}
+              {machine.type}
             </p>
             <p className="single-dialog-content__section-title">
               Характеристики:{' '}

@@ -4,7 +4,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 const CardImage = ({ image, title, className }) => {
   return (
     <CardMedia
-      component="img"
+      component="div"
       image={image}
       title={title}
       className={className}

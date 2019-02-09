@@ -1,8 +1,8 @@
 import React from 'react';
 import MuiCardContent from '@material-ui/core/CardContent';
 
-const CardContent = ({ children }) => {
-  return <MuiCardContent>{children}</MuiCardContent>;
+const CardContent = ({ className, children }) => {
+  return <MuiCardContent className={className}>{children}</MuiCardContent>;
 };
 
 export default CardContent;

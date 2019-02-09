@@ -3,7 +3,6 @@ import { post, get, REGISTER, LOGIN, USER_INFO } from '../../utils/api';
 export const USER_AUTH_REQUEST = 'USER_AUTH_REQUEST';
 export const USER_AUTH_SUCCESS = 'USER_AUTH_SUCCESS';
 export const USER_AUTH_ERROR = 'USER_AUTH_ERROR';
-export const USER_LOGOUT = 'USER_LOGOUT';
 
 export const register = (user) => async (dispatch) => {
   dispatch({ type: USER_AUTH_REQUEST });
@@ -39,11 +38,6 @@ export const login = (user) => async (dispatch) => {
     dispatch({ type: USER_AUTH_ERROR, payload: message });
     throw new Error(message);
   }
-}
-
-export const logout = () => (dispatch) => {
-  localStorage.clear();
-  dispatch({ type: USER_LOGOUT });
 }
 
 export const FETCH_USER_INFO_REQUEST = 'FETCH_USER_INFO_REQUEST';

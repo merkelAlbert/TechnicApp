@@ -6,6 +6,10 @@ import { connect } from 'react-redux';
 import { resetCommonState } from '../../store/actions/service';
 
 class Form extends Component {
+  componentDidMount = () => {
+    const { reset } = this.props;
+    reset();
+  };
   componentWillUnmount = () => {
     const { reset } = this.props;
     reset();
@@ -43,7 +47,7 @@ class Form extends Component {
       </FinalForm>
     );
   };
-};
+}
 
 Form.defaultProps = {
   error: null,
@@ -59,8 +63,11 @@ Form.propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  reset: ()=>dispatch(resetCommonState()),
+const mapDispatchToProps = dispatch => ({
+  reset: () => dispatch(resetCommonState())
 });
 
-export default connect(null, mapDispatchToProps)(Form);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Form);

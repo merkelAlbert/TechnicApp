@@ -2,14 +2,39 @@
   margin: 20px;
   width: 320px;
 
+  &__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 18px;
+  }
+
+  &__subtitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    margin-top: 5px;
+    color: grey;
+  }
+
   &__image {
-    justify-content: center;
-    margin: 0 auto;
-    height: auto;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+    background-size: contain !important;
+  }
+
+  &__price {
+    font-size: 18px;
+  }
+
+  &__status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   &__actions {
-    padding: 0;
-    justify-content: space-between;
+    padding: 0 !important;
   }
 }
