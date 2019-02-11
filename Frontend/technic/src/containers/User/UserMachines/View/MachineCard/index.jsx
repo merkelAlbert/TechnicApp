@@ -17,7 +17,7 @@ import './style.scss';
 import Image from './technic.png';
 
 const UserMachineCard = ({
-  machine: { id, name, price, type, imageId },
+  machine: { id: machineId, name, price, type, imageId },
   userId
 }) => (
   <Card className="user-machine-card">
@@ -25,7 +25,7 @@ const UserMachineCard = ({
       <div className="user-machine-card__title">{name}</div>
       <div className="user-machine-card__subtitle">{type}</div>
     </CardContent>
-    <Link to={`/user/${userId}/machines/${id}/view`}>
+    <Link to={`/user/${userId}/machines/view/${machineId}`}>
       {imageId ? (
         <CardImage
           image={`${FILES}/${imageId}`}

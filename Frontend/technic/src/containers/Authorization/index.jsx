@@ -17,7 +17,7 @@ class Authorization extends Component {
   render = () => {
     const { user } = this.props;
     return (
-      (user || isEmpty(user))
+      (!user || isEmpty(user))
         ?
         < div className="authorization-container" >
           <img src={Picture} className="authorization__picture" alt="картинка" />

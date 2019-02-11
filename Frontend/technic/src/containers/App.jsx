@@ -1,7 +1,9 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+
+import PrivateRoute from '../components/PrivateRoute';
 
 import './style.scss';
 import { store, persistor } from '../store';
@@ -18,9 +20,9 @@ const App = () => (
         <ThemeProvider>
           <Switch>
             <Layout>
-              <Route exact path='/' component={Home} />
-              <Route path='/auth' component={Authorization} />
-              <Route path='/user/:userId' component={User} />
+              <Route path="/auth" component={Authorization} />
+              <Route exact path="/" component={Home} />
+              <PrivateRoute path="/user/:userId" component={User} />
             </Layout>
           </Switch>
         </ThemeProvider>
