@@ -64,7 +64,7 @@ namespace Technic.Services
             throw new InvalidOperationException("Неверный id");
         }
 
-        public async Task<MachineInfo> AddMachine(Guid userId, MachineModel machineModel)
+        public async Task<MachinesInfo> AddMachine(Guid userId, MachineModel machineModel)
         {
             var machine = _mapper.Map<MachineModel, Machine>(machineModel);
             machine.UserId = userId;
@@ -82,8 +82,8 @@ namespace Technic.Services
 
             await _databaseContext.Machines.AddAsync(machine);
             await _databaseContext.SaveChangesAsync();
-            var machineInfo = await GetMachine(machine.Id);
-            return machineInfo;
+            var machinesInfo = _mapper.Map<MachineInfo, MachinesInfo>(await GetMachine(machine.Id));
+            return machinesInfo;
         }
     }
 }

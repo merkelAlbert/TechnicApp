@@ -12,12 +12,15 @@ import Text from '../../../../components/Form/Text';
 import Select from '../../../../components/Form/Select';
 import Button from '../../../../components/Button';
 import Loader from '../../../../components/Loader';
+import Uploader from '../../../../components/Uploader';
 
 import './style.scss';
 
 import { fetchAll } from '../../../../store/actions/machineTypes';
+import { add } from '../../../../store/actions/files';
 
 class UserMachinesForm extends Component {
+  uploader = null;
   state = {
     disabled: true,
     specifications: []
@@ -53,10 +56,17 @@ class UserMachinesForm extends Component {
     return errors;
   };
 
-  onSubmit = machine => {
-    const { onSubmit } = this.props;
+  onSubmit = async machine => {
+    const { onSubmit, uploadFiles } = this.props;
     const { specifications } = this.state;
     const machineCopy = { ...machine };
+    const { files } = this.uploader;
+    const formData = new FormData();
+
+    for (let i = 0; i < files.length; i++) formData.append('images', files[i]);
+    const imagesIds = await uploadFiles(formData);
+    machineCopy.imagesIds = imagesIds;
+
     if (!isEmpty(machine.specifications)) {
       machineCopy.specifications = machine.specifications.map((spec, index) => {
         const { value } = spec;
@@ -136,13 +146,22 @@ class UserMachinesForm extends Component {
                 )}
               </FieldArray>
               <div className="add-machine-form__row">
-                  <Text
-                    required
-                    name="price"
-                    label="Цена"
-                    className="add-machine-form__field"
-                  />
-                </div>
+                <Text
+                  required
+                  name="price"
+                  label="Цена"
+                  className="add-machine-form__field"
+                />
+              </div>
+              <div className="add-machine-form__uploader">
+                <Uploader
+                  innerRef={child => {
+                    if (child) this.uploader = child.ref;
+                  }}
+                  name="images"
+                  title="Загрузить фотографии"
+                />
+              </div>
               <div className="add-machine-form__row">
                 <Loader isFetching={isFetching}>
                   <Button type="submit" disabled={disabled}>
@@ -187,8 +206,10 @@ const mapStateToProps = state => {
   return {
     error: state.common.machines.error,
     success: state.common.machines.success,
-    isFetching: state.common.machines.isFetching,
-    machineTypes
+    isFetching:
+      state.common.machines.isFetching || state.common.files.isFetching,
+    machineTypes,
+    files: state.files
   };
 };
 
@@ -197,6 +218,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     loadData: async () => {
       try {
         await dispatch(fetchAll());
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    uploadFiles: async formData => {
+      try {
+        return await dispatch(add(formData));
       } catch (err) {
         console.log(err);
       }

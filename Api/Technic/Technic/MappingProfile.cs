@@ -32,6 +32,12 @@ namespace Technic
                         (m.ImagesIds != null && m.ImagesIds.Count > 0 && m.ImagesIds[0] != Guid.Empty)
                             ? m.ImagesIds[0]
                             : (Guid?) null));
+            CreateMap<MachineInfo, MachinesInfo>()
+                .ForMember(m => m.ImageId,
+                    o => o.MapFrom(m =>
+                        (m.ImagesIds != null && m.ImagesIds.Count > 0 && m.ImagesIds[0] != Guid.Empty)
+                            ? m.ImagesIds[0]
+                            : (Guid?) null));
 
             CreateMap<MachineSpecification, SpecificationModel>()
                 .ForMember(s => s.Id, o => o.MapFrom(ms => ms.SpecificationId))

@@ -5,7 +5,7 @@ import Dialog from '../../../../../components/Dialog';
 import Loader from '../../../../../components/Loader';
 
 import { fetchOne } from '../../../../../store/actions/machines';
-import { IMAGES } from '../../../../../utils/api';
+import { FILES } from '../../../../../utils/api';
 
 import './style.scss';
 
@@ -41,7 +41,7 @@ class UserMachinesSingleDialog extends Component {
                 machine.imagesIds.map(machineId => (
                   <img
                     className="single-dialog-content__image"
-                    src={`${IMAGES}${machineId}`}
+                    src={`${FILES}/${machineId}`}
                     alt={machine.name}
                   />
                 ))}

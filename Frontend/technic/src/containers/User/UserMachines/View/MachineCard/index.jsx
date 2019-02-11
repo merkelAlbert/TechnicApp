@@ -11,7 +11,7 @@ import Link from '../../../../../components/Link';
 import Switch from '../../../../../components/Switch';
 import IconButton from '../../../../../components/IconButton';
 
-import { IMAGES } from '../../../../../utils/api';
+import { FILES } from '../../../../../utils/api';
 
 import './style.scss';
 import Image from './technic.png';
@@ -28,7 +28,7 @@ const UserMachineCard = ({
     <Link to={`/user/${userId}/machines/${id}/view`}>
       {imageId ? (
         <CardImage
-          image={`${IMAGES}${imageId}`}
+          image={`${FILES}/${imageId}`}
           title={name}
           className="user-machine-card__image"
         />

@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const { onSuccess } = ownProps;
 
   return {
-    onSubmit: async machine => {
+    onSubmit: async (machine) => {
       try {
         await dispatch(add(machine));
         const { history } = ownProps;

@@ -12,6 +12,8 @@ const machines = (state = initialState.machines, action) => {
       return action.payload ? { ...state, list: action.payload } : state;
     case machinesActions.FETCH_ONE_SUCCESS:
       return action.payload ? { ...state, active: action.payload } : state;
+    case machinesActions.FETCH_ONE_ERROR:
+      return { ...state, active: {} };
     case USER_LOGOUT:
       return initialState.machines;
     default:

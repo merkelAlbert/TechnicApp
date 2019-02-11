@@ -58,7 +58,7 @@ export const fetchOne = id => async dispatch => {
       message = err.response.data;
     }
     console.log(message);
-    dispatch({ type: FETCH_ALL_ERROR, payload: message });
+    dispatch({ type: FETCH_ONE_ERROR, payload: message });
     throw new Error(message);
   }
 };

@@ -12,6 +12,6 @@ namespace Technic.Interfaces
     {
         Task<List<MachinesInfo>> GetMachines(Guid userId, bool isPrivateOffice);
         Task<MachineInfo> GetMachine(Guid machineId);
-        Task<MachineInfo> AddMachine(Guid userId, MachineModel machineModel);
+        Task<MachinesInfo> AddMachine(Guid userId, MachineModel machineModel);
     }
 }
