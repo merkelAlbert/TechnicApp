@@ -1,14 +1,12 @@
 .user-machine-card {
   margin: 20px;
-  width: 320px;
-
+  width: 300px;
   &__title {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 18px;
   }
-
   &__subtitle {
     white-space: nowrap;
     overflow: hidden;
@@ -17,23 +15,18 @@
     margin-top: 5px;
     color: grey;
   }
-
   &__image {
-    padding-bottom: 56.25%;
-    overflow: hidden;
+    height: 225px;
     background-size: contain !important;
   }
-
   &__price {
     font-size: 18px;
   }
-
   &__status {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-
   &__actions {
     padding: 0 !important;
   }

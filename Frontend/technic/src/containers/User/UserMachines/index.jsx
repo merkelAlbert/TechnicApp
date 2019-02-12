@@ -30,7 +30,7 @@ class UserMachines extends Component {
         <Route path="/user/:userId/machines" component={View} />
         <Switch>
           <Route
-            path="/user/:userId/machines/:machineId/view"
+            path="/user/:userId/machines/view/:machineId/"
             component={SingleDialog}
           />
           <Route
