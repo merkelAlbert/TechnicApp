@@ -95,12 +95,15 @@ namespace Technic
                     });
             });
 
+            services.AddHttpContextAccessor();
+            
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IMachinesService, MachinesService>();
             services.AddScoped<IMachineTypeService, MachineTypeService>();
             services.AddScoped<IFilesService, FilesService>();
             services.AddScoped<SpecificationsInitializer>();
             services.AddScoped<MachineTypesInitializer>();
+            services.AddScoped<UserRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

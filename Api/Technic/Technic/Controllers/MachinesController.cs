@@ -32,7 +32,7 @@ namespace Technic.Controllers
         {
             try
             {
-                return await _machinesService.GetMachines(this.GetUserId(), isPrivateOffice);
+                return await _machinesService.GetMachines(isPrivateOffice);
             }
             catch (InvalidOperationException e)
             {
@@ -58,11 +58,11 @@ namespace Technic.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<object> AddMachine([FromBody] MachineModel machineModel)
+        public async Task<object> AddMachine([FromBody] MachineInfo machineInfo)
         {
             try
             {
-                var machine = await _machinesService.AddMachine(this.GetUserId(), machineModel);
+                var machine = await _machinesService.AddMachine(machineInfo);
                 return machine;
             }
             catch (Exception e)

@@ -4,7 +4,7 @@ using Technic.DAL.Models.Enums;
 
 namespace Technic.DTO.Machines
 {
-    public class MachinesInfo
+    public class MachinesModel
     {
         public Guid Id { get; set; }
         public Guid? ImageId { get; set; }

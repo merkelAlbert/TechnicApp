@@ -2,7 +2,7 @@ using System;
 
 namespace Technic.DTO.Account
 {
-    public class AuthorizedInfo
+    public class AuthorizedModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

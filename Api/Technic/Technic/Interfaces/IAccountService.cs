@@ -7,9 +7,9 @@ namespace Technic.Interfaces
 {
     public interface IAccountService
     {
-        Task Register(RegistrationModel registrationModel);
-        Task<string> Login(LoginModel loginModel);
-        Task<AuthorizedInfo> GetUserById(Guid id);
-        Task<AuthorizedInfo> GetUserByEmail(string email);
+        Task Register(RegistrationInfo registrationInfo);
+        Task<string> Login(LoginInfo loginInfo);
+        Task<AuthorizedModel> GetUserById(Guid id);
+        Task<AuthorizedModel> GetUserByEmail(string email);
     }
 }

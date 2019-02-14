@@ -20,34 +20,37 @@ namespace Technic.Services
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
+        private readonly UserRepository _userRepository;
         private const string IMAGESFOLDER = "wwwroot/Images";
 
-        public MachinesService(DatabaseContext databaseContext, IMapper mapper)
+        public MachinesService(DatabaseContext databaseContext, IMapper mapper, UserRepository userRepository)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;
+            _userRepository = userRepository;
         }
 
-        public async Task<List<MachinesInfo>> GetMachines(Guid userId, bool isPrivateOffice)
+        public async Task<List<MachinesModel>> GetMachines(bool isPrivateOffice)
         {
+            var userId = _userRepository.GetCurrentUserId();
             var machines = await _databaseContext.Machines
                 .Where(m => !isPrivateOffice || m.UserId == userId)
                 .Include(m => m.Specifications)
                 .ThenInclude(s => s.Specification)
                 .ToListAsync();
-            var machineInfos = new List<MachinesInfo>();
+            var machinesModels = new List<MachinesModel>();
             foreach (var machine in machines)
             {
-                var machinesInfo = _mapper.Map<Machine, MachinesInfo>(machine);
-                machinesInfo.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
+                var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
+                machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
                     ?.Name;
-                machineInfos.Add(machinesInfo);
+                machinesModels.Add(machinesModel);
             }
 
-            return machineInfos;
+            return machinesModels;
         }
 
-        public async Task<MachineInfo> GetMachine(Guid machineId)
+        public async Task<MachineModel> GetMachine(Guid machineId)
         {
             var machine = await _databaseContext.Machines
                 .Include(m => m.Specifications)
@@ -55,21 +58,22 @@ namespace Technic.Services
                 .FirstOrDefaultAsync(m => m.Id == machineId);
             if (machine != null)
             {
-                var machineInfo = _mapper.Map<Machine, MachineInfo>(machine);
-                machineInfo.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
+                var machineModel = _mapper.Map<Machine, MachineModel>(machine);
+                machineModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
                     ?.Name;
-                return machineInfo;
+                return machineModel;
             }
 
             throw new InvalidOperationException("Неверный id");
         }
 
-        public async Task<MachinesInfo> AddMachine(Guid userId, MachineModel machineModel)
+        public async Task<MachinesModel> AddMachine(MachineInfo machineInfo)
         {
-            var machine = _mapper.Map<MachineModel, Machine>(machineModel);
+            var userId = _userRepository.GetCurrentUserId();
+            var machine = _mapper.Map<MachineInfo, Machine>(machineInfo);
             machine.UserId = userId;
             var specifications = _databaseContext.Specifications.ToList();
-            foreach (var specificationModel in machineModel.Specifications)
+            foreach (var specificationModel in machineInfo.Specifications)
             {
                 var specification = specifications.FirstOrDefault(s => s.Id == specificationModel.Id);
                 if (specification != null)
@@ -82,8 +86,38 @@ namespace Technic.Services
 
             await _databaseContext.Machines.AddAsync(machine);
             await _databaseContext.SaveChangesAsync();
-            var machinesInfo = _mapper.Map<MachineInfo, MachinesInfo>(await GetMachine(machine.Id));
-            return machinesInfo;
+            var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
+            machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
+                ?.Name;
+            
+            return machinesModel;
         }
+        
+        public async Task<MachinesModel> UpdateMachine(Guid machineId, MachineInfo machineInfo)
+        {
+            var userId = _userRepository.GetCurrentUserId();
+            var machine = _mapper.Map<MachineInfo, Machine>(machineInfo);
+            machine.UserId = userId;
+            var specifications = _databaseContext.Specifications.ToList();
+            foreach (var specificationModel in machineInfo.Specifications)
+            {
+                var specification = specifications.FirstOrDefault(s => s.Id == specificationModel.Id);
+                if (specification != null)
+                    machine.Specifications.Add(new MachineSpecification()
+                    {
+                        Value = specificationModel.Value,
+                        SpecificationId = specification.Id,
+                    });
+            }
+
+            await _databaseContext.Machines.AddAsync(machine);
+            await _databaseContext.SaveChangesAsync();
+            var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
+            machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
+                ?.Name;
+            
+            return machinesModel;
+        }
+        
     }
 }

@@ -82,9 +82,9 @@ namespace Technic.Services
             return await Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
         }
 
-        public async Task Register(RegistrationModel registrationModel)
+        public async Task Register(RegistrationInfo registrationInfo)
         {
-            var user = _mapper.Map<RegistrationModel, User>(registrationModel);
+            var user = _mapper.Map<RegistrationInfo, User>(registrationInfo);
             if (await _databaseContext.Users.FirstOrDefaultAsync(x => x.Email == user.Email) != null)
                 throw new InvalidOperationException("Пользователь с данным email уже существует");
 
@@ -96,19 +96,14 @@ namespace Technic.Services
             await _databaseContext.SaveChangesAsync();
         }
 
-        public async Task<string> Login(LoginModel loginModel)
+        public async Task<string> Login(LoginInfo loginInfo)
         {
-            var user = _mapper.Map<LoginModel, User>(loginModel);
+            var user = _mapper.Map<LoginInfo, User>(loginInfo);
 
             var storedUser = await _databaseContext.Users
                 .FirstOrDefaultAsync(x => x.Email == user.Email);
 
-            if (storedUser == null)
-            {
-                throw new InvalidOperationException("Неверный email или пароль");
-            }
-
-            if (!ValidatePassword(user.Password, storedUser.Salt, storedUser.Password))
+            if (storedUser == null || !ValidatePassword(user.Password, storedUser.Salt, storedUser.Password))
             {
                 throw new InvalidOperationException("Неверный email или пароль");
             }
@@ -117,18 +112,18 @@ namespace Technic.Services
             return token;
         }
 
-        public async Task<AuthorizedInfo> GetUserById(Guid id)
+        public async Task<AuthorizedModel> GetUserById(Guid id)
         {
             var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Id == id);
-            var authorizedDto = _mapper.Map<User, AuthorizedInfo>(user);
-            return authorizedDto ?? throw new InvalidOperationException("Неверный id");
+            var authorizedModel = _mapper.Map<User, AuthorizedModel>(user);
+            return authorizedModel ?? throw new InvalidOperationException("Неверный id");
         }
 
-        public async Task<AuthorizedInfo> GetUserByEmail(string email)
+        public async Task<AuthorizedModel> GetUserByEmail(string email)
         {
             var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Email == email);
-            var authorizedDto = _mapper.Map<User, AuthorizedInfo>(user);
-            return authorizedDto ?? throw new InvalidOperationException("Неверный email");
+            var authorizedModel = _mapper.Map<User, AuthorizedModel>(user);
+            return authorizedModel ?? throw new InvalidOperationException("Неверный email");
         }
     }
 }

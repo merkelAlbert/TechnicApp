@@ -14,42 +14,36 @@ namespace Technic
     {
         public MappingProfile()
         {
-            CreateMap<RegistrationModel, User>();
-            CreateMap<LoginModel, User>();
-            CreateMap<User, AuthorizedInfo>();
+            CreateMap<RegistrationInfo, User>();
+            CreateMap<LoginInfo, User>();
+            CreateMap<User, AuthorizedModel>();
 
-            CreateMap<MachineModel, Machine>()
+            CreateMap<MachineInfo, Machine>()
                 .ForMember(m => m.Specifications, o => o.Ignore());
 
-            CreateMap<Machine, MachineModel>();
-            CreateMap<Machine, MachineInfo>()
+            CreateMap<Machine, MachineInfo>();
+            CreateMap<Machine, MachineModel>()
                 .ForMember(m => m.Type, o => o.Ignore());
 
-            CreateMap<Machine, MachinesInfo>()
+            CreateMap<Machine, MachinesModel>()
                 .ForMember(m => m.Type, o => o.Ignore())
                 .ForMember(m => m.ImageId,
                     o => o.MapFrom(m =>
                         (m.ImagesIds != null && m.ImagesIds.Count > 0 && m.ImagesIds[0] != Guid.Empty)
                             ? m.ImagesIds[0]
                             : (Guid?) null));
-            CreateMap<MachineInfo, MachinesInfo>()
-                .ForMember(m => m.ImageId,
-                    o => o.MapFrom(m =>
-                        (m.ImagesIds != null && m.ImagesIds.Count > 0 && m.ImagesIds[0] != Guid.Empty)
-                            ? m.ImagesIds[0]
-                            : (Guid?) null));
 
-            CreateMap<MachineSpecification, SpecificationModel>()
+            CreateMap<MachineSpecification, SpecificationInfo>()
                 .ForMember(s => s.Id, o => o.MapFrom(ms => ms.SpecificationId))
                 .ForMember(s => s.Name, o => o.MapFrom(ms => ms.Specification.Name))
                 .ForMember(s => s.Value, o => o.MapFrom(ms => ms.Value));
 
-            CreateMap<MachineType, MachineTypeInfo>()
+            CreateMap<MachineType, MachineTypeModel>()
                 .ForMember(t => t.AllowedSpecifications,
                     o => o.MapFrom(t => t.AllowedSpecifications.Select(s => s.Specification)));
 
-            CreateMap<Specification, SpecificationsInfo>();
-            CreateMap<SpecificationModel, Specification>();
+            CreateMap<Specification, SpecificationsModel>();
+            CreateMap<SpecificationInfo, Specification>();
         }
     }
 }

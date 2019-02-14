@@ -10,8 +10,9 @@ namespace Technic.Interfaces
 {
     public interface IMachinesService
     {
-        Task<List<MachinesInfo>> GetMachines(Guid userId, bool isPrivateOffice);
-        Task<MachineInfo> GetMachine(Guid machineId);
-        Task<MachinesInfo> AddMachine(Guid userId, MachineModel machineModel);
+        Task<List<MachinesModel>> GetMachines(bool isPrivateOffice);
+        Task<MachineModel> GetMachine(Guid machineId);
+        Task<MachinesModel> AddMachine(MachineInfo machineInfo);
+        Task<MachinesModel> UpdateMachine(Guid machineId, MachineInfo machineInfo);
     }
 }
