@@ -25,8 +25,7 @@ namespace Technic
                     o.UseDestinationValue();
                     o.Ignore();
                 })
-                .ForMember(m => m.Specifications, o => o.Ignore())
-                .ForMember(m => m.ImagesIds, o => o.Ignore());
+                .ForMember(m => m.Specifications, o => o.Ignore());
 
             CreateMap<Machine, MachineInfo>();
             CreateMap<Machine, MachineModel>()

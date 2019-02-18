@@ -9,8 +9,10 @@
     align-items: center;
   }
   &__image {
-    width: 90%;
-    margin: 10px;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    object-fit: contain;
   }
   &__description {
     white-space: pre-wrap;
