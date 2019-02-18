@@ -21,10 +21,7 @@ const UserMachineCard = ({
   userId
 }) => (
   <Card className="user-machine-card">
-    <CardContent>
-      <div className="user-machine-card__title">{name}</div>
-      <div className="user-machine-card__subtitle">{type}</div>
-    </CardContent>
+    <CardHeader title={name} subTitle={type} />
     <Link to={`/user/${userId}/machines/view/${machineId}`}>
       {imageId ? (
         <CardImage
@@ -32,14 +29,13 @@ const UserMachineCard = ({
           title={name}
           className="user-machine-card__image"
         />
-      )
-    : (
-      <CardImage
+      ) : (
+        <CardImage
           image={Image}
           title={name}
           className="user-machine-card__image"
         />
-    )}
+      )}
       <CardContentArea>
         <CardContent>
           <div className="user-machine-card__price">{price} ₽</div>

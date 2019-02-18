@@ -1,26 +1,14 @@
+$cardWidth: 240px;
 .user-machine-card {
-  margin: 20px;
-  width: 300px;
-  &__title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 18px;
-  }
-  &__subtitle {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 14px;
-    margin-top: 5px;
-    color: grey;
-  }
+  margin: 15px;
+  width: $cardWidth;
   &__image {
-    height: 225px;
+    height: $cardWidth*9/16;
     background-size: contain !important;
   }
   &__price {
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 500;
   }
   &__status {
     display: flex;

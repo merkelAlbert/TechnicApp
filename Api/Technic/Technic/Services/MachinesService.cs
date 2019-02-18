@@ -21,7 +21,6 @@ namespace Technic.Services
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
         private readonly UserRepository _userRepository;
-        private const string IMAGESFOLDER = "wwwroot/Images";
 
         public MachinesService(DatabaseContext databaseContext, IMapper mapper, UserRepository userRepository)
         {
@@ -89,35 +88,36 @@ namespace Technic.Services
             var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
             machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
                 ?.Name;
-            
+
             return machinesModel;
         }
-        
+
         public async Task<MachinesModel> UpdateMachine(Guid machineId, MachineInfo machineInfo)
         {
             var userId = _userRepository.GetCurrentUserId();
-            var machine = _mapper.Map<MachineInfo, Machine>(machineInfo);
-            machine.UserId = userId;
-            var specifications = _databaseContext.Specifications.ToList();
-            foreach (var specificationModel in machineInfo.Specifications)
+            var machine = _databaseContext.Machines.FirstOrDefault(m => m.Id == machineId);
+            if (machine != null)
             {
-                var specification = specifications.FirstOrDefault(s => s.Id == specificationModel.Id);
-                if (specification != null)
-                    machine.Specifications.Add(new MachineSpecification()
-                    {
-                        Value = specificationModel.Value,
-                        SpecificationId = specification.Id,
-                    });
+                _mapper.Map(machineInfo, machine);
+                machine.UserId = userId;
+                var specifications = _databaseContext.Specifications.ToList();
+                foreach (var specificationModel in machineInfo.Specifications)
+                {
+                    var specification = specifications.FirstOrDefault(s => s.Id == specificationModel.Id);
+                    if (specification != null)
+                        machine.Specifications.Add(new MachineSpecification()
+                        {
+                            Value = specificationModel.Value,
+                            SpecificationId = specification.Id,
+                        });
+                }
+                await _databaseContext.SaveChangesAsync();
+                var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
+                machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
+                    ?.Name;
+                return machinesModel;
             }
-
-            await _databaseContext.Machines.AddAsync(machine);
-            await _databaseContext.SaveChangesAsync();
-            var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
-            machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
-                ?.Name;
-            
-            return machinesModel;
+            throw new InvalidOperationException("Неверный id");
         }
-        
     }
 }

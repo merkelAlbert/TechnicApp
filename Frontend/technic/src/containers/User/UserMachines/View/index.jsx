@@ -49,12 +49,12 @@ class UserMachinesView extends Component {
               <MachineCard key={machine.id} userId={userId} machine={machine} />
             ))}
           </div>
-          <Link to={`/user/${userId}/machines/add`}>
-            <Fab className="user-machines-view__fab">
-              <Add />
-            </Fab>
-          </Link>
         </Loader>
+        <Link to={`/user/${userId}/machines/add`}>
+          <Fab className="user-machines-view__fab">
+            <Add />
+          </Fab>
+        </Link>
       </div>
     );
   };

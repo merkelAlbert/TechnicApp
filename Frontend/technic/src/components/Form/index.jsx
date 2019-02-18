@@ -6,10 +6,6 @@ import { connect } from 'react-redux';
 import { resetCommonState } from '../../store/actions/service';
 
 class Form extends Component {
-  componentDidMount = () => {
-    const { reset } = this.props;
-    reset();
-  };
   componentWillUnmount = () => {
     const { reset } = this.props;
     reset();

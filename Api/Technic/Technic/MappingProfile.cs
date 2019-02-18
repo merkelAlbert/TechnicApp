@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using AutoMapper;
+using Technic.DAL;
 using Technic.DAL.Models;
 using Technic.DAL.Models.IntermediateModels;
 using Technic.DTO;
@@ -19,7 +20,13 @@ namespace Technic
             CreateMap<User, AuthorizedModel>();
 
             CreateMap<MachineInfo, Machine>()
-                .ForMember(m => m.Specifications, o => o.Ignore());
+                .ForMember(m => m.Id, o =>
+                {
+                    o.UseDestinationValue();
+                    o.Ignore();
+                })
+                .ForMember(m => m.Specifications, o => o.Ignore())
+                .ForMember(m => m.ImagesIds, o => o.Ignore());
 
             CreateMap<Machine, MachineInfo>();
             CreateMap<Machine, MachineModel>()

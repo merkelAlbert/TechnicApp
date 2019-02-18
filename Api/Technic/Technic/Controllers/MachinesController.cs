@@ -53,7 +53,6 @@ namespace Technic.Controllers
             {
                 return BadRequest(e.Message);
             }
-            
         }
 
         [HttpPost]
@@ -63,6 +62,22 @@ namespace Technic.Controllers
             try
             {
                 var machine = await _machinesService.AddMachine(machineInfo);
+                return machine;
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("{machineId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<object> UpdateMachine([FromRoute] Guid machineId, [FromBody] MachineInfo machineInfo)
+        {
+            try
+            {
+                var machine = await _machinesService.UpdateMachine(machineId, machineInfo);
                 return machine;
             }
             catch (Exception e)
