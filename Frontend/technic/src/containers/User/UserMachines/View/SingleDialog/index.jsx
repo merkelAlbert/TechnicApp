@@ -53,10 +53,8 @@ class UserMachinesSingleDialog extends Component {
               {machine.name}
             </p>
             <p>
-              <span className="single-dialog-content__section-title">
-                Тип:
-              </span>{' '}
-              {machine.type}
+              <span className="single-dialog-content__section-title">Тип:</span>{' '}
+              {machine.type && machine.type.name}
             </p>
             <p className="single-dialog-content__section-title">
               Характеристики:{' '}

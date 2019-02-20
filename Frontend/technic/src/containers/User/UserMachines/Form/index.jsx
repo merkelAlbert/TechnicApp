@@ -1,4 +1,3 @@
-import cn from 'classnames';
 import { isEmpty, find } from 'lodash-es';
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
@@ -29,6 +28,19 @@ class UserMachinesForm extends Component {
   componentDidMount = () => {
     const { loadData } = this.props;
     loadData();
+  };
+
+  componentDidUpdate = prevProps => {
+    const { initialValues } = this.props;
+    if (
+      initialValues &&
+      initialValues.type &&
+      initialValues !== prevProps.initialValues
+    ) {
+      this.setState({
+        specifications: initialValues.type.allowedSpecifications
+      });
+    }
   };
 
   validate = values => {
@@ -87,7 +99,13 @@ class UserMachinesForm extends Component {
   };
 
   render = () => {
-    const { error, isFetching, machineTypes, initialValues } = this.props;
+    const {
+      error,
+      isFetching,
+      machineTypes,
+      initialValues,
+      submitButtonTitle
+    } = this.props;
     const { specifications, disabled } = this.state;
 
     return (
@@ -95,77 +113,82 @@ class UserMachinesForm extends Component {
         <Form
           onSubmit={this.onSubmit}
           validate={this.validate}
-          error={error}
+          error={error.machines}
           initialValues={initialValues}
           className="add-machine-form"
         >
           {() => (
             <>
+              <Loader
+                isFetching={isFetching.machineTypes}
+                error={error.machineTypes}
+              >
+                <div className="add-machine-form__row">
+                  <Text
+                    required
+                    name="name"
+                    label="Название"
+                    className="add-machine-form__field"
+                  />
+                </div>
+                <div className="add-machine-form__row">
+                  <Text
+                    required
+                    multiline
+                    name="description"
+                    label="Описание"
+                    className="add-machine-form__field"
+                  />
+                </div>
+                <div className="add-machine-form__row">
+                  <Select
+                    required
+                    name="machineTypeId"
+                    label="Тип техники"
+                    items={machineTypes}
+                    className="add-machine-form__field"
+                    onMutation={this.handleMachineTypeChange}
+                  />
+                </div>
+                <FieldArray name="specifications">
+                  {() => (
+                    <div className="add-machine-form__row">
+                      {specifications.map((specification, index) => {
+                        return (
+                          <Fragment key={specification.name}>
+                            <Text
+                              name={`specifications[${index}].value`}
+                              label={specifications[index].name}
+                              className="add-machine-form__field"
+                            />
+                          </Fragment>
+                        );
+                      })}
+                    </div>
+                  )}
+                </FieldArray>
+                <div className="add-machine-form__row">
+                  <Text
+                    required
+                    name="price"
+                    label="Цена"
+                    className="add-machine-form__field"
+                  />
+                </div>
+                <div className="add-machine-form__uploader">
+                  <Uploader
+                    innerRef={child => {
+                      if (child) this.uploader = child.ref;
+                    }}
+                    name="images"
+                    title="Загрузить фотографии"
+                  />
+                </div>
+              </Loader>
               <div className="add-machine-form__row">
-                <Text
-                  required
-                  name="name"
-                  label="Название"
-                  className="add-machine-form__field"
-                />
-              </div>
-              <div className="add-machine-form__row">
-                <Text
-                  required
-                  multiline
-                  name="description"
-                  label="Описание"
-                  className="add-machine-form__field"
-                />
-              </div>
-              <div className="add-machine-form__row">
-                <Select
-                  required
-                  name="machineTypeId"
-                  label="Тип техники"
-                  items={machineTypes}
-                  className="add-machine-form__field"
-                  onMutation={this.handleMachineTypeChange}
-                />
-              </div>
-              <FieldArray name="specifications">
-                {() => (
-                  <div className="add-machine-form__row">
-                    {specifications.map((specification, index) => {
-                      return (
-                        <Fragment key={specification.title}>
-                          <Text
-                            name={`specifications[${index}].value`}
-                            label={specifications[index].title}
-                            className="add-machine-form__field"
-                          />
-                        </Fragment>
-                      );
-                    })}
-                  </div>
-                )}
-              </FieldArray>
-              <div className="add-machine-form__row">
-                <Text
-                  required
-                  name="price"
-                  label="Цена"
-                  className="add-machine-form__field"
-                />
-              </div>
-              <div className="add-machine-form__uploader">
-                <Uploader
-                  innerRef={child => {
-                    if (child) this.uploader = child.ref;
-                  }}
-                  name="images"
-                  title="Загрузить фотографии"
-                />
-              </div>
-              <div className="add-machine-form__row">
-                <Loader isFetching={isFetching}>
+                <Loader isFetching={isFetching.machines || isFetching.files}>
                   <Button type="submit" disabled={disabled}>
-                    Добавить
+                    {submitButtonTitle}
                   </Button>
                 </Loader>
               </div>
@@ -184,9 +207,9 @@ UserMachinesForm.defaultProps = {
 
 UserMachinesForm.propTypes = {
   className: PropTypes.string,
-  error: PropTypes.string,
+  error: PropTypes.shape(),
   onSubmit: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired
+  isFetching: PropTypes.shape({}).isRequired
 };
 
 const mapStateToProps = state => {
@@ -196,18 +219,26 @@ const mapStateToProps = state => {
     machineTypes = types.map(type => ({
       id: type.id,
       title: type.name,
-      specifications: type.allowedSpecifications.map(specification => ({
-        id: specification.id,
-        title: specification.name
-      }))
+      specifications: type.allowedSpecifications
     }));
   }
 
   return {
-    error: state.common.machines.error,
-    success: state.common.machines.success,
-    isFetching:
-      state.common.machines.isFetching || state.common.files.isFetching,
+    error: {
+      machines: state.common.machines.error,
+      files: state.common.files.error,
+      machineTypes: state.common.machineTypes.error
+    },
+    success: {
+      machines: state.common.machines.success,
+      files: state.common.files.success,
+      machineTypes: state.common.machineTypes.success
+    },
+    isFetching: {
+      machines: state.common.machines.isFetching,
+      files: state.common.files.isFetching,
+      machineTypes: state.common.machineTypes.isFetching
+    },
     machineTypes,
     files: state.files
   };

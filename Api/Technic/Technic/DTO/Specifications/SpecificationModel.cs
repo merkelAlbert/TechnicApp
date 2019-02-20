@@ -1,8 +1,8 @@
 using System;
 
-namespace Technic.DTO.MachineTypes
+namespace Technic.DTO.Specifications
 {
-    public class SpecificationsModel
+    public class SpecificationModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

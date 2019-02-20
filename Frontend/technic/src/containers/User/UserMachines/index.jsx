@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import SnackBar from '../../../components/SnackBar';
+
 import View from './View';
 import SingleDialog from './View/SingleDialog';
 import AddDialog from './AddDialod';
-import SnackBar from '../../../components/SnackBar';
+import EditDialog from './EditDialog';
 
 class UserMachines extends Component {
   state = {
@@ -36,6 +38,10 @@ class UserMachines extends Component {
           <Route
             path="/user/:userId/machines/add"
             render={() => <AddDialog onSuccess={this.onSuccess} />}
+          />
+           <Route
+            path="/user/:userId/machines/edit/:machineId"
+            render={() => <EditDialog onSuccess={this.onSuccess} />}
           />
         </Switch>
         <SnackBar open={open} message={message} onClose={this.handleClose} />

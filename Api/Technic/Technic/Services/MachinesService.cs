@@ -12,6 +12,7 @@ using Technic.DAL.Models;
 using Technic.DAL.Models.IntermediateModels;
 using Technic.DTO;
 using Technic.DTO.Machines;
+using Technic.DTO.MachineTypes;
 using Technic.Interfaces;
 
 namespace Technic.Services
@@ -21,12 +22,15 @@ namespace Technic.Services
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
         private readonly UserRepository _userRepository;
+        private readonly IMachineTypeService _machineTypeService;
 
-        public MachinesService(DatabaseContext databaseContext, IMapper mapper, UserRepository userRepository)
+        public MachinesService(DatabaseContext databaseContext, IMapper mapper, UserRepository userRepository,
+            IMachineTypeService machineTypeService)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;
             _userRepository = userRepository;
+            _machineTypeService = machineTypeService;
         }
 
         public async Task<List<MachinesModel>> GetMachines(bool isPrivateOffice)
@@ -58,8 +62,7 @@ namespace Technic.Services
             if (machine != null)
             {
                 var machineModel = _mapper.Map<Machine, MachineModel>(machine);
-                machineModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
-                    ?.Name;
+                machineModel.Type = await _machineTypeService.GetMachineType(machine.MachineTypeId);
                 return machineModel;
             }
 
@@ -111,12 +114,14 @@ namespace Technic.Services
                             SpecificationId = specification.Id,
                         });
                 }
+
                 await _databaseContext.SaveChangesAsync();
                 var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
                 machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
                     ?.Name;
                 return machinesModel;
             }
+
             throw new InvalidOperationException("Неверный id");
         }
     }

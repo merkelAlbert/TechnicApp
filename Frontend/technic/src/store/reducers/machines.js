@@ -14,6 +14,19 @@ const machines = (state = initialState.machines, action) => {
       return action.payload ? { ...state, active: action.payload } : state;
     case machinesActions.FETCH_ONE_ERROR:
       return { ...state, active: {} };
+    case machinesActions.UPDATE_MACHINE_SUCCESS:
+      return action.payload
+        ? {
+            ...state,
+            list: state.list.map(machine => {
+              if (machine.id !== action.payload.id) {
+                return machine;
+              }
+              return action.payload;
+            }),
+            active: {}
+          }
+        : state;
     case USER_LOGOUT:
       return initialState.machines;
     default:

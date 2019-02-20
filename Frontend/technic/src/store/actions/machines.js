@@ -1,4 +1,4 @@
-import { post, get, MACHINES } from '../../utils/api';
+import { post, get, put, MACHINES } from '../../utils/api';
 
 export const ADD_MACHINE_REQUEST = 'ADD_MACHINE_REQUEST';
 export const ADD_MACHINE_SUCCESS = 'ADD_MACHINE_SUCCESS';
@@ -59,6 +59,27 @@ export const fetchOne = id => async dispatch => {
     }
     console.log(message);
     dispatch({ type: FETCH_ONE_ERROR, payload: message });
+    throw new Error(message);
+  }
+};
+
+export const UPDATE_MACHINE_REQUEST = 'UPDATE_MACHINE_REQUEST';
+export const UPDATE_MACHINE_SUCCESS = 'UPDATE_MACHINE_SUCCESS';
+export const UPDATE_MACHINE_ERROR = 'UPDATE_MACHINE_ERROR';
+export const update = (machineId, machine) => async dispatch => {
+  dispatch({ type: UPDATE_MACHINE_REQUEST });
+
+  try {
+    const data = await put(MACHINES, machineId, machine);
+    dispatch({ type: UPDATE_MACHINE_SUCCESS, payload: data });
+  } catch (err) {
+    let message = 'Прозошла ошибка';
+
+    if (err.response !== undefined) {
+      message = err.response.data;
+    }
+    console.log(message);
+    dispatch({ type: UPDATE_MACHINE_ERROR, payload: message });
     throw new Error(message);
   }
 };

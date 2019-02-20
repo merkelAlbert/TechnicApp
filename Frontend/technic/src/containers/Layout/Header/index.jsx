@@ -6,13 +6,14 @@ import cn from 'classnames';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash-es/isEmpty';
 import AccountIcon from '@material-ui/icons/AccountCircle';
-import { Menu, MenuItem } from '@material-ui/core';
 
 import { logout } from '../../../store/actions/service';
 
 import AppHeader from '../../../components/Header';
 import Link from '../../../components/Link';
 import IconButton from '../../../components/IconButton';
+import Menu from '../../../components/Menu';
+import MenuItem from '../../../components/Menu/MenuItem';
 
 import './style.scss';
 
@@ -65,7 +66,7 @@ class Header extends Component {
               open={isMenuOpen}
               onClose={this.handleUserMenuClose}
             >
-              <MenuItem onClick={this.handleUserMenuClose}>
+              <MenuItem>
                 <Link to={`/user/${user.id}`} className="header__auth-profile">
                   Личный кабинет
                 </Link>

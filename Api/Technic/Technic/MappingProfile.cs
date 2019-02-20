@@ -8,6 +8,7 @@ using Technic.DTO;
 using Technic.DTO.Account;
 using Technic.DTO.Machines;
 using Technic.DTO.MachineTypes;
+using Technic.DTO.Specifications;
 
 namespace Technic
 {
@@ -48,7 +49,7 @@ namespace Technic
                 .ForMember(t => t.AllowedSpecifications,
                     o => o.MapFrom(t => t.AllowedSpecifications.Select(s => s.Specification)));
 
-            CreateMap<Specification, SpecificationsModel>();
+            CreateMap<Specification, SpecificationModel>();
             CreateMap<SpecificationInfo, Specification>();
         }
     }

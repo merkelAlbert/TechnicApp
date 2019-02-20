@@ -9,6 +9,21 @@ export const MACHINES = BASE_URL + '/machines';
 export const FETCH_MACHINE_TYPES = BASE_URL + '/machineTypes';
 export const FILES = BASE_URL + '/files';
 
+export const put = async (url, id, payload) => {
+  let options = {};
+
+  const token = localStorage.getItem('token');
+  if (token) {
+    options = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+  }
+
+  const { data } = await axios.put(`${url}/${id}`, payload, options);
+
+  return data;
+};
+
 export const post = async (url, payload) => {
   let options = {};
 

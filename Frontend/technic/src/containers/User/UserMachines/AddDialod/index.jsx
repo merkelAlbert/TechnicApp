@@ -25,17 +25,12 @@ class UserMachinesAddDialog extends Component {
           open
           fullWidth
         >
-          <Form onSubmit={onSubmit} />
+          <Form onSubmit={onSubmit} submitButtonTitle="Изменить"/>
         </Dialog>
       </>
     );
   };
 }
-
-const mapStateToProps = state => ({
-  isSuccess: state.common.machines.isSuccess,
-  isFetching: state.common.machines.isFetching
-});
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { onSuccess } = ownProps;
@@ -57,7 +52,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default compose(
   withRouter,
   connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
   )
 )(UserMachinesAddDialog);

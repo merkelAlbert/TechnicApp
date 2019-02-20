@@ -1,6 +1,6 @@
 using System;
 
-namespace Technic.DTO.Machines
+namespace Technic.DTO.Specifications
 {
     public class SpecificationInfo
     {

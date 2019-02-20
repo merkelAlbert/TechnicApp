@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Technic.DAL.Models;
+using Technic.DTO.Specifications;
 
 namespace Technic.DTO.MachineTypes
 {
@@ -9,7 +10,7 @@ namespace Technic.DTO.MachineTypes
         public Guid Id { get; set; }
         
         public string Name { get; set; }
-        public List<SpecificationsModel> AllowedSpecifications { get; set; } =
-            new List<SpecificationsModel>();
+        public List<SpecificationModel> AllowedSpecifications { get; set; } =
+            new List<SpecificationModel>();
     }
 }

@@ -25,6 +25,18 @@ namespace Technic.Services
             _mapper = mapper;
         }
 
+        public async Task<MachineTypeModel> GetMachineType(Guid machineTypeId)
+        {
+            var machineType = await _databaseContext.MachineTypes.Include(mt => mt.AllowedSpecifications)
+                .ThenInclude(s => s.Specification).FirstOrDefaultAsync(mt => mt.Id == machineTypeId);
+            if (machineType != null)
+            {
+                var machineTypeModel = _mapper.Map<MachineType, MachineTypeModel>(machineType);
+                return machineTypeModel;
+            }
+            throw new InvalidOperationException("Неверный id");
+        }
+
         public async Task<List<MachineTypeModel>> GetMachineTypes()
         {
             var machineTypes = await _databaseContext.MachineTypes

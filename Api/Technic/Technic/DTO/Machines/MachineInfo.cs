@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Technic.DAL.Models.Enums;
+using Technic.DTO.Specifications;
 
 namespace Technic.DTO.Machines
 {
