@@ -31,6 +31,7 @@ namespace Technic.Services
             ref Machine machine)
         {
             var specifications = _databaseContext.Specifications.ToList();
+            var machineSpecifications = machine.Specifications;
             foreach (var specificationModel in machineInfo.Specifications)
             {
                 //in db
@@ -39,10 +40,10 @@ namespace Technic.Services
                 {
                     //in machine
                     var machineSpecification =
-                        machine.Specifications.FirstOrDefault(s => s.Specification.Id == specificationModel.Id);
+                        machineSpecifications.FirstOrDefault(s => s.Specification?.Id == specificationModel.Id);
                     if (machineSpecification == null)
                     {
-                        machine.Specifications.Add(new MachineSpecification()
+                        machineSpecifications.Add(new MachineSpecification()
                         {
                             Value = specificationModel.Value,
                             SpecificationId = specification.Id,

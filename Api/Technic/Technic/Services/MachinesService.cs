@@ -89,7 +89,7 @@ namespace Technic.Services
         public async Task<MachinesModel> UpdateMachine(Guid machineId, MachineInfo machineInfo)
         {
             var userId = _userRepository.GetCurrentUserId();
-            var machine = _databaseContext.Machines.Include(m => m.Specifications)
+            var machine = _databaseContext.Machines.Include(m => m.Specifications).ThenInclude(s => s.Specification)
                 .FirstOrDefault(m => m.Id == machineId);
             if (machine != null)
             {
