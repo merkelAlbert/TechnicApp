@@ -35,7 +35,8 @@ class UserMachinesView extends Component {
     return (
       (machines.length &&
         !machines.every(machine => prevMachines.includes(machine))) ||
-      !machines.length
+      !machines.length ||
+      machines.length !== prevMachines.length
     );
   };
 
