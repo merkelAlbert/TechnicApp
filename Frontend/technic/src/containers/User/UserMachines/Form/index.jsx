@@ -75,9 +75,12 @@ class UserMachinesForm extends Component {
     const { files } = this.uploader;
     const formData = new FormData();
 
-    for (let i = 0; i < files.length; i++) formData.append('images', files[i]);
-    const imagesIds = await uploadFiles(formData);
-    machineCopy.imagesIds = imagesIds;
+    if (files.length) {
+      for (let i = 0; i < files.length; i++)
+        formData.append('images', files[i]);
+      const imagesIds = await uploadFiles(formData);
+      machineCopy.imagesIds = imagesIds;
+    }
 
     if (!isEmpty(machine.specifications)) {
       machineCopy.specifications = machine.specifications.map((spec, index) => {

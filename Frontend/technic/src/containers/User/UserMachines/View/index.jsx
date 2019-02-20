@@ -24,14 +24,20 @@ class UserMachinesView extends Component {
     loadData();
   };
 
-  // componentDidUpdate = prevProps => {
-  //   const {
-  //     history: {
-  //       location: { pathname }
-  //     }
-  //   } = this.props;
-  //   if ()
-  // };
+  shouldComponentUpdate = prevProps => {
+    const {
+      data: { machines }
+    } = this.props;
+    const {
+      data: { machines: prevMachines }
+    } = prevProps;
+
+    return (
+      (machines.length &&
+        !machines.every(machine => prevMachines.includes(machine))) ||
+      !machines.length
+    );
+  };
 
   onSuccess = message => {
     this.setState({

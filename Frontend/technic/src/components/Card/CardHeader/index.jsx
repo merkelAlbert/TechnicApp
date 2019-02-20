@@ -1,11 +1,9 @@
 import cn from 'classnames';
 import React from 'react';
-import MuiCardHeader from '@material-ui/core/CardHeader';
 import { withStyles } from '@material-ui/core/styles';
 import { MoreVert as MoreVertIcon } from '@material-ui/icons';
 
 import IconButton from '../../IconButton';
-import { CardContent } from '@material-ui/core';
 
 const styles = {
   root: {
@@ -20,7 +18,7 @@ const styles = {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    fontSize: '18px'
+    fontSize: '16px'
   },
   subHeader: {
     whiteSpace: 'nowrap',
