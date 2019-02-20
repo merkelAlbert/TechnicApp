@@ -14,12 +14,12 @@ using Technic.Interfaces;
 
 namespace Technic.Services
 {
-    public class MachineTypeService : IMachineTypeService
+    public class MachineTypesService : IMachineTypesService
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
 
-        public MachineTypeService(DatabaseContext databaseContext, IMapper mapper)
+        public MachineTypesService(DatabaseContext databaseContext, IMapper mapper)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;

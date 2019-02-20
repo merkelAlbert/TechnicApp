@@ -15,18 +15,18 @@ namespace Technic.Controllers
     [Route("[controller]")]
     public class MachineTypesController : Controller
     {
-        private readonly IMachineTypeService _machineTypeService;
+        private readonly IMachineTypesService _machineTypesService;
 
-        public MachineTypesController(IMachineTypeService machineTypeService)
+        public MachineTypesController(IMachineTypesService machineTypesService)
         {
-            _machineTypeService = machineTypeService;
+            _machineTypesService = machineTypesService;
         }
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<object> GetMachineTypes()
         {
-            return await _machineTypeService.GetMachineTypes();
+            return await _machineTypesService.GetMachineTypes();
         }
     }
 }

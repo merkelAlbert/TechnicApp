@@ -25,7 +25,7 @@ class UserMachinesAddDialog extends Component {
           open
           fullWidth
         >
-          <Form onSubmit={onSubmit} submitButtonTitle="Изменить"/>
+          <Form onSubmit={onSubmit} submitButtonTitle="Добавить"/>
         </Dialog>
       </>
     );

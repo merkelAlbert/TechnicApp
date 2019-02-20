@@ -99,8 +99,9 @@ namespace Technic
             
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IMachinesService, MachinesService>();
-            services.AddScoped<IMachineTypeService, MachineTypeService>();
+            services.AddScoped<IMachineTypesService, MachineTypesService>();
             services.AddScoped<IFilesService, FilesService>();
+            services.AddScoped<ISpecificationsService, SpecificationsService>();
             services.AddScoped<SpecificationsInitializer>();
             services.AddScoped<MachineTypesInitializer>();
             services.AddScoped<UserRepository>();

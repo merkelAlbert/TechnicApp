@@ -22,15 +22,17 @@ namespace Technic.Services
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
         private readonly UserRepository _userRepository;
-        private readonly IMachineTypeService _machineTypeService;
+        private readonly IMachineTypesService _machineTypesService;
+        private readonly ISpecificationsService _specificationsService;
 
         public MachinesService(DatabaseContext databaseContext, IMapper mapper, UserRepository userRepository,
-            IMachineTypeService machineTypeService)
+            IMachineTypesService machineTypesService, ISpecificationsService specificationsService)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;
             _userRepository = userRepository;
-            _machineTypeService = machineTypeService;
+            _machineTypesService = machineTypesService;
+            _specificationsService = specificationsService;
         }
 
         public async Task<List<MachinesModel>> GetMachines(bool isPrivateOffice)
@@ -62,7 +64,7 @@ namespace Technic.Services
             if (machine != null)
             {
                 var machineModel = _mapper.Map<Machine, MachineModel>(machine);
-                machineModel.Type = await _machineTypeService.GetMachineType(machine.MachineTypeId);
+                machineModel.Type = await _machineTypesService.GetMachineType(machine.MachineTypeId);
                 return machineModel;
             }
 
@@ -74,18 +76,7 @@ namespace Technic.Services
             var userId = _userRepository.GetCurrentUserId();
             var machine = _mapper.Map<MachineInfo, Machine>(machineInfo);
             machine.UserId = userId;
-            var specifications = _databaseContext.Specifications.ToList();
-            foreach (var specificationModel in machineInfo.Specifications)
-            {
-                var specification = specifications.FirstOrDefault(s => s.Id == specificationModel.Id);
-                if (specification != null)
-                    machine.Specifications.Add(new MachineSpecification()
-                    {
-                        Value = specificationModel.Value,
-                        SpecificationId = specification.Id,
-                    });
-            }
-
+            _specificationsService.AddSpecificationsToMachine(machineInfo, ref machine);
             await _databaseContext.Machines.AddAsync(machine);
             await _databaseContext.SaveChangesAsync();
             var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
@@ -98,23 +89,13 @@ namespace Technic.Services
         public async Task<MachinesModel> UpdateMachine(Guid machineId, MachineInfo machineInfo)
         {
             var userId = _userRepository.GetCurrentUserId();
-            var machine = _databaseContext.Machines.FirstOrDefault(m => m.Id == machineId);
+            var machine = _databaseContext.Machines.Include(m => m.Specifications)
+                .FirstOrDefault(m => m.Id == machineId);
             if (machine != null)
             {
                 _mapper.Map(machineInfo, machine);
                 machine.UserId = userId;
-                var specifications = _databaseContext.Specifications.ToList();
-                foreach (var specificationModel in machineInfo.Specifications)
-                {
-                    var specification = specifications.FirstOrDefault(s => s.Id == specificationModel.Id);
-                    if (specification != null)
-                        machine.Specifications.Add(new MachineSpecification()
-                        {
-                            Value = specificationModel.Value,
-                            SpecificationId = specification.Id,
-                        });
-                }
-
+                _specificationsService.AddSpecificationsToMachine(machineInfo, ref machine);
                 await _databaseContext.SaveChangesAsync();
                 var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
                 machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)

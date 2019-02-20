@@ -24,6 +24,15 @@ class UserMachinesView extends Component {
     loadData();
   };
 
+  // componentDidUpdate = prevProps => {
+  //   const {
+  //     history: {
+  //       location: { pathname }
+  //     }
+  //   } = this.props;
+  //   if ()
+  // };
+
   onSuccess = message => {
     this.setState({
       isSnackBarOpen: true,

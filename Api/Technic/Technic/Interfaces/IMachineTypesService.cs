@@ -7,7 +7,7 @@ using Technic.DTO.MachineTypes;
 
 namespace Technic.Interfaces
 {
-    public interface IMachineTypeService
+    public interface IMachineTypesService
     {
         Task<MachineTypeModel> GetMachineType(Guid machineTypeId);
         Task<List<MachineTypeModel>> GetMachineTypes();
