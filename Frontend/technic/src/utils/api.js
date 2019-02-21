@@ -24,6 +24,21 @@ export const put = async (url, id, payload) => {
   return data;
 };
 
+export const del = async (url, id) => {
+  let options = {};
+
+  const token = localStorage.getItem('token');
+  if (token) {
+    options = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+  }
+
+  const { data } = await axios.delete(`${url}/${id}`, options);
+
+  return data;
+};
+
 export const post = async (url, payload) => {
   let options = {};
 

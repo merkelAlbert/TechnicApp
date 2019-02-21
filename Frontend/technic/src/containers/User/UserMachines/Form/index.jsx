@@ -77,7 +77,7 @@ class UserMachinesForm extends Component {
 
     if (files.length) {
       for (let i = 0; i < files.length; i++)
-        formData.append('images', files[i]);
+        formData.append('files', files[i]);
       const imagesIds = await uploadFiles(formData);
       machineCopy.imagesIds = imagesIds;
     }

@@ -20,8 +20,6 @@ const styles = {
   }
 };
 
-const Actions = ({ children }) => <DialogActions>{children}</DialogActions>;
-
 const Dialog = ({ children, open, onClose, title, classes, ...props }) => (
   <MuiDialog
     {...props}
@@ -39,7 +37,5 @@ const Dialog = ({ children, open, onClose, title, classes, ...props }) => (
     <DialogContent>{children}</DialogContent>
   </MuiDialog>
 );
-
-Dialog.Actions = Actions;
 
 export default withStyles(styles)(Dialog);

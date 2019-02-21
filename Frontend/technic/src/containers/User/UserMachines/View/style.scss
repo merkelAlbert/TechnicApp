@@ -3,6 +3,13 @@
   min-height: 100%;
   background-color: #fafafa;
 
+
+  &__empty-message {
+    width: 100%;
+    text-align: center;
+    align-self: center;
+  }
+
   &__container {
     margin: 0 auto;
     display: grid;

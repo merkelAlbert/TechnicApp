@@ -7,6 +7,7 @@ import View from './View';
 import SingleDialog from './View/SingleDialog';
 import AddDialog from './AddDialod';
 import EditDialog from './EditDialog';
+import RemoveDialog from './RemoveDialog';
 
 class UserMachines extends Component {
   state = {
@@ -42,6 +43,10 @@ class UserMachines extends Component {
            <Route
             path="/user/:userId/machines/edit/:machineId"
             render={() => <EditDialog onSuccess={this.onSuccess} />}
+          />
+           <Route
+            path="/user/:userId/machines/remove/:machineId"
+            render={() => <RemoveDialog onSuccess={this.onSuccess} />}
           />
         </Switch>
         <SnackBar open={open} message={message} onClose={this.handleClose} />

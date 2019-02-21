@@ -93,8 +93,7 @@ namespace Technic.Controllers
         {
             try
             {
-                await _machinesService.DeleteMachine(machineId);
-                return Ok();
+                return await _machinesService.DeleteMachine(machineId);
             }
             catch (Exception e)
             {

@@ -14,6 +14,6 @@ namespace Technic.Interfaces
         Task<MachineModel> GetMachine(Guid machineId);
         Task<MachinesModel> AddMachine(MachineInfo machineInfo);
         Task<MachinesModel> UpdateMachine(Guid machineId, MachineInfo machineInfo);
-        Task DeleteMachine(Guid machineId);
+        Task<Guid> DeleteMachine(Guid machineId);
     }
 }

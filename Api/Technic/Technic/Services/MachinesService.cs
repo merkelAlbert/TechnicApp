@@ -109,11 +109,12 @@ namespace Technic.Services
             throw new InvalidOperationException("Неверный id");
         }
 
-        public async Task DeleteMachine(Guid machineId)
+        public async Task<Guid> DeleteMachine(Guid machineId)
         {
             var machine = await _databaseContext.Machines.FirstOrDefaultAsync(m => m.Id == machineId);
             if (machine != null)
             {
+                var guid = machine.Id;
                 foreach (var image in machine.ImagesIds)
                 {
                     _filesService.DeleteFile(image);
@@ -121,6 +122,7 @@ namespace Technic.Services
 
                 _databaseContext.Remove(machine);
                 _databaseContext.SaveChanges();
+                return guid;
             }
             else
             {

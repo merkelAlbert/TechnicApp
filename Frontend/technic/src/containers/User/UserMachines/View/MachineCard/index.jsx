@@ -58,7 +58,11 @@ class UserMachineCard extends Component {
               Изменить
             </Link>
           </MenuItem>
-          <MenuItem>Удалить</MenuItem>
+          <MenuItem>
+            <Link to={`/user/${userId}/machines/remove/${machineId}`}>
+              Удалить
+            </Link>
+          </MenuItem>
         </Menu>
         <Link to={`/user/${userId}/machines/view/${machineId}`}>
           {imageId ? (

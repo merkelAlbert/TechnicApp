@@ -27,6 +27,14 @@ const machines = (state = initialState.machines, action) => {
             active: {}
           }
         : state;
+    case machinesActions.REMOVE_MACHINE_SUCCESS:
+      return action.payload
+        ? {
+            ...state,
+            list: state.list.filter(machine => machine.id !== action.payload),
+            active: {}
+          }
+        : state;
     case USER_LOGOUT:
       return initialState.machines;
     default:

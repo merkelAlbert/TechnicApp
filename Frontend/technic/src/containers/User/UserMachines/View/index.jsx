@@ -60,6 +60,11 @@ class UserMachinesView extends Component {
     return (
       <div className="user-machines-view">
         <Loader isFetching={isFetching} error={error}>
+          {!machines.length && (
+            <div className="user-machines-view__empty-message">
+              Техника отсутствует. Добавьте свою первую машину!
+            </div>
+          )}
           <div className="user-machines-view__container">
             {machines.map(machine => (
               <MachineCard key={machine.id} userId={userId} machine={machine} />
