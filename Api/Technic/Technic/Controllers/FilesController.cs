@@ -19,11 +19,11 @@ namespace Technic.Controllers
 
         [HttpPost]
         //[Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<object> Upload([FromForm] List<IFormFile> images)
+        public async Task<object> Upload([FromForm] List<IFormFile> files)
         {
             try
             {
-                var ids = await _filesService.Upload(images);
+                var ids = await _filesService.UploadFile(files);
                 return ids;
             }
             catch (Exception e)
@@ -33,13 +33,13 @@ namespace Technic.Controllers
         }
 
         [HttpGet]
-        [Route("{imageId}")]
+        [Route("{fileId}")]
         //[Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<object> Download([FromRoute] Guid imageId)
+        public async Task<object> Download([FromRoute] Guid fileId)
         {
             try
             {
-                var file = await _filesService.Download(imageId);
+                var file = await _filesService.DownloadFile(fileId);
                 return file;
             }
             catch (Exception e)

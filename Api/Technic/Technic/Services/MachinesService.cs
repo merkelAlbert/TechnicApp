@@ -24,15 +24,18 @@ namespace Technic.Services
         private readonly UserRepository _userRepository;
         private readonly IMachineTypesService _machineTypesService;
         private readonly ISpecificationsService _specificationsService;
+        private readonly IFilesService _filesService;
 
         public MachinesService(DatabaseContext databaseContext, IMapper mapper, UserRepository userRepository,
-            IMachineTypesService machineTypesService, ISpecificationsService specificationsService)
+            IMachineTypesService machineTypesService, ISpecificationsService specificationsService,
+            IFilesService filesService)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;
             _userRepository = userRepository;
             _machineTypesService = machineTypesService;
             _specificationsService = specificationsService;
+            _filesService = filesService;
         }
 
         public async Task<List<MachinesModel>> GetMachines(bool isPrivateOffice)
@@ -104,6 +107,25 @@ namespace Technic.Services
             }
 
             throw new InvalidOperationException("Неверный id");
+        }
+
+        public async Task DeleteMachine(Guid machineId)
+        {
+            var machine = await _databaseContext.Machines.FirstOrDefaultAsync(m => m.Id == machineId);
+            if (machine != null)
+            {
+                foreach (var image in machine.ImagesIds)
+                {
+                    _filesService.DeleteFile(image);
+                }
+
+                _databaseContext.Remove(machine);
+                _databaseContext.SaveChanges();
+            }
+            else
+            {
+                throw new InvalidOperationException("Неверный id");
+            }
         }
     }
 }

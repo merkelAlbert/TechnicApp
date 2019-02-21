@@ -9,7 +9,8 @@ namespace Technic.Interfaces
 {
     public interface IFilesService
     {
-        Task<List<Guid>> Upload(List<IFormFile> images);
-        Task<FileStreamResult> Download(Guid imageId);
+        Task<List<Guid>> UploadFile(List<IFormFile> files);
+        Task<FileStreamResult> DownloadFile(Guid fileId);
+        void DeleteFile(Guid fileId);
     }
 }

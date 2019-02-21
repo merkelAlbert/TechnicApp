@@ -85,5 +85,21 @@ namespace Technic.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+        
+        [HttpDelete]
+        [Route("{machineId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<object> DeleteMachine([FromRoute] Guid machineId)
+        {
+            try
+            {
+                await _machinesService.DeleteMachine(machineId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }
