@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { withRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import './style.scss';
 import UserInfo from './UserInfo';
@@ -32,4 +30,4 @@ class User extends Component {
   };
 }
 
-export default withRouter(User);
+export default User;

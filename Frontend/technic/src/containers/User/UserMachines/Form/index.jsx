@@ -1,5 +1,5 @@
 import { isEmpty, find } from 'lodash-es';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -17,7 +17,6 @@ import './style.scss';
 
 import { fetchAll } from '../../../../store/actions/machineTypes';
 import { add } from '../../../../store/actions/files';
-import { DriveEtaOutlined } from '@material-ui/icons';
 
 class UserMachinesForm extends Component {
   uploader = null;

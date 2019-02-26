@@ -1,10 +1,6 @@
-import { isEmpty, find } from 'lodash-es';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { FieldArray } from 'react-final-form-arrays';
 
 import Form from '../../../../components/Form';
 import Text from '../../../../components/Form/Text';

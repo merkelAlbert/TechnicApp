@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const {
     onSuccess,
     match: {
-      params: { machineId }
+      params: { userId }
     }
   } = ownProps;
 
@@ -78,7 +78,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default compose(
   withRouter,
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )
 )(UserInfoEditDialog);
