@@ -4,64 +4,32 @@ import { compose } from 'redux';
 import { withRouter, Switch, Route } from 'react-router-dom';
 
 import './style.scss';
-import EditUser from './EditUser';
 import UserInfo from './UserInfo';
 import Sidebar from './Sidebar';
 import UserMachines from './UserMachines';
 import UserFeedbacks from './UserFeedbacks';
 
-import { fetchOne } from '../../store/actions/user';
-
 class User extends Component {
-
-  componentDidMount = () => {
+  render = () => {
     const {
       match: {
-        params: {
-          userId
-        }
-      },
-      loadData,
+        params: { userId }
+      }
     } = this.props;
-
-    loadData(userId);
-  }
-
-  render = () => {
-    const { user } = this.props;
 
     return (
       <>
-        <Sidebar className="user-profile__sidebar" user={user} />
+        <Sidebar className="user-profile__sidebar" userId={userId} />
         <div className="user-profile__main">
           <Switch>
-            <Route exact path="/user/:userId" component={UserInfo} />
-            <Route path="/user/:userId/edit" component={EditUser} />
+            <Route path="/user/:userId/info" component={UserInfo} />
             <Route path="/user/:userId/machines" component={UserMachines} />
             <Route path="/user/:userId/feedbacks" component={UserFeedbacks} />
           </Switch>
         </div>
       </>
     );
-  }
+  };
 }
 
-const mapStateToProps = (state) => ({
-  user: state.user,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loadData: async (userId) => {
-    try {
-      await dispatch(fetchOne(userId));
-    }
-    catch (err) {
-      alert(err);
-    }
-  }
-});
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps, mapDispatchToProps),
-)(User);
+export default withRouter(User);

@@ -1,0 +1,15 @@
+.user-info-view {
+  &__card {
+    margin: 30px auto;
+    height: min-content;
+    width: 70%;
+    font-size: 14px;
+  }
+  &__row {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__row-key {
+    color: grey;
+  }
+}

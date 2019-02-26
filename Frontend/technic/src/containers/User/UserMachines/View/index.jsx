@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import { Add } from '@material-ui/icons';
@@ -58,7 +58,7 @@ class UserMachinesView extends Component {
     } = this.props;
 
     return (
-      <div className="user-machines-view">
+      <>
         <Loader isFetching={isFetching} error={error}>
           {!machines.length && (
             <div className="user-machines-view__empty-message">
@@ -76,7 +76,7 @@ class UserMachinesView extends Component {
             <Add />
           </Fab>
         </Link>
-      </div>
+      </>
     );
   };
 }

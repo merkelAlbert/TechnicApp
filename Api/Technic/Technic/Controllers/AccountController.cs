@@ -54,20 +54,22 @@ namespace Technic.Controllers
                 return new BadRequestObjectResult(e.Message);
             }
         }
+        
+        
 
-        /*[HttpGet]
+        [HttpGet]
         [Route("{id}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<object> GetUserInfo([FromRoute] Guid id)
+        public async Task<object> GetUser([FromRoute] Guid id)
         {
             try
             {
-                return _mapper.Map<User, AuthorizedDto>(await _accountService.GetAccountById(id));
+                return await _accountService.GetUserById(id);
             }
             catch (Exception e)
             {
                 return new BadRequestObjectResult(e.Message);
             }
-        }*/
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace Technic
             CreateMap<RegistrationInfo, User>();
             CreateMap<LoginInfo, User>();
             CreateMap<User, AuthorizedModel>();
+            CreateMap<User, UserModel>();
 
             CreateMap<MachineInfo, Machine>()
                 .ForMember(m => m.Id, o =>

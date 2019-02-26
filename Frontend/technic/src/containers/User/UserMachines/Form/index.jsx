@@ -17,6 +17,7 @@ import './style.scss';
 
 import { fetchAll } from '../../../../store/actions/machineTypes';
 import { add } from '../../../../store/actions/files';
+import { DriveEtaOutlined } from '@material-ui/icons';
 
 class UserMachinesForm extends Component {
   uploader = null;
@@ -76,8 +77,7 @@ class UserMachinesForm extends Component {
     const formData = new FormData();
 
     if (files.length) {
-      for (let i = 0; i < files.length; i++)
-        formData.append('files', files[i]);
+      for (let i = 0; i < files.length; i++) formData.append('files', files[i]);
       const imagesIds = await uploadFiles(formData);
       machineCopy.imagesIds = imagesIds;
     }
@@ -118,7 +118,7 @@ class UserMachinesForm extends Component {
           validate={this.validate}
           error={error.machines}
           initialValues={initialValues}
-          className="add-machine-form"
+          className="machine-form"
         >
           {() => (
             <>
@@ -126,59 +126,62 @@ class UserMachinesForm extends Component {
                 isFetching={isFetching.machineTypes}
                 error={error.machineTypes}
               >
-                <div className="add-machine-form__row">
+                <div className="machine-form__row">
                   <Text
                     required
                     name="name"
                     label="Название"
-                    className="add-machine-form__field"
+                    className="machine-form__field"
                   />
                 </div>
-                <div className="add-machine-form__row">
+                <div className="machine-form__row">
                   <Text
                     required
                     multiline
                     name="description"
                     label="Описание"
-                    className="add-machine-form__field"
+                    className="machine-form__field"
                   />
                 </div>
-                <div className="add-machine-form__row">
+                <div className="machine-form__row">
                   <Select
                     required
                     name="machineTypeId"
                     label="Тип техники"
                     items={machineTypes}
-                    className="add-machine-form__field"
+                    className="machine-form__field"
                     onMutation={this.handleMachineTypeChange}
                   />
                 </div>
                 <FieldArray name="specifications">
                   {() => (
-                    <div className="add-machine-form__row">
+                    <div className="machine-form__specifications">
                       {specifications.map((specification, index) => {
                         return (
-                          <Fragment key={specification.name}>
+                          <div
+                            key={specification.name}
+                            className="machine-form__specification"
+                          >
                             <Text
                               name={`specifications[${index}].value`}
                               label={specifications[index].name}
-                              className="add-machine-form__field"
+                              className="machine-form__field"
                             />
-                          </Fragment>
+                          </div>
                         );
                       })}
                     </div>
                   )}
                 </FieldArray>
-                <div className="add-machine-form__row">
+                <div className="machine-form__row">
                   <Text
                     required
                     name="price"
                     label="Цена"
-                    className="add-machine-form__field"
+                    className="machine-form__field"
                   />
                 </div>
-                <div className="add-machine-form__uploader">
+                <div className="machine-form__uploader">
                   <Uploader
                     innerRef={child => {
                       if (child) this.uploader = child.ref;
@@ -188,7 +191,7 @@ class UserMachinesForm extends Component {
                   />
                 </div>
               </Loader>
-              <div className="add-machine-form__row">
+              <div className="machine-form__row">
                 <Loader isFetching={isFetching.machines || isFetching.files}>
                   <Button type="submit" disabled={disabled}>
                     {submitButtonTitle}

@@ -4,7 +4,7 @@ import initialState from '../initialState';
 
 const user = (state = initialState.user, action) => {
   switch (action.type) {
-    case userActions.FETCH_USER_INFO_SUCCESS:
+    case userActions.FETCH_ONE_SUCCESS:
     case userActions.USER_AUTH_SUCCESS:
       return action.payload ? action.payload : state;
     case USER_LOGOUT:

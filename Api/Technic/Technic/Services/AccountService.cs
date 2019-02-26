@@ -92,6 +92,7 @@ namespace Technic.Services
             var hash = CreateHash(user.Password, salt);
             user.Password = hash;
             user.Salt = salt;
+            user.RegistrationDate = DateTime.Today;
             await _databaseContext.Users.AddAsync(user);
             await _databaseContext.SaveChangesAsync();
         }
@@ -112,10 +113,10 @@ namespace Technic.Services
             return token;
         }
 
-        public async Task<AuthorizedModel> GetUserById(Guid id)
+        public async Task<UserModel> GetUserById(Guid id)
         {
             var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Id == id);
-            var authorizedModel = _mapper.Map<User, AuthorizedModel>(user);
+            var authorizedModel = _mapper.Map<User, UserModel>(user);
             return authorizedModel ?? throw new InvalidOperationException("Неверный id");
         }
 

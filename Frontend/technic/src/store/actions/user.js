@@ -1,4 +1,4 @@
-import { post, get, REGISTER, LOGIN, USER_INFO } from '../../utils/api';
+import { post, get, REGISTER, LOGIN, USER } from '../../utils/api';
 
 export const USER_AUTH_REQUEST = 'USER_AUTH_REQUEST';
 export const USER_AUTH_SUCCESS = 'USER_AUTH_SUCCESS';
@@ -40,16 +40,16 @@ export const login = (user) => async (dispatch) => {
   }
 }
 
-export const FETCH_USER_INFO_REQUEST = 'FETCH_USER_INFO_REQUEST';
-export const FETCH_USER_INFO_SUCCESS = 'FETCH_USER_INFO_SUCCESS';
-export const FETCH_USER_INFO_ERROR = 'FETCH_USER_INFO_ERROR';
+export const FETCH_ONE_REQUEST = 'FETCH_ONE_REQUEST';
+export const FETCH_ONE_SUCCESS = 'FETCH_ONE_SUCCESS';
+export const FETCH_ONE_ERROR = 'FETCH_ONE_ERROR';
 
 export const fetchOne = (userId) => async (dispatch) => {
-  dispatch({ type: FETCH_USER_INFO_REQUEST });
+  dispatch({ type: FETCH_ONE_REQUEST });
 
   try {
-    const data = await get(USER_INFO, userId);
-    dispatch({ type: FETCH_USER_INFO_SUCCESS, payload: data });
+    const data = await get(USER, userId);
+    dispatch({ type: FETCH_ONE_SUCCESS, payload: data });
   }
   catch (err) {
     let message = 'Прозошла ошибка';
@@ -57,6 +57,6 @@ export const fetchOne = (userId) => async (dispatch) => {
     if (err.response !== undefined) {
       message = err.response.data;
     }
-    dispatch({ type: FETCH_USER_INFO_ERROR, payload: message });
+    dispatch({ type: FETCH_ONE_ERROR, payload: message });
   }
 }

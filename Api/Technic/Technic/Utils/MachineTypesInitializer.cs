@@ -77,6 +77,10 @@ namespace Technic.Utils
                 //эвакуатор
                 type = new MachineType();
                 type.Name = MachineTypes.TowTruck;
+                var typeSpecification = new MachineType_Specification();
+                typeSpecification.Specification =
+                    _databaseContext.Specifications.FirstOrDefault(s => s.Name == MachineSpecifications.FuelType);
+                type.AllowedSpecifications.Add(typeSpecification);
                 types.Add(type);
 
                 //тип-характеристика
@@ -84,7 +88,7 @@ namespace Technic.Utils
                 {
                     foreach (var spec in specs)
                     {
-                        var typeSpec  = new MachineType_Specification();
+                        var typeSpec = new MachineType_Specification();
                         typeSpec.Specification = spec;
                         machineType.AllowedSpecifications.Add(typeSpec);
                     }

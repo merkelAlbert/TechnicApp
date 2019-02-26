@@ -14,6 +14,9 @@ namespace Technic.DAL.Models
         public UserRole UserRole { get; set; }
         
         public string Phone { get; set; }
+        public string Description { get; set; }
+        public string Address { get; set; }
+        public DateTime RegistrationDate { get; set; } = new DateTime();
         public ICollection<Machine> Machines { get; set; } = new List<Machine>();
     }
 }

@@ -45,6 +45,7 @@ class UserMachineCard extends Component {
       <Card className="user-machine-card">
         <CardHeader
           title={name}
+          titleSize="medium"
           subTitle={type}
           onActionClick={this.onCardActionClick}
         />
