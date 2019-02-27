@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -9,13 +9,16 @@ import Loader from '../../../../components/Loader';
 
 import './style.scss';
 
-class UserInfoForm extends Component {
-  state = {
-    disabled: true
-  };
-  componentDidMount = () => {};
+const UserInfoForm = ({
+  submitButtonTitle,
+  onSubmit,
+  initialValues,
+  isFetching,
+  error
+}) => {
+  const [disabled, setDisabled] = useState(true);
 
-  validate = values => {
+  const validate = values => {
     const errors = {};
     if (!values.name) {
       errors.name = 'Required';
@@ -23,119 +26,79 @@ class UserInfoForm extends Component {
     if (!values.phone) {
       errors.name = 'Required';
     }
-    Object.keys(errors).length === 0
-      ? this.setState({
-          disabled: false
-        })
-      : this.setState({
-          disabled: true
-        });
+    Object.keys(errors).length === 0 ? setDisabled(false) : setDisabled(true);
 
     return errors;
   };
 
-  // onSubmit = async machine => {
-  //   const { onSubmit, uploadFiles } = this.props;
-  //   const { specifications } = this.state;
-  //   const machineCopy = { ...machine };
-  //   const { files } = this.uploader;
-  //   const formData = new FormData();
+  return (
+    <>
+      <Form
+        onSubmit={onSubmit}
+        validate={validate}
+        error={error}
+        initialValues={initialValues}
+        className="user-info-form"
+      >
+        {() => (
+          <>
+            {/* <div className="user-info-form__row">
+              <Text
+                required
+                name="email"
+                type="email"
+                label="Email"
+                className="user-info-form__field"
+              />
+            </div> */}
+            <div className="user-info-form__row">
+              <Text
+                required
+                name="name"
+                label="Название"
+                className="user-info-form__field"
+              />
+              <Text
+                required
+                name="phone"
+                label="Телефон"
+                className="user-info-form__field"
+              />
+            </div>
+            <div className="user-info-form__row">
+              <Text
+                multiline
+                name="description"
+                label="Описание"
+                className="user-info-form__field"
+              />
+            </div>
 
-  //   if (files.length) {
-  //     for (let i = 0; i < files.length; i++) formData.append('files', files[i]);
-  //     const imagesIds = await uploadFiles(formData);
-  //     machineCopy.imagesIds = imagesIds;
-  //   }
-
-  //   if (!isEmpty(machine.specifications)) {
-  //     machineCopy.specifications = machine.specifications.map((spec, index) => {
-  //       const { value } = spec;
-  //       const id = specifications[index].id;
-
-  //       return { id, value };
-  //     });
-  //   }
-  //   onSubmit(machineCopy);
-  // };
-
-  // handleMachineTypeChange = id => {
-  //   const { machineTypes } = this.props;
-  //   const selectedType = find(machineTypes, type => type.id === id);
-  //   this.setState({
-  //     specifications: selectedType.specifications
-  //   });
-  // };
-
-  render = () => {
-    const {
-      submitButtonTitle,
-      onSubmit,
-      initialValues,
-      isFetching,
-      error
-    } = this.props;
-    const { disabled } = this.state;
-
-    return (
-      <>
-        <Form
-          onSubmit={onSubmit}
-          validate={this.validate}
-          error={error}
-          initialValues={initialValues}
-          className="user-info-form"
-        >
-          {() => (
-            <>
-              <div className="user-info-form__row">
-                <Text
-                  required
-                  name="name"
-                  label="Название"
-                  className="user-info-form__field"
-                />
-                <Text
-                  required
-                  name="phone"
-                  label="Телефон"
-                  className="user-info-form__field"
-                />
-              </div>
-              <div className="user-info-form__row">
-                <Text
-                  multiline
-                  name="description"
-                  label="Описание"
-                  className="user-info-form__field"
-                />
-              </div>
-
-              <div className="user-info-form__row">
-                <Text
-                  multiline
-                  name="address"
-                  label="Адрес"
-                  className="user-info-form__field"
-                />
-              </div>
-              <div className="user-info-form__row">
-                <Loader isFetching={isFetching}>
-                  <Button disabled={disabled} type="submit">
-                    {submitButtonTitle}
-                  </Button>
-                </Loader>
-              </div>
-            </>
-          )}
-        </Form>
-      </>
-    );
-  };
-}
+            <div className="user-info-form__row">
+              <Text
+                multiline
+                name="address"
+                label="Адрес"
+                className="user-info-form__field"
+              />
+            </div>
+            <div className="user-info-form__row">
+              <Loader isFetching={isFetching}>
+                <Button disabled={disabled} type="submit">
+                  {submitButtonTitle}
+                </Button>
+              </Loader>
+            </div>
+          </>
+        )}
+      </Form>
+    </>
+  );
+};
 
 const mapStateToProps = state => ({
-  isFetching: state.user.isFetching,
-  error: state.user.error
+  isFetching: state.common.user.isFetching,
+  error: state.common.user.error
 });
 
 export default connect(mapStateToProps)(UserInfoForm);

@@ -66,11 +66,9 @@ class Header extends Component {
               open={isMenuOpen}
               onClose={this.handleUserMenuClose}
             >
-              <MenuItem>
-                <Link to={`/user/${user.id}`} className="header__auth-profile">
-                  Личный кабинет
-                </Link>
-              </MenuItem>
+              <Link to={`/user/${user.id}/info`} className="header__auth-profile">
+                <MenuItem>Личный кабинет</MenuItem>
+              </Link>
               <MenuItem onClick={this.handleUserExit}>Выйти</MenuItem>
             </Menu>
           </div>

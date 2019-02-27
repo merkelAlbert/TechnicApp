@@ -7,9 +7,7 @@ using Technic.DTO.Specifications;
 namespace Technic.DTO.Machines
 {
     public class MachineInfo
-    {
-        public Guid Id { get; set; }
-        
+    {   
         public Guid MachineTypeId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

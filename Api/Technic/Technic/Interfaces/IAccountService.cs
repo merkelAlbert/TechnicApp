@@ -9,7 +9,8 @@ namespace Technic.Interfaces
     {
         Task Register(RegistrationInfo registrationInfo);
         Task<string> Login(LoginInfo loginInfo);
-        Task<UserModel> GetUserById(Guid id);
         Task<AuthorizedModel> GetUserByEmail(string email);
+        Task<UserModel> GetUserById(Guid userId);
+        Task<UserModel> UpdateUser(Guid userId, UserInfo userInfo);
     }
 }

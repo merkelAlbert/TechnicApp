@@ -49,7 +49,7 @@ namespace Technic.Services
 
         private string CreateSalt()
         {
-            byte[] randomBytes = new byte[128 / 8];
+            var randomBytes = new byte[128 / 8];
             using (var generator = RandomNumberGenerator.Create())
             {
                 generator.GetBytes(randomBytes);
@@ -113,18 +113,29 @@ namespace Technic.Services
             return token;
         }
 
-        public async Task<UserModel> GetUserById(Guid id)
+        public async Task<UserModel> GetUserById(Guid userId)
         {
-            var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _databaseContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
             var authorizedModel = _mapper.Map<User, UserModel>(user);
             return authorizedModel ?? throw new InvalidOperationException("Неверный id");
         }
 
         public async Task<AuthorizedModel> GetUserByEmail(string email)
         {
-            var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            var user = await _databaseContext.Users.FirstOrDefaultAsync(u => u.Email == email);
             var authorizedModel = _mapper.Map<User, AuthorizedModel>(user);
             return authorizedModel ?? throw new InvalidOperationException("Неверный email");
+        }
+
+        public async Task<UserModel> UpdateUser(Guid userId, UserInfo userInfo)
+        {
+            var user = await _databaseContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null) throw new InvalidOperationException("Неверный id");
+            _mapper.Map(userInfo, user);
+            await _databaseContext.SaveChangesAsync();
+            var userModel = _mapper.Map<User, UserModel>(user);
+            return userModel;
+
         }
     }
 }

@@ -20,6 +20,16 @@ namespace Technic
             CreateMap<LoginInfo, User>();
             CreateMap<User, AuthorizedModel>();
             CreateMap<User, UserModel>();
+            CreateMap<UserInfo, User>();/*.ForMember(u => u.Id, o =>
+                {
+                    o.UseDestinationValue();
+                    o.Ignore();
+                })
+                .ForMember(u => u.RegistrationDate, o =>
+                {
+                    o.UseDestinationValue();
+                    o.Ignore();
+                });*/
 
             CreateMap<MachineInfo, Machine>()
                 .ForMember(m => m.Id, o =>

@@ -36,7 +36,7 @@ namespace Technic.Services
             {
                 //in db
                 var specification = specifications.FirstOrDefault(s => s.Id == specificationModel.Id);
-                if (specification != null)
+                if (specification == null) continue;
                 {
                     //in machine
                     var machineSpecification =

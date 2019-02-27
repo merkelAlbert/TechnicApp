@@ -3,14 +3,16 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import { fetchOne, update } from '../../../../store/actions/user';
+
 import Dialog from '../../../../components/Dialog';
 import Form from '../Form';
 
 class UserInfoEditDialog extends Component {
-  // componentDidMount = () => {
-  //   const { loadData } = this.props;
-  //   loadData();
-  // };
+  componentDidMount = () => {
+    const { loadData } = this.props;
+    loadData();
+  };
 
   handleDialogClose = () => {
     const { history } = this.props;
@@ -18,7 +20,10 @@ class UserInfoEditDialog extends Component {
   };
 
   render = () => {
-    const { onSubmit } = this.props;
+    const {
+      onSubmit,
+      data: { user }
+    } = this.props;
 
     return (
       <>
@@ -30,7 +35,7 @@ class UserInfoEditDialog extends Component {
         >
           <Form
             onSubmit={onSubmit}
-            // initialValues={user}
+            initialValues={user}
             submitButtonTitle="Изменить"
           />
         </Dialog>
@@ -40,10 +45,9 @@ class UserInfoEditDialog extends Component {
 }
 
 const mapStateToProps = state => {
-  // const { isFetching, error } = state.common.machines;
-  // const { active: machine = {} } = state.machines;
-  // machine.machineTypeId = machine.type && machine.type.id;
-  // return { data: { machine }, isFetching, error };
+  const { user } = state;
+
+  return { data: { user } };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -55,23 +59,23 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   } = ownProps;
 
   return {
-    onSubmit: async machine => {
+    onSubmit: async user => {
       try {
-        // await dispatch(update(machineId, machine));
+        await dispatch(update(userId, user));
         const { history } = ownProps;
         onSuccess('Информация о пользователе успешно изменена');
         history.goBack();
       } catch (err) {
         console.log(err);
       }
+    },
+    loadData: async () => {
+      try {
+        await dispatch(fetchOne(userId));
+      } catch (err) {
+        console.log(err);
+      }
     }
-    // loadData: async () => {
-    //   try {
-    //     await dispatch(fetchOne(machineId));
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // }
   };
 };
 

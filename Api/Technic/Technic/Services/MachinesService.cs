@@ -64,14 +64,10 @@ namespace Technic.Services
                 .Include(m => m.Specifications)
                 .ThenInclude(s => s.Specification)
                 .FirstOrDefaultAsync(m => m.Id == machineId);
-            if (machine != null)
-            {
-                var machineModel = _mapper.Map<Machine, MachineModel>(machine);
-                machineModel.Type = await _machineTypesService.GetMachineType(machine.MachineTypeId);
-                return machineModel;
-            }
-
-            throw new InvalidOperationException("Неверный id");
+            if (machine == null) throw new InvalidOperationException("Неверный id");
+            var machineModel = _mapper.Map<Machine, MachineModel>(machine);
+            machineModel.Type = await _machineTypesService.GetMachineType(machine.MachineTypeId);
+            return machineModel;
         }
 
         public async Task<MachinesModel> AddMachine(MachineInfo machineInfo)
@@ -94,40 +90,30 @@ namespace Technic.Services
             var userId = _userRepository.GetCurrentUserId();
             var machine = _databaseContext.Machines.Include(m => m.Specifications).ThenInclude(s => s.Specification)
                 .FirstOrDefault(m => m.Id == machineId);
-            if (machine != null)
-            {
-                _mapper.Map(machineInfo, machine);
-                machine.UserId = userId;
-                _specificationsService.AddSpecificationsToMachine(machineInfo, ref machine);
-                await _databaseContext.SaveChangesAsync();
-                var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
-                machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
-                    ?.Name;
-                return machinesModel;
-            }
-
-            throw new InvalidOperationException("Неверный id");
+            if (machine == null) throw new InvalidOperationException("Неверный id");
+            _mapper.Map(machineInfo, machine);
+            machine.UserId = userId;
+            _specificationsService.AddSpecificationsToMachine(machineInfo, ref machine);
+            await _databaseContext.SaveChangesAsync();
+            var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
+            machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
+                ?.Name;
+            return machinesModel;
         }
 
         public async Task<Guid> DeleteMachine(Guid machineId)
         {
             var machine = await _databaseContext.Machines.FirstOrDefaultAsync(m => m.Id == machineId);
-            if (machine != null)
+            if (machine == null) throw new InvalidOperationException("Неверный id");
+            var guid = machine.Id;
+            foreach (var image in machine.ImagesIds)
             {
-                var guid = machine.Id;
-                foreach (var image in machine.ImagesIds)
-                {
-                    _filesService.DeleteFile(image);
-                }
+                _filesService.DeleteFile(image);
+            }
 
-                _databaseContext.Remove(machine);
-                _databaseContext.SaveChanges();
-                return guid;
-            }
-            else
-            {
-                throw new InvalidOperationException("Неверный id");
-            }
+            _databaseContext.Remove(machine);
+            _databaseContext.SaveChanges();
+            return guid;
         }
     }
 }

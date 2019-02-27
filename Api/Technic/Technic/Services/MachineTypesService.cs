@@ -29,12 +29,9 @@ namespace Technic.Services
         {
             var machineType = await _databaseContext.MachineTypes.Include(mt => mt.AllowedSpecifications)
                 .ThenInclude(s => s.Specification).FirstOrDefaultAsync(mt => mt.Id == machineTypeId);
-            if (machineType != null)
-            {
-                var machineTypeModel = _mapper.Map<MachineType, MachineTypeModel>(machineType);
-                return machineTypeModel;
-            }
-            throw new InvalidOperationException("Неверный id");
+            if (machineType == null) throw new InvalidOperationException("Неверный id");
+            var machineTypeModel = _mapper.Map<MachineType, MachineTypeModel>(machineType);
+            return machineTypeModel;
         }
 
         public async Task<List<MachineTypeModel>> GetMachineTypes()
@@ -43,7 +40,7 @@ namespace Technic.Services
                 .Include(t => t.AllowedSpecifications)
                 .ThenInclude(t => t.Specification)
                 .ToListAsync();
-            
+
             var machineTypeModels = new List<MachineTypeModel>();
             foreach (var machineType in machineTypes)
             {

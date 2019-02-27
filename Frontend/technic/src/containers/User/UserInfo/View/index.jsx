@@ -62,9 +62,9 @@ class UserInfoView extends Component {
               open={isMenuOpen}
               onClose={this.handleCardMenuClose}
             >
-              <MenuItem>
-                <Link to={`/user/${userId}/info/edit`}>Изменить</Link>
-              </MenuItem>
+              <Link to={`/user/${userId}/info/edit`}>
+                <MenuItem>Изменить</MenuItem>
+              </Link>
             </Menu>
             <CardContent>
               <div className="user-info-view__table">
@@ -80,7 +80,7 @@ class UserInfoView extends Component {
                 <Divider />
                 <UserCardRow
                   title="Дата регистрации"
-                  value={user.registrationDate}
+                  value={new Date(user.registrationDate).toLocaleDateString('ru')}
                 />
               </div>
             </CardContent>

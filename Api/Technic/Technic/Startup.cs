@@ -80,7 +80,7 @@ namespace Technic
                 });
                 c.AddSecurityRequirement(security);
                 c.DescribeAllEnumsAsStrings();
-                c.OperationFilter<FileOperation>();
+                //c.OperationFilter<FileOperation>();
             });
             
             services.AddCors(options =>

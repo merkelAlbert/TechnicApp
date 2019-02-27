@@ -54,16 +54,12 @@ class UserMachineCard extends Component {
           open={isMenuOpen}
           onClose={this.handleCardMenuClose}
         >
-          <MenuItem>
-            <Link to={`/user/${userId}/machines/edit/${machineId}`}>
-              Изменить
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={`/user/${userId}/machines/remove/${machineId}`}>
-              Удалить
-            </Link>
-          </MenuItem>
+          <Link to={`/user/${userId}/machines/edit/${machineId}`}>
+            <MenuItem>Изменить</MenuItem>
+          </Link>
+          <Link to={`/user/${userId}/machines/remove/${machineId}`}>
+            <MenuItem>Удалить</MenuItem>
+          </Link>
         </Menu>
         <Link to={`/user/${userId}/machines/view/${machineId}`}>
           {imageId ? (
