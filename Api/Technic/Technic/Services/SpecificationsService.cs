@@ -26,35 +26,5 @@ namespace Technic.Services
             _databaseContext = databaseContext;
             _mapper = mapper;
         }
-
-        public void AddSpecificationsToMachine(MachineInfo machineInfo,
-            ref Machine machine)
-        {
-            var specifications = _databaseContext.Specifications.ToList();
-            var machineSpecifications = machine.Specifications;
-            foreach (var specificationModel in machineInfo.Specifications)
-            {
-                //in db
-                var specification = specifications.FirstOrDefault(s => s.Id == specificationModel.Id);
-                if (specification == null) continue;
-                {
-                    //in machine
-                    var machineSpecification =
-                        machineSpecifications.FirstOrDefault(s => s.Specification?.Id == specificationModel.Id);
-                    if (machineSpecification == null)
-                    {
-                        machineSpecifications.Add(new MachineSpecification()
-                        {
-                            Value = specificationModel.Value,
-                            SpecificationId = specification.Id,
-                        });
-                    }
-                    else
-                    {
-                        machineSpecification.Value = specificationModel.Value;
-                    }
-                }
-            }
-        }
     }
 }

@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FieldArray } from 'react-final-form-arrays';
 
+import Checkbox from '../../../../components/Checkbox';
 import Form from '../../../../components/Form';
 import Text from '../../../../components/Form/Text';
 import Select from '../../../../components/Form/Select';
@@ -22,6 +23,7 @@ class UserMachinesForm extends Component {
   uploader = null;
   state = {
     disabled: true,
+    checked: false,
     specifications: []
   };
 
@@ -70,15 +72,20 @@ class UserMachinesForm extends Component {
 
   onSubmit = async machine => {
     const { onSubmit, uploadFiles } = this.props;
-    const { specifications } = this.state;
+    const { specifications, checked } = this.state;
     const machineCopy = { ...machine };
     const { files } = this.uploader;
     const formData = new FormData();
 
-    if (files.length) {
-      for (let i = 0; i < files.length; i++) formData.append('files', files[i]);
-      const imagesIds = await uploadFiles(formData);
-      machineCopy.imagesIds = imagesIds;
+    if (checked) {
+      machineCopy.imagesIds = null;
+    } else {
+      if (files.length) {
+        for (let i = 0; i < files.length; i++)
+          formData.append('files', files[i]);
+        const imagesIds = await uploadFiles(formData);
+        machineCopy.imagesIds = imagesIds;
+      }
     }
 
     if (!isEmpty(machine.specifications)) {
@@ -100,6 +107,12 @@ class UserMachinesForm extends Component {
     });
   };
 
+  handleCkeckboxClick = () => {
+    this.setState(prevState => ({
+      checked: !prevState.checked
+    }));
+  };
+
   render = () => {
     const {
       error,
@@ -108,7 +121,7 @@ class UserMachinesForm extends Component {
       initialValues,
       submitButtonTitle
     } = this.props;
-    const { specifications, disabled } = this.state;
+    const { specifications, disabled, checked } = this.state;
 
     return (
       <>
@@ -180,14 +193,22 @@ class UserMachinesForm extends Component {
                     className="machine-form__field"
                   />
                 </div>
-                <div className="machine-form__uploader">
-                  <Uploader
-                    innerRef={child => {
-                      if (child) this.uploader = child.ref;
-                    }}
-                    name="images"
-                    title="Загрузить фотографии"
+                <div className="machine-form__checkbox">
+                  <Checkbox
+                    label="Без фотографий"
+                    onClick={this.handleCkeckboxClick}
                   />
+                </div>
+                <div className="machine-form__uploader">
+                  {!checked && (
+                    <Uploader
+                      innerRef={child => {
+                        if (child) this.uploader = child.ref;
+                      }}
+                      name="images"
+                      title="Загрузить фотографии (старые фотографии будут удалены)"
+                    />
+                  )}
                 </div>
               </Loader>
               <div className="machine-form__row">

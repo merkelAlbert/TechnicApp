@@ -7,7 +7,5 @@ namespace Technic.Interfaces
 {
     public interface ISpecificationsService
     {
-        void AddSpecificationsToMachine(MachineInfo machineInfo,
-            ref Machine machine);
     }
 }

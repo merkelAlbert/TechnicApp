@@ -28,6 +28,10 @@
       margin-left: 0;
     }
   }
+  &__checkbox {
+    width: 100%;
+    justify-content: flex-start;
+  }
   &__uploader {
     width: 100%;
     justify-content: flex-start;
