@@ -13,11 +13,6 @@ import './style.scss';
 import MachineCard from './MachineCard';
 
 class UserMachinesView extends Component {
-  state = {
-    isSnackBarOpen: false,
-    message: ''
-  };
-
   componentDidMount = () => {
     const { loadData } = this.props;
 
@@ -49,7 +44,6 @@ class UserMachinesView extends Component {
 
   render = () => {
     const {
-      onSuccess,
       match: {
         params: { userId }
       },
@@ -68,12 +62,7 @@ class UserMachinesView extends Component {
           )}
           <div className="user-machines-view__container">
             {machines.map(machine => (
-              <MachineCard
-                key={machine.id}
-                userId={userId}
-                machine={machine}
-                onSuccess={onSuccess}
-              />
+              <MachineCard key={machine.id} userId={userId} machine={machine} />
             ))}
           </div>
         </Loader>

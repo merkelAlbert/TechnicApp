@@ -1,4 +1,4 @@
-export default [
-  { id: 0, title: 'Физ.лицо' },
-  { id: 1, title: 'Компания' }
-];
+export default {
+  person: { id: 0, title: 'Физ.лицо' },
+  company: { id: 1, title: 'Компания' }
+};

@@ -10,7 +10,7 @@ export const register = user => async dispatch => {
     await post(REGISTER, user);
     dispatch({ type: USER_AUTH_SUCCESS });
   } catch (err) {
-    let message = 'Прозошла ошибка';
+    let message = 'Произошла ошибка';
 
     if (err.response !== undefined) {
       message = err.response.data;
@@ -27,6 +27,7 @@ export const login = user => async dispatch => {
     const { token, account: userInfo } = await post(LOGIN, user);
     dispatch({ type: USER_AUTH_SUCCESS, payload: userInfo });
     localStorage.setItem('token', token);
+    localStorage.setItem('role', userInfo.role);
   } catch (err) {
     let message = 'Произошла ошибка';
 
@@ -50,7 +51,7 @@ export const fetchOne = userId => async dispatch => {
     dispatch({ type: FETCH_ONE_SUCCESS, payload: data });
     return data;
   } catch (err) {
-    let message = 'Прозошла ошибка';
+    let message = 'Произошла ошибка';
 
     if (err.response !== undefined) {
       message = err.response.data;
@@ -70,7 +71,7 @@ export const update = (userId, user) => async dispatch => {
     dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
     return data;
   } catch (err) {
-    let message = 'Прозошла ошибка';
+    let message = 'Произошла ошибка';
 
     if (err.response !== undefined) {
       message = err.response.data;

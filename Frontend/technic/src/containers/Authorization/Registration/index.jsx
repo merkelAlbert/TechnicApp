@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 
-import './style.scss';
-import userRoles from '../../../constants/roles';
 import Form from '../../../components/Form';
 import Text from '../../../components/Form/Text';
 import Password from '../../../components/Form/Password';
@@ -12,8 +10,12 @@ import Button from '../../../components/Button';
 import Loader from '../../../components/Loader';
 import Select from '../../../components/Form/Select';
 
-import { register } from '../../../store/actions/user';
+import './style.scss';
 
+import { register } from '../../../store/actions/user';
+import userRoles from '../../../constants/roles';
+
+const roles = Object.keys(userRoles).map(userRole => userRoles[userRole]);
 class Registration extends Component {
   state = {
     disabled: true
@@ -34,7 +36,7 @@ class Registration extends Component {
     if (!values.repeatedPassword) {
       errors.repeatedPassword = 'Required';
     }
-    if (!values.userRole && values.userRole !== 0) {
+    if (!values.role && values.role !== 0) {
       errors.role = 'Required';
     }
     if (values.password !== values.repeatedPassword) {
@@ -104,9 +106,9 @@ class Registration extends Component {
               <div className="registration-form__row">
                 <Select
                   required
-                  name="userRole"
+                  name="role"
                   label="Тип"
-                  items={userRoles}
+                  items={roles}
                   className="registration-form__field"
                 />
               </div>

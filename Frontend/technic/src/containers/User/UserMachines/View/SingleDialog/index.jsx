@@ -38,10 +38,11 @@ class UserMachinesSingleDialog extends Component {
           <div className="single-dialog-content">
             <div className="single-dialog-content__images">
               {machine.imagesIds &&
-                machine.imagesIds.map(machineId => (
+                machine.imagesIds.map(imageId => (
                   <img
+                    key={imageId}
                     className="single-dialog-content__image"
-                    src={`${FILES}/${machineId}`}
+                    src={`${FILES}/${imageId}`}
                     alt={machine.name}
                   />
                 ))}

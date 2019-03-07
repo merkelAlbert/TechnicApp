@@ -11,7 +11,7 @@ export const add = machine => async dispatch => {
     dispatch({ type: ADD_MACHINE_SUCCESS, payload: data });
     return data;
   } catch (err) {
-    let message = 'Прозошла ошибка';
+    let message = 'Произошла ошибка';
 
     if (err.response !== undefined) {
       message = err.response.data;
@@ -33,7 +33,7 @@ export const fetchAll = options => async dispatch => {
     dispatch({ type: FETCH_ALL_SUCCESS, payload: data });
     return data;
   } catch (err) {
-    let message = 'Прозошла ошибка';
+    let message = 'Произошла ошибка';
 
     if (err.response !== undefined) {
       message = err.response.data;
@@ -55,7 +55,7 @@ export const fetchOne = id => async dispatch => {
     dispatch({ type: FETCH_ONE_SUCCESS, payload: data });
     return data;
   } catch (err) {
-    let message = 'Прозошла ошибка';
+    let message = 'Произошла ошибка';
 
     if (err.response !== undefined) {
       message = err.response.data;
@@ -77,7 +77,7 @@ export const update = (machineId, machine) => async dispatch => {
     dispatch({ type: UPDATE_MACHINE_SUCCESS, payload: data });
     return data;
   } catch (err) {
-    let message = 'Прозошла ошибка';
+    let message = 'Произошла ошибка';
 
     if (err.response !== undefined) {
       message = err.response.data;
@@ -99,7 +99,7 @@ export const remove = machineId => async dispatch => {
     dispatch({ type: REMOVE_MACHINE_SUCCESS, payload: data });
     return data;
   } catch (err) {
-    let message = 'Прозошла ошибка';
+    let message = 'Произошла ошибка';
 
     if (err.response !== undefined) {
       message = err.response.data;

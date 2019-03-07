@@ -20,6 +20,10 @@ import { fetchAll } from '../../../../store/actions/machineTypes';
 import { add } from '../../../../store/actions/files';
 import machineStatuses from '../../../../constants/machineStatuses';
 
+const statuses = Object.keys(machineStatuses).map(
+  machineStatus => machineStatuses[machineStatus]
+);
+
 class UserMachinesForm extends Component {
   uploader = null;
   state = {
@@ -202,7 +206,7 @@ class UserMachinesForm extends Component {
                     required
                     name="status"
                     label="Статус техники"
-                    items={machineStatuses}
+                    items={statuses}
                     className="machine-form__field"
                   />
                 </div>

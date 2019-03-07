@@ -12,7 +12,7 @@ export const fetchAll = () => async (dispatch) => {
     return data;
   }
   catch (err) {
-    let message = 'Прозошла ошибка';
+    let message = 'Произошла ошибка';
 
     if (err.response !== undefined) {
       message = err.response.data;

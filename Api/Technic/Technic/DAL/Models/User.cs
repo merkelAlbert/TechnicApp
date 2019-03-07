@@ -11,7 +11,7 @@ namespace Technic.DAL.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
-        public UserRole UserRole { get; set; }
+        public UserRole Role { get; set; }
         
         public string Phone { get; set; }
         public string Name { get; set; }

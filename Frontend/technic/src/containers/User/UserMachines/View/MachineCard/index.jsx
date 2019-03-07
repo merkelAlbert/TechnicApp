@@ -47,13 +47,13 @@ class UserMachineCard extends Component {
         className={cn(
           'user-machine-card',
           {
-            'user-machine-card--hidden': status === machineStatuses[0].id
+            'user-machine-card--hidden': status === machineStatuses.hidden.id
           },
           {
-            'user-machine-card--active': status === machineStatuses[1].id
+            'user-machine-card--active': status === machineStatuses.active.id
           },
           {
-            'user-machine-card--busy': status === machineStatuses[2].id
+            'user-machine-card--busy': status === machineStatuses.busy.id
           }
         )}
       >
