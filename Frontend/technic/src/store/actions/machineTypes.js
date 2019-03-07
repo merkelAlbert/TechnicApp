@@ -9,6 +9,7 @@ export const fetchAll = () => async (dispatch) => {
   try {
     const data = await get(FETCH_MACHINE_TYPES);
     dispatch({ type: FETCH_ALL_SUCCESS, payload: data });
+    return data;
   }
   catch (err) {
     let message = 'Прозошла ошибка';

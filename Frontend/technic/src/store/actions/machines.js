@@ -9,6 +9,7 @@ export const add = machine => async dispatch => {
   try {
     const data = await post(MACHINES, machine);
     dispatch({ type: ADD_MACHINE_SUCCESS, payload: data });
+    return data;
   } catch (err) {
     let message = 'Прозошла ошибка';
 
@@ -30,6 +31,7 @@ export const fetchAll = options => async dispatch => {
   try {
     const data = await get(MACHINES, null, options);
     dispatch({ type: FETCH_ALL_SUCCESS, payload: data });
+    return data;
   } catch (err) {
     let message = 'Прозошла ошибка';
 
@@ -51,6 +53,7 @@ export const fetchOne = id => async dispatch => {
   try {
     const data = await get(MACHINES, id);
     dispatch({ type: FETCH_ONE_SUCCESS, payload: data });
+    return data;
   } catch (err) {
     let message = 'Прозошла ошибка';
 
@@ -72,6 +75,7 @@ export const update = (machineId, machine) => async dispatch => {
   try {
     const data = await put(MACHINES, machineId, machine);
     dispatch({ type: UPDATE_MACHINE_SUCCESS, payload: data });
+    return data;
   } catch (err) {
     let message = 'Прозошла ошибка';
 
@@ -87,12 +91,13 @@ export const update = (machineId, machine) => async dispatch => {
 export const REMOVE_MACHINE_REQUEST = 'REMOVE_MACHINE_REQUEST';
 export const REMOVE_MACHINE_SUCCESS = 'REMOVE_MACHINE_SUCCESS';
 export const REMOVE_MACHINE_ERROR = 'REMOVE_MACHINE_ERROR';
-export const remove = (machineId) => async dispatch => {
+export const remove = machineId => async dispatch => {
   dispatch({ type: REMOVE_MACHINE_REQUEST });
 
   try {
     const data = await del(MACHINES, machineId);
-    dispatch({ type: REMOVE_MACHINE_SUCCESS,  payload: data});
+    dispatch({ type: REMOVE_MACHINE_SUCCESS, payload: data });
+    return data;
   } catch (err) {
     let message = 'Прозошла ошибка';
 

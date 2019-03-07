@@ -2,6 +2,15 @@ $cardWidth: 240px;
 .user-machine-card {
   margin: 15px;
   width: $cardWidth;
+  &--hidden {
+    background-color: #ffebee !important;
+  }
+  &--active {
+    background-color: #f1f8e9 !important;
+  }
+  &--busy {
+    background-color: #fffde7 !important;
+  }
   &__image {
     height: $cardWidth*9/16;
     background-size: contain !important;

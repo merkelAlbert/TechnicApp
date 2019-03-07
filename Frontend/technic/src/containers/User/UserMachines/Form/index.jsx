@@ -18,6 +18,7 @@ import './style.scss';
 
 import { fetchAll } from '../../../../store/actions/machineTypes';
 import { add } from '../../../../store/actions/files';
+import machineStatuses from '../../../../constants/machineStatuses';
 
 class UserMachinesForm extends Component {
   uploader = null;
@@ -58,6 +59,9 @@ class UserMachinesForm extends Component {
     }
     if (!values.price) {
       errors.price = 'Required';
+    }
+    if (!values.status && values.status !== 0) {
+      errors.status = 'Required';
     }
     Object.keys(errors).length === 0
       ? this.setState({
@@ -190,6 +194,15 @@ class UserMachinesForm extends Component {
                     required
                     name="price"
                     label="Цена"
+                    className="machine-form__field"
+                  />
+                </div>
+                <div className="machine-form__row">
+                  <Select
+                    required
+                    name="status"
+                    label="Статус техники"
+                    items={machineStatuses}
                     className="machine-form__field"
                   />
                 </div>

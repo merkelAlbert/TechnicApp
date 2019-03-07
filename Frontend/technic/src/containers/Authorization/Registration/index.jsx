@@ -16,8 +16,8 @@ import { register } from '../../../store/actions/user';
 
 class Registration extends Component {
   state = {
-    disabled: true,
-  }
+    disabled: true
+  };
 
   handleChange = event => {
     this.setState({ name: event.target.value });
@@ -34,7 +34,7 @@ class Registration extends Component {
     if (!values.repeatedPassword) {
       errors.repeatedPassword = 'Required';
     }
-    if (!values.userRole && values.userRole!==0) {
+    if (!values.userRole && values.userRole !== 0) {
       errors.role = 'Required';
     }
     if (values.password !== values.repeatedPassword) {
@@ -42,21 +42,18 @@ class Registration extends Component {
     }
     Object.keys(errors).length === 0
       ? this.setState({
-        disabled: false,
-      })
+          disabled: false
+        })
       : this.setState({
-        disabled: true,
-      });
+          disabled: true
+        });
 
     return errors;
-  }
+  };
 
   render = () => {
     const { className, error, isSuccess, isFetching, onSubmit } = this.props;
     const { disabled } = this.state;
-    const roles = Object.keys(userRoles).map(role => {
-      return userRoles[role];
-    });
 
     return (
       <>
@@ -109,27 +106,29 @@ class Registration extends Component {
                   required
                   name="userRole"
                   label="Тип"
-                  items={roles}
+                  items={userRoles}
                   className="registration-form__field"
                 />
               </div>
               <div className="registration-form__row">
                 <Loader isFetching={isFetching}>
-                  <Button type="submit" disabled={disabled}>Зарегистрироваться</Button>
+                  <Button type="submit" disabled={disabled}>
+                    Зарегистрироваться
+                  </Button>
                 </Loader>
               </div>
             </>
           )}
         </Form>
       </>
-    )
-  }
+    );
+  };
 }
 
 Registration.defaultProps = {
   className: null,
   error: null,
-  isSuccess: false,
+  isSuccess: false
 };
 
 Registration.propTypes = {
@@ -137,25 +136,26 @@ Registration.propTypes = {
   error: PropTypes.string,
   isSuccess: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired
 };
 
-
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   error: state.common.user.error,
   isSuccess: state.common.user.isSuccess,
-  isFetching: state.common.user.isFetching,
+  isFetching: state.common.user.isFetching
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: async (user) => {
+const mapDispatchToProps = dispatch => ({
+  onSubmit: async user => {
     try {
       await dispatch(register(user));
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
     }
-  },
+  }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Registration);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Registration);

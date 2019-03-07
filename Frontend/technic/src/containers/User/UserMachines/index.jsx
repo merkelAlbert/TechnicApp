@@ -40,11 +40,11 @@ class UserMachines extends Component {
             path="/user/:userId/machines/add"
             render={() => <AddDialog onSuccess={this.onSuccess} />}
           />
-           <Route
+          <Route
             path="/user/:userId/machines/edit/:machineId"
             render={() => <EditDialog onSuccess={this.onSuccess} />}
           />
-           <Route
+          <Route
             path="/user/:userId/machines/remove/:machineId"
             render={() => <RemoveDialog onSuccess={this.onSuccess} />}
           />

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { Add } from '@material-ui/icons';
@@ -49,6 +49,7 @@ class UserMachinesView extends Component {
 
   render = () => {
     const {
+      onSuccess,
       match: {
         params: { userId }
       },
@@ -58,16 +59,21 @@ class UserMachinesView extends Component {
     } = this.props;
 
     return (
-      <>
+      <div className="user-machines-view">
         <Loader isFetching={isFetching} error={error}>
-          {!machines.length && (
+          {!machines.length && !error && (
             <div className="user-machines-view__empty-message">
               Техника отсутствует. Добавьте свою первую машину!
             </div>
           )}
           <div className="user-machines-view__container">
             {machines.map(machine => (
-              <MachineCard key={machine.id} userId={userId} machine={machine} />
+              <MachineCard
+                key={machine.id}
+                userId={userId}
+                machine={machine}
+                onSuccess={onSuccess}
+              />
             ))}
           </div>
         </Loader>
@@ -76,7 +82,7 @@ class UserMachinesView extends Component {
             <Add />
           </Fab>
         </Link>
-      </>
+      </div>
     );
   };
 }

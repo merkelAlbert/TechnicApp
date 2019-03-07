@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import React, { Component } from 'react';
 
 import Card from '../../../../../components/Card';
@@ -6,7 +7,6 @@ import CardHeader from '../../../../../components/Card/CardHeader';
 import CardContentArea from '../../../../../components/Card/CardContentArea';
 import CardImage from '../../../../../components/Card/CardImage';
 import Link from '../../../../../components/Link';
-import Switch from '../../../../../components/Switch';
 import Menu from '../../../../../components/Menu';
 import MenuItem from '../../../../../components/Menu/MenuItem';
 
@@ -14,6 +14,7 @@ import { FILES } from '../../../../../utils/api';
 
 import './style.scss';
 import Image from './technic.png';
+import machineStatuses from '../../../../../constants/machineStatuses';
 
 class UserMachineCard extends Component {
   state = {
@@ -35,14 +36,27 @@ class UserMachineCard extends Component {
 
   render = () => {
     const {
-      machine: { id: machineId, name, price, type, imageId },
+      machine: { id: machineId, name, price, type, imageId, status },
       userId
     } = this.props;
     const { anchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
 
     return (
-      <Card className="user-machine-card">
+      <Card
+        className={cn(
+          'user-machine-card',
+          {
+            'user-machine-card--hidden': status === machineStatuses[0].id
+          },
+          {
+            'user-machine-card--active': status === machineStatuses[1].id
+          },
+          {
+            'user-machine-card--busy': status === machineStatuses[2].id
+          }
+        )}
+      >
         <CardHeader
           title={name}
           titleSize="medium"
@@ -78,22 +92,9 @@ class UserMachineCard extends Component {
           <CardContentArea>
             <CardContent>
               <div className="user-machine-card__price">{price} ₽</div>
-            </CardContent>{' '}
+            </CardContent>
           </CardContentArea>
         </Link>
-        <CardContent>
-          <div className="user-machine-card__status">
-            Статус машины: <Switch />
-          </div>
-        </CardContent>
-        {/* <CardActions className="user-machine-card__actions">
-      <IconButton>
-        <EditIcon />
-      </IconButton>
-      <IconButton>
-        <EditIcon />
-      </IconButton>
-    </CardActions> */}
       </Card>
     );
   };
