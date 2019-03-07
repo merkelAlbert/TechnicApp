@@ -11,6 +11,7 @@ export const FILES = BASE_URL + '/files';
 
 export const put = async (url, id, payload) => {
   let options = {};
+
   const token = localStorage.getItem('token');
   if (token) {
     options = {

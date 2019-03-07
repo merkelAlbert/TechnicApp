@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Technic.Interfaces;
@@ -18,7 +19,7 @@ namespace Technic.Controllers
         }
 
         [HttpPost]
-        //[Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<object> Upload([FromForm] List<IFormFile> files)
         {
             try
@@ -34,7 +35,6 @@ namespace Technic.Controllers
 
         [HttpGet]
         [Route("{fileId}")]
-        //[Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<object> Download([FromRoute] Guid fileId)
         {
             try

@@ -49,7 +49,7 @@ class UserInfoView extends Component {
     const isMenuOpen = Boolean(anchorEl);
 
     return (
-      <div className="user-info-view">
+      <>
         <Loader isFetching={isFetching} error={error}>
           <Card className="user-info-view__card">
             <CardHeader
@@ -86,7 +86,7 @@ class UserInfoView extends Component {
             </CardContent>
           </Card>
         </Loader>
-      </div>
+      </>
     );
   };
 }

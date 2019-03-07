@@ -56,7 +56,7 @@ namespace Technic.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Company")]
         public async Task<object> AddMachine([FromBody] MachineInfo machineInfo)
         {
             try
@@ -72,7 +72,7 @@ namespace Technic.Controllers
 
         [HttpPut]
         [Route("{machineId}")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Company")]
         public async Task<object> UpdateMachine([FromRoute] Guid machineId, [FromBody] MachineInfo machineInfo)
         {
             try
@@ -88,7 +88,7 @@ namespace Technic.Controllers
         
         [HttpDelete]
         [Route("{machineId}")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Company")]
         public async Task<object> DeleteMachine([FromRoute] Guid machineId)
         {
             try

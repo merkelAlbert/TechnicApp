@@ -59,7 +59,7 @@ class UserMachinesView extends Component {
     } = this.props;
 
     return (
-      <div className="user-machines-view">
+      <>
         <Loader isFetching={isFetching} error={error}>
           {!machines.length && !error && (
             <div className="user-machines-view__empty-message">
@@ -82,7 +82,7 @@ class UserMachinesView extends Component {
             <Add />
           </Fab>
         </Link>
-      </div>
+      </>
     );
   };
 }
