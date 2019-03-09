@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using Technic.DAL;
@@ -35,12 +30,12 @@ namespace Technic
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            
+
             services.AddAutoMapper();
-            
+
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-            
+
             services
                 .AddAuthentication(options =>
                 {
@@ -60,20 +55,21 @@ namespace Technic
                         ClockSkew = TimeSpan.Zero
                     };
                 });
-            
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1.0", new Info { Title = "Main API v1.0", Version = "v1.0" });
- 
+                c.SwaggerDoc("v1.0", new Info {Title = "Main API v1.0", Version = "v1.0"});
+
                 // Swagger 2.+ support
                 var security = new Dictionary<string, IEnumerable<string>>
                 {
                     {"Bearer", new string[] { }},
                 };
- 
+
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Description =
+                        "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
                     Name = "Authorization",
                     In = "header",
                     Type = "apiKey"
@@ -82,7 +78,7 @@ namespace Technic
                 c.DescribeAllEnumsAsStrings();
                 //c.OperationFilter<FileOperation>();
             });
-            
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -96,11 +92,12 @@ namespace Technic
             });
 
             services.AddHttpContextAccessor();
-            
+
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IMachinesService, MachinesService>();
             services.AddScoped<IMachineTypesService, MachineTypesService>();
             services.AddScoped<IFilesService, FilesService>();
+            services.AddScoped<IOrdersService, OrdersService>();
             services.AddScoped<ISpecificationsService, SpecificationsService>();
             services.AddScoped<SpecificationsInitializer>();
             services.AddScoped<MachineTypesInitializer>();
@@ -109,7 +106,6 @@ namespace Technic
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            
             if (env.IsDevelopment())
             {
                 app.UseSwagger();
@@ -124,10 +120,11 @@ namespace Technic
             {
                 app.UseHsts();
             }
+
             app.UseCors("AllowAll");
             app.UseAuthentication();
             //app.UseHttpsRedirection();
-            
+
             app.UseMvc();
         }
     }

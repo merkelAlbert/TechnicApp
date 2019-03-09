@@ -1,4 +1,3 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using Technic.DAL.Models;
 using Technic.DAL.Models.IntermediateModels;
@@ -13,6 +12,7 @@ namespace Technic.DAL
 
         public DbSet<User> Users { get; set; }
         public DbSet<Machine> Machines { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<MachineType> MachineTypes { get; set; }
         public DbSet<Specification> Specifications { get; set; }
         public DbSet<MachineType_Specification> MachineType_Specifications { get; set; }
@@ -38,7 +38,7 @@ namespace Technic.DAL
                 .HasForeignKey(mt => mt.SpecificationId);
 
             #endregion
-            
+
             #region Machine-specification
 
             builder.Entity<MachineSpecification>()

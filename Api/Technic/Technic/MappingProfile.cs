@@ -1,13 +1,12 @@
 using System;
 using System.Linq;
 using AutoMapper;
-using Technic.DAL;
 using Technic.DAL.Models;
 using Technic.DAL.Models.IntermediateModels;
-using Technic.DTO;
 using Technic.DTO.Account;
 using Technic.DTO.Machines;
 using Technic.DTO.MachineTypes;
+using Technic.DTO.Orders;
 using Technic.DTO.Specifications;
 
 namespace Technic
@@ -21,6 +20,10 @@ namespace Technic
             CreateMap<User, AuthorizedModel>();
             CreateMap<User, UserModel>();
             CreateMap<UserInfo, User>();
+            CreateMap<OrderInfo, Order>();
+            CreateMap<Order, OrderModel>();
+            CreateMap<Specification, SpecificationModel>();
+            CreateMap<SpecificationInfo, Specification>();
 
             CreateMap<MachineInfo, Machine>()
                 .ForMember(m => m.Specifications, o => o.Ignore());
@@ -45,9 +48,6 @@ namespace Technic
             CreateMap<MachineType, MachineTypeModel>()
                 .ForMember(t => t.AllowedSpecifications,
                     o => o.MapFrom(t => t.AllowedSpecifications.Select(s => s.Specification)));
-
-            CreateMap<Specification, SpecificationModel>();
-            CreateMap<SpecificationInfo, Specification>();
         }
     }
 }
