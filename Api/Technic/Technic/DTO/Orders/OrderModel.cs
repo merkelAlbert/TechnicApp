@@ -1,4 +1,5 @@
 using System;
+using Technic.DAL.Models.Enums;
 using Technic.DTO.Account;
 using Technic.DTO.Machines;
 
@@ -6,14 +7,15 @@ namespace Technic.DTO.Orders
 {
     public class OrderModel
     {
-        public string Comment;
-        public UserModel Company;
+        public Guid Id { get; set; }
+        public UserModel Company { get; set; }
+        public UserModel Person { get; set; }
 
-        public DateTime CreationDate;
-        public DateTime FromDate;
-        public Guid Id;
-        public MachineModel Machine;
-        public UserModel Person;
-        public DateTime ToDate;
+        public MachineModel Machine { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public string Comment { get; set; }
+        public OrderStatus Status { get; set; }
     }
 }

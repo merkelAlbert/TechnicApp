@@ -6,8 +6,9 @@ export const REGISTER = BASE_URL + '/account/register';
 export const LOGIN = BASE_URL + '/account/login';
 export const USER = BASE_URL + '/account';
 export const MACHINES = BASE_URL + '/machines';
-export const FETCH_MACHINE_TYPES = BASE_URL + '/machineTypes';
+export const MACHINE_TYPES = BASE_URL + '/machineTypes';
 export const FILES = BASE_URL + '/files';
+export const ORDERS = BASE_URL + '/orders';
 
 export const put = async (url, id, payload) => {
   let options = {};

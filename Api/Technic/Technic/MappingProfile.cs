@@ -20,8 +20,14 @@ namespace Technic
             CreateMap<User, AuthorizedModel>();
             CreateMap<User, UserModel>();
             CreateMap<UserInfo, User>();
-            CreateMap<OrderInfo, Order>();
+            CreateMap<OrderInfo, Order>()
+                .ForMember(o => o.ToDate, options => options.Condition(src => src.ToDate != DateTime.MinValue))
+                .ForMember(o => o.FromDate, options => options.Condition(src => src.FromDate != DateTime.MinValue))
+                .ForMember(o => o.CreationDate,
+                    options => options.Condition(src => src.CreationDate != DateTime.MinValue))
+                .ForMember(o => o.MachineId, options => options.Condition(src => src.MachineId != Guid.Empty));
             CreateMap<Order, OrderModel>();
+            CreateMap<Order, OrdersModel>();
             CreateMap<Specification, SpecificationModel>();
             CreateMap<SpecificationInfo, Specification>();
 

@@ -10,6 +10,7 @@ import AccountIcon from '@material-ui/icons/AccountCircle';
 import { logout } from '../../../store/actions/service';
 
 import AppHeader from '../../../components/Header';
+import HeaderItem from '../../../components/Header/Item';
 import Link from '../../../components/Link';
 import IconButton from '../../../components/IconButton';
 import Menu from '../../../components/Menu';
@@ -51,6 +52,12 @@ class Header extends Component {
         <div className="header__title-container">
           <Link to="/">course</Link>
         </div>
+        <Link to="/machines" className="header__item">
+          <HeaderItem>Техника</HeaderItem>
+        </Link>
+        <HeaderItem>Компании</HeaderItem>
+        <HeaderItem>О нас</HeaderItem>
+
         {!user || isEmpty(user) ? (
           <div className="header__auth">
             <Link to="/auth">Регистрация | Вход</Link>
@@ -66,7 +73,10 @@ class Header extends Component {
               open={isMenuOpen}
               onClose={this.handleUserMenuClose}
             >
-              <Link to={`/user/${user.id}/info`} className="header__auth-profile">
+              <Link
+                to={`/user/${user.id}/info`}
+                className="header__auth-profile"
+              >
                 <MenuItem>Личный кабинет</MenuItem>
               </Link>
               <MenuItem onClick={this.handleUserExit}>Выйти</MenuItem>

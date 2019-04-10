@@ -9,7 +9,7 @@ import { FILES } from '../../../../../utils/api';
 
 import './style.scss';
 
-class UserMachinesSingleDialog extends Component {
+class HomeMachinesSingleDialog extends Component {
   componentDidMount = () => {
     const { loadData } = this.props;
     loadData();
@@ -35,29 +35,29 @@ class UserMachinesSingleDialog extends Component {
         fullWidth
       >
         <Loader isFetching={isFetching} error={error}>
-          <div className="single-dialog-content">
-            <div className="single-dialog-content__images">
+          <div className="home-single-dialog-content">
+            <div className="home-single-dialog-content__images">
               {machine.imagesIds &&
                 machine.imagesIds.map(imageId => (
                   <img
                     key={imageId}
-                    className="single-dialog-content__image"
+                    className="home-single-dialog-content__image"
                     src={`${FILES}/${imageId}`}
                     alt={machine.name}
                   />
                 ))}
             </div>
             <p>
-              <span className="single-dialog-content__section-title">
+              <span className="home-single-dialog-content__section-title">
                 Название:
               </span>{' '}
               {machine.name}
             </p>
             <p>
-              <span className="single-dialog-content__section-title">Тип:</span>{' '}
+              <span className="home-single-dialog-content__section-title">Тип:</span>{' '}
               {machine.type && machine.type.name}
             </p>
-            <p className="single-dialog-content__section-title">
+            <p className="home-single-dialog-content__section-title">
               Характеристики:{' '}
             </p>
             <ul>
@@ -68,8 +68,8 @@ class UserMachinesSingleDialog extends Component {
                   </li>
                 ))}
             </ul>
-            <p className="single-dialog-content__section-title">Описание: </p>
-            <p className="single-dialog-content__description">
+            <p className="home-single-dialog-content__section-title">Описание: </p>
+            <p className="home-single-dialog-content__description">
               {machine.description}
             </p>
           </div>
@@ -106,4 +106,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserMachinesSingleDialog);
+)(HomeMachinesSingleDialog);

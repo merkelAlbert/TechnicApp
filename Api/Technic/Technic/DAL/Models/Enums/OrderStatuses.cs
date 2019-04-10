@@ -1,10 +1,11 @@
 namespace Technic.DAL.Models.Enums
 {
-    public enum OrderStatuses
+    public enum OrderStatus
     {
         Created,
         Confirmed,
         Rejected,
+        Performing,
         Performed
     }
 }

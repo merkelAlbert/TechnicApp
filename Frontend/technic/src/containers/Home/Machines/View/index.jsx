@@ -12,7 +12,7 @@ import Link from '../../../../components/Link';
 import './style.scss';
 import MachineCard from './MachineCard';
 
-class UserMachinesView extends Component {
+class HomeMachinesView extends Component {
   componentDidMount = () => {
     const { loadData } = this.props;
 
@@ -35,43 +35,21 @@ class UserMachinesView extends Component {
     );
   };
 
-  onSuccess = message => {
-    this.setState({
-      isSnackBarOpen: true,
-      message
-    });
-  };
-
   render = () => {
     const {
-      match: {
-        params: { userId }
-      },
       data: { machines },
       isFetching,
       error
     } = this.props;
 
     return (
-      <>
-        <Loader isFetching={isFetching} error={error}>
-          {!machines.length && !error && (
-            <div className="user-machines-view__empty-message">
-              Техника отсутствует. Добавьте свою первую машину!
-            </div>
-          )}
-          <div className="user-machines-view__container">
-            {machines.map(machine => (
-              <MachineCard key={machine.id} userId={userId} machine={machine} />
-            ))}
-          </div>
-        </Loader>
-        <Link to={`/user/${userId}/machines/add`}>
-          <Fab className="user-machines-view__fab">
-            <Add />
-          </Fab>
-        </Link>
-      </>
+      <Loader isFetching={isFetching} error={error}>
+        <div className="home-machines-view__container">
+          {machines.map(machine => (
+            <MachineCard key={machine.id} machine={machine} />
+          ))}
+        </div>
+      </Loader>
     );
   };
 }
@@ -87,7 +65,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loadData: async () => {
       try {
-        await dispatch(fetchAll({ isPrivateOffice: true }));
+        await dispatch(fetchAll({ isPrivateOffice: false }));
       } catch (err) {
         console.log(err);
       }
@@ -98,4 +76,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserMachinesView);
+)(HomeMachinesView);

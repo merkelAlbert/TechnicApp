@@ -1,0 +1,37 @@
+.user-orders-view {
+  &__empty-message {
+    width: 100%;
+    text-align: center;
+    align-self: center;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-x: scroll;
+  }
+  &__orders {
+    width: 100%;
+    table-layout: fixed;
+  }
+  &__orders-row {
+    width: 100%;
+  }
+  &__orders-cell {
+    padding: 5px;
+    text-align: center;
+    width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &__orders-action {
+    padding: 10px;
+    width: 25%;
+  }
+  &__divider {
+    margin: 0 !important;
+    width: 100%;
+  }
+}

@@ -1,44 +1,54 @@
 import React from 'react';
 import cn from 'classnames';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { AccountCircle, Commute, Comment } from '@material-ui/icons';
+import { AccountCircle, Commute, Assignment } from '@material-ui/icons';
 
 import SideBar from '../../../components/SideBar';
 import Link from '../../../components/Link';
 
+import userRoles from '../../../constants/roles';
+
 import './style.scss';
 import Item from './SidebarItem';
 
-const isSelected = (location, path) => {
-  return location.pathname === path;
-};
-
-const UserSideBar = ({ className, userId, location }) => {
-  return (
-    <SideBar className={cn('user-sidebar', className)}>
-      <Link to={`/user/${userId}/info`}>
-        <Item
-          icon={AccountCircle}
-          caption="Мой аккаунт"
-          isSelected={isSelected(location, `/user/${userId}/info`)}
-        />
-      </Link>
-      <Link to={`/user/${userId}/machines`}>
+const UserSideBar = ({ className, user, location }) => (
+  <SideBar className={cn('user-sidebar', className)}>
+    <Link to={`/user/${user.id}/info`}>
+      <Item
+        icon={AccountCircle}
+        caption="Мой аккаунт"
+        isSelected={location.pathname === `/user/${user.id}/info`}
+      />
+    </Link>
+    {user.role === userRoles.company.id && (
+      <Link to={`/user/${user.id}/machines`}>
         <Item
           icon={Commute}
           caption="Моя техника"
-          isSelected={isSelected(location, `/user/${userId}/machines`)}
+          isSelected={location.pathname === `/user/${user.id}/machines`}
         />
       </Link>
-      <Link to={`/user/${userId}/feedbacks`}>
-        <Item
-          icon={Comment}
-          caption="Отклики"
-          isSelected={isSelected(location, `/user/${userId}/feedbacks`)}
-        />
-      </Link>
-    </SideBar>
-  );
-};
+    )}
+    <Link to={`/user/${user.id}/orders`}>
+      <Item
+        icon={Assignment}
+        caption="Заказы"
+        isSelected={location.pathname === `/user/${user.id}/orders`}
+      />
+    </Link>
+  </SideBar>
+);
 
-export default withRouter(UserSideBar);
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default compose(
+  withRouter,
+  connect(
+    mapStateToProps,
+    null
+  )
+)(UserSideBar);

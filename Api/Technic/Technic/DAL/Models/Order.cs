@@ -1,4 +1,5 @@
 using System;
+using Technic.DAL.Models.Enums;
 
 namespace Technic.DAL.Models
 {
@@ -19,5 +20,6 @@ namespace Technic.DAL.Models
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public string Comment { get; set; }
+        public OrderStatus Status { get; set; }
     }
 }

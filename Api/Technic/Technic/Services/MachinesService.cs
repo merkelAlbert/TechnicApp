@@ -49,9 +49,8 @@ namespace Technic.Services
 
         public async Task<List<MachinesModel>> GetMachines(bool isPrivateOffice)
         {
-            var userId = _userRepository.GetCurrentUserId();
             var machines = await _databaseContext.Machines
-                .Where(m => !isPrivateOffice || m.UserId == userId)
+                .Where(m => !isPrivateOffice || m.UserId == _userRepository.GetCurrentUserId())
                 .Include(m => m.Specifications)
                 .ThenInclude(s => s.Specification)
                 .ToListAsync();

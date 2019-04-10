@@ -7,6 +7,10 @@
     display: flex;
   }
 
+  &__item {
+    height: 100%;
+  }
+
   &__auth {
     display: flex;
     align-items: center;

@@ -20,10 +20,10 @@ const App = () => (
         <ThemeProvider>
           <Switch>
             <Layout>
-              <Route path="/auth" component={Authorization} />
-              <Route exact path="/" component={Home} />
+              <Route exact path="/auth" component={Authorization} />
               <PrivateRoute path="/user/:userId" component={User} />
-            </Layout>
+              <Route path="/" component={Home} />
+              </Layout>
           </Switch>
         </ThemeProvider>
       </BrowserRouter>

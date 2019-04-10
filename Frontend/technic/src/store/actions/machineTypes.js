@@ -1,4 +1,4 @@
-import { post, get, FETCH_MACHINE_TYPES } from '../../utils/api';
+import { post, get, MACHINE_TYPES } from '../../utils/api';
 
 export const FETCH_ALL_REQUEST = 'machineTypes/FETCH_ALL_REQUEST';
 export const FETCH_ALL_SUCCESS = 'machineTypes/FETCH_ALL_SUCCESS';
@@ -7,7 +7,7 @@ export const fetchAll = () => async (dispatch) => {
   dispatch({ type: FETCH_ALL_REQUEST });
 
   try {
-    const data = await get(FETCH_MACHINE_TYPES);
+    const data = await get(MACHINE_TYPES);
     dispatch({ type: FETCH_ALL_SUCCESS, payload: data });
     return data;
   }

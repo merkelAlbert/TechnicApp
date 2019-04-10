@@ -27,7 +27,6 @@ namespace Technic.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<object> GetMachines([FromQuery] bool isPrivateOffice)
         {
             try

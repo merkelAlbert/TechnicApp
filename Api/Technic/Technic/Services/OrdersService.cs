@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -47,24 +48,61 @@ namespace Technic.Services
             return orderModel;
         }
 
-        public Task<List<OrderModel>> GetOrders(bool isPrivateOffice)
+        public async Task<List<OrdersModel>> GetOrders()
         {
-            throw new NotImplementedException();
+            var userId = _userRepository.GetCurrentUserId();
+            var orders = await _databaseContext.Orders
+                .Where(o => o.Person.Id == userId || o.Company.Id == userId)
+                .Include(o => o.Person)
+                .Include(o => o.Company)
+                .Include(o => o.Machine)
+                .ToListAsync();
+            var ordersModels = new List<OrdersModel>();
+            foreach (var order in orders)
+            {
+                var ordersModel = _mapper.Map<Order, OrdersModel>(order);
+                ordersModels.Add(ordersModel);
+            }
+
+            return ordersModels;
         }
 
-        public Task<OrderModel> GetOrder(Guid machineId)
+        public async Task<OrderModel> GetOrder(Guid orderId)
         {
-            throw new NotImplementedException();
+            var order = await _databaseContext.Orders
+                .Include(o => o.Person)
+                .Include(o => o.Company)
+                .Include(o => o.Machine)
+                .FirstOrDefaultAsync(o => o.Id == orderId);
+            if (order == null) throw new InvalidOperationException("Неверный id");
+            var orderModel = _mapper.Map<Order, OrderModel>(order);
+
+            return orderModel;
         }
 
-        public Task<OrderModel> UpdateOrder(Guid machineId, OrderInfo machineInfo)
+        public async Task<OrdersModel> UpdateOrder(Guid orderId, OrderInfo orderInfo)
         {
-            throw new NotImplementedException();
+            var order = _databaseContext.Orders
+                .Include(o => o.Person)
+                .Include(o => o.Company)
+                .Include(o => o.Machine)
+                .FirstOrDefault(m => m.Id == orderId);
+            if (order == null) throw new InvalidOperationException("Неверный id");
+            _mapper.Map(orderInfo, order);
+            await _databaseContext.SaveChangesAsync();
+            var ordersModel = _mapper.Map<Order, OrdersModel>(order);
+            return ordersModel;
         }
 
-        public Task<Guid> DeleteOrder(Guid machineId)
+        public async Task<Guid> DeleteOrder(Guid orderId)
         {
-            throw new NotImplementedException();
+            var order = await _databaseContext.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+            if (order == null) throw new InvalidOperationException("Неверный id");
+            var guid = order.Id;
+            _databaseContext.Remove(order);
+            _databaseContext.SaveChanges();
+
+            return guid;
         }
     }
 }
