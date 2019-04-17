@@ -48,7 +48,6 @@ class Password extends Component {
       render={({
         input: { name, ...restInput },
         meta,
-        type,
         ...rest
       }) => (
           <TextField
@@ -60,7 +59,7 @@ class Password extends Component {
               ...restInput
             }}
             className={cn(classes.input, className)}
-            type={showPassword ? 'text' : type}
+            type={showPassword ? 'text' : 'password'}
           />
         )}
       />
@@ -69,12 +68,10 @@ class Password extends Component {
 };
 
 Password.defaultProps = {
-  type: 'password',
   className: null,
 };
 
-Password.proptypes = {
-  type: PropTypes.string,
+Password.propTypes = {
   className: PropTypes.string,
 };
 

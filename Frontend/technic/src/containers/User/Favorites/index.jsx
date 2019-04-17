@@ -6,7 +6,7 @@ import SnackBar from '../../../components/SnackBar';
 import View from './View';
 import SingleDialog from './View/SingleDialog';
 
-class HomeMachines extends Component {
+class UserFavorites extends Component {
   state = {
     open: false,
     message: null
@@ -31,11 +31,14 @@ class HomeMachines extends Component {
     return (
       <>
         <Route
-          path="/machines"
+          path="/user/:userId/favoritemachines"
           render={() => <View onSuccess={this.onSuccess} />}
         />
         <Switch>
-          <Route path="/machines/view/:machineId" component={SingleDialog} />
+          <Route
+            path="/user/:userId/favoritemachines/view/:machineId"
+            component={SingleDialog}
+          />
         </Switch>
         <SnackBar open={open} message={message} onClose={this.handleClose} />
       </>
@@ -43,4 +46,4 @@ class HomeMachines extends Component {
   };
 }
 
-export default HomeMachines;
+export default UserFavorites;

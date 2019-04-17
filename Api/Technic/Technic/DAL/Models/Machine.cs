@@ -21,6 +21,7 @@ namespace Technic.DAL.Models
         public MachineStatus Status { get; set; }
 
         public ICollection<MachineSpecification> Specifications { get; set; } = new List<MachineSpecification>();
+        public ICollection<User_FavoriteMachine> Lovers { get; set; } = new List<User_FavoriteMachine>();
         public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

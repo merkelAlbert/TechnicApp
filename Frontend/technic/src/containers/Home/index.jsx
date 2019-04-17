@@ -6,11 +6,9 @@ import './style.scss';
 import Machines from './Machines';
 
 const Home = () => (
-  <>
-    <Switch>
-      <Route path="/machines" component={Machines} />
-    </Switch>
-  </>
+  <Switch>
+    <Route path="/machines" component={Machines} />
+  </Switch>
 );
 
 export default Home;

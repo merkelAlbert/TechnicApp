@@ -8,7 +8,7 @@ import Loader from '../../../../components/Loader';
 import './style.scss';
 import MachineCard from './MachineCard';
 
-class HomeMachinesView extends Component {
+class UserFavoritesView extends Component {
   componentDidMount = () => {
     const { loadData } = this.props;
 
@@ -40,19 +40,22 @@ class HomeMachinesView extends Component {
     } = this.props;
 
     return (
-      <div className="home-machines-view">
-        <Loader isFetching={isFetching} error={error}>
-          <div className="home-machines-view__container">
-            {machines.map(machine => (
-              <MachineCard
-                key={machine.id}
-                machine={machine}
-                onSuccess={onSuccess}
-              />
-            ))}
+      <Loader isFetching={isFetching} error={error}>
+        {!machines.length && !error && (
+          <div className="user-favorites-view__empty-message">
+            В избранном ничего нет! Добавьте машину, чтобы не потерять!
           </div>
-        </Loader>
-      </div>
+        )}
+        <div className="user-favorites-view__container">
+          {machines.map(machine => (
+            <MachineCard
+              key={machine.id}
+              machine={machine}
+              onSuccess={onSuccess}
+            />
+          ))}
+        </div>
+      </Loader>
     );
   };
 }
@@ -61,14 +64,18 @@ const mapStateToProps = state => {
   const { list: machines = [] } = state.machines;
   const { isFetching, error } = state.common.machines;
 
-  return { data: { machines }, isFetching, error };
+  return {
+    data: { machines: machines.filter(machine => machine.isFavorite) },
+    isFetching,
+    error
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loadData: async () => {
       try {
-        await dispatch(fetchAll({ isPrivateOffice: false }));
+        await dispatch(fetchAll({ isPrivateOffice: true }));
       } catch (err) {
         console.log(err);
       }
@@ -79,4 +86,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HomeMachinesView);
+)(UserFavoritesView);

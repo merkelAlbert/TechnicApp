@@ -7,7 +7,7 @@ import './style.scss';
 import UserInfo from './Info';
 import Sidebar from './Sidebar';
 import UserMachines from './Machines';
-import UserFeedbacks from './Feedbacks';
+import Favorites from './Favorites';
 import UserOrders from './Orders';
 
 import userRoles from '../../constants/roles';
@@ -24,8 +24,12 @@ class User extends Component {
             path="/user/:userId/machines"
             component={UserMachines}
           />
+          <PrivateRoute
+            userRole={userRoles.person.id}
+            path="/user/:userId/favoritemachines"
+            component={Favorites}
+          />
           <Route path="/user/:userId/orders" component={UserOrders} />
-          <Route path="/user/:userId/feedbacks" component={UserFeedbacks} />
         </Switch>
       </div>
     </>

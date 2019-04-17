@@ -15,7 +15,9 @@ namespace Technic
 
         public Guid GetCurrentUserId()
         {
-            return new Guid(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            return _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated
+                ? new Guid(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                : Guid.Empty;
         }
     }
 }

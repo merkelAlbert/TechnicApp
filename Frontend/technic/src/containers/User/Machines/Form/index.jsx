@@ -199,6 +199,7 @@ class UserMachinesForm extends Component {
                     name="price"
                     label="Цена"
                     className="machine-form__field"
+                    type="number"
                   />
                 </div>
                 <div className="machine-form__row">

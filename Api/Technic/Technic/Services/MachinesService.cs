@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Technic.DAL;
 using Technic.DAL.Models;
+using Technic.DAL.Models.Enums;
 using Technic.DAL.Models.IntermediateModels;
 using Technic.DTO.Machines;
 using Technic.Interfaces;
@@ -49,17 +50,34 @@ namespace Technic.Services
 
         public async Task<List<MachinesModel>> GetMachines(bool isPrivateOffice)
         {
+            var userId = _userRepository.GetCurrentUserId();
+            var user = await _databaseContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
             var machines = await _databaseContext.Machines
-                .Where(m => !isPrivateOffice || m.UserId == _userRepository.GetCurrentUserId())
                 .Include(m => m.Specifications)
                 .ThenInclude(s => s.Specification)
+                .Include(m => m.Lovers)
+                .ThenInclude(l => l.User)
                 .ToListAsync();
+            if (isPrivateOffice)
+            {
+                if (user.Role == UserRole.Company)
+                {
+                    machines = machines.Where(m => m.UserId == userId).ToList();
+                }
+                else if (user.Role == UserRole.Person)
+                {
+                    machines = machines.Where(m => m.Lovers.Select(l => l.UserId).Contains(userId)).ToList();
+                }
+            }
+
             var machinesModels = new List<MachinesModel>();
             foreach (var machine in machines)
             {
                 var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
                 machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
                     ?.Name;
+                machinesModel.IsFavorite =
+                    machine.Lovers.Select(l => l.User.Id).Contains(_userRepository.GetCurrentUserId());
                 machinesModels.Add(machinesModel);
             }
 
@@ -80,16 +98,29 @@ namespace Technic.Services
 
         public async Task<MachinesModel> UpdateMachine(Guid machineId, MachineInfo machineInfo)
         {
+            var userId = _userRepository.GetCurrentUserId();
+            var user = await _databaseContext.Users.FirstAsync(u => u.Id == userId);
             var machine = _databaseContext.Machines.Include(m => m.Specifications).ThenInclude(s => s.Specification)
                 .FirstOrDefault(m => m.Id == machineId);
             if (machine == null) throw new InvalidOperationException("Неверный id");
-            DeleteUnusedImages(machineInfo, machine);
-            _mapper.Map(machineInfo, machine);
-            AddSpecificationsToMachine(machineInfo, ref machine);
+            if (user.Role == UserRole.Company)
+            {
+                DeleteUnusedImages(machineInfo, machine);
+                _mapper.Map(machineInfo, machine);
+                AddSpecificationsToMachine(machineInfo, ref machine);
+            }
+            else if (user.Role == UserRole.Person)
+            {
+                await SwitchIsFavorite(userId, machineInfo, machine);
+            }
+
             await _databaseContext.SaveChangesAsync();
             var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
+
             machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
                 ?.Name;
+            machinesModel.IsFavorite = machine.Lovers.Select(l => l.UserId).Contains(userId);
+
             return machinesModel;
         }
 
@@ -158,6 +189,25 @@ namespace Technic.Services
                         _filesService.DeleteFile(machineId);
                     }
                 }
+            }
+        }
+
+        private async Task SwitchIsFavorite(Guid userId, MachineInfo machineInfo, Machine machine)
+        {
+            if (!machineInfo.IsFavorite)
+            {
+                var userFavoriteMachine =
+                    await _databaseContext.User_FavoriteMachines.FirstOrDefaultAsync(ufm =>
+                        ufm.UserId == userId && ufm.MachineId == machine.Id);
+                if (userFavoriteMachine != null)
+                    _databaseContext.User_FavoriteMachines.Remove(userFavoriteMachine);
+            }
+            else
+            {
+                var userFavoriteMachine = new User_FavoriteMachine();
+                userFavoriteMachine.UserId = userId;
+                userFavoriteMachine.MachineId = machine.Id;
+                machine.Lovers.Add(userFavoriteMachine);
             }
         }
 

@@ -1,10 +1,9 @@
-.home-machines-view {
-  display: flex;
-  flex: 1;
-  background-color: #fafafa;
-  padding: 30px 0;
-  justify-content: center;
-  min-height: 100%;
+.user-favorites-view {
+  &__empty-message {
+    width: 100%;
+    text-align: center;
+    align-self: center;
+  }
 
   &__container {
     display: grid;

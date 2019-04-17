@@ -44,7 +44,8 @@ namespace Technic
                     o => o.MapFrom(m =>
                         (m.ImagesIds != null && m.ImagesIds.Count > 0 && m.ImagesIds[0] != Guid.Empty)
                             ? m.ImagesIds[0]
-                            : (Guid?) null));
+                            : (Guid?) null))
+                .ForMember(m => m.IsFavorite, o => o.Ignore());
 
             CreateMap<MachineSpecification, SpecificationInfo>()
                 .ForMember(s => s.Id, o => o.MapFrom(ms => ms.SpecificationId))

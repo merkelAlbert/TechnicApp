@@ -13,5 +13,6 @@ namespace Technic.DTO.Machines
         public string Type { get; set; }
         public decimal Price { get; set; }
         public MachineStatus Status { get; set; }
+        public bool IsFavorite { get; set; }
     }
 }

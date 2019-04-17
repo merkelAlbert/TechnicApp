@@ -9,7 +9,7 @@ import { FILES } from '../../../../../utils/api';
 
 import './style.scss';
 
-class HomeMachinesSingleDialog extends Component {
+class UserFavoritesSingleDialog extends Component {
   componentDidMount = () => {
     const { loadData } = this.props;
     loadData();
@@ -35,29 +35,29 @@ class HomeMachinesSingleDialog extends Component {
         fullWidth
       >
         <Loader isFetching={isFetching} error={error}>
-          <div className="home-machines-single-dialog-content">
-            <div className="home-machines-single-dialog-content__images">
+          <div className="user-favorites-single-dialog-content">
+            <div className="user-favorites-single-dialog-content__images">
               {machine.imagesIds &&
                 machine.imagesIds.map(imageId => (
                   <img
                     key={imageId}
-                    className="home-machines-single-dialog-content__image"
+                    className="user-favorites-single-dialog-content__image"
                     src={`${FILES}/${imageId}`}
                     alt={machine.name}
                   />
                 ))}
             </div>
             <p>
-              <span className="home-machines-single-dialog-content__section-title">
+              <span className="user-favorites-single-dialog-content__section-title">
                 Название:
               </span>{' '}
               {machine.name}
             </p>
             <p>
-              <span className="home-machines-single-dialog-content__section-title">Тип:</span>{' '}
+              <span className="user-favorites-single-dialog-content__section-title">Тип:</span>{' '}
               {machine.type && machine.type.name}
             </p>
-            <p className="home-machines-single-dialog-content__section-title">
+            <p className="user-favorites-single-dialog-content__section-title">
               Характеристики:{' '}
             </p>
             <ul>
@@ -68,8 +68,8 @@ class HomeMachinesSingleDialog extends Component {
                   </li>
                 ))}
             </ul>
-            <p className="home-machines-single-dialog-content__section-title">Описание: </p>
-            <p className="home-machines-single-dialog-content__description">
+            <p className="user-favorites-single-dialog-content__section-title">Описание: </p>
+            <p className="user-favorites-single-dialog-content__description">
               {machine.description}
             </p>
           </div>
@@ -106,4 +106,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HomeMachinesSingleDialog);
+)(UserFavoritesSingleDialog);

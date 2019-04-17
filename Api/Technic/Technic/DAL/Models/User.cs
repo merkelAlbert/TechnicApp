@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Technic.DAL.Models.Enums;
+using Technic.DAL.Models.IntermediateModels;
 
 namespace Technic.DAL.Models
 {
@@ -21,9 +22,9 @@ namespace Technic.DAL.Models
         public DateTime RegistrationDate { get; set; } = new DateTime();
 
         public ICollection<Machine> Machines { get; set; } = new List<Machine>();
+        public ICollection<User_FavoriteMachine> FavoriteMachines { get; set; } = new List<User_FavoriteMachine>();
 
         [InverseProperty("Person")] public ICollection<Order> PersonOrders { get; set; } = new List<Order>();
-
         [InverseProperty("Company")] public ICollection<Order> CompanyOrders { get; set; } = new List<Order>();
     }
 }

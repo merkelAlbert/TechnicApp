@@ -15,5 +15,6 @@ namespace Technic.DTO.Machines
         public MachineStatus Status { get; set; }
         public List<SpecificationInfo> Specifications { get; set; } = new List<SpecificationInfo>();
         public List<Guid> ImagesIds { get; set; } = new List<Guid>();
+        public bool IsFavorite { get; set; }
     }
 }

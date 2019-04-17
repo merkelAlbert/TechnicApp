@@ -82,7 +82,7 @@ class Registration extends Component {
                 <Text
                   required
                   name="phone"
-                  type="phone"
+                  type="tel"
                   label="Телефон"
                   className="registration-form__field"
                 />

@@ -17,6 +17,7 @@ namespace Technic.DAL
         public DbSet<Specification> Specifications { get; set; }
         public DbSet<MachineType_Specification> MachineType_Specifications { get; set; }
         public DbSet<MachineSpecification> MachineSpecifications { get; set; }
+        public DbSet<User_FavoriteMachine> User_FavoriteMachines { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -53,6 +54,23 @@ namespace Technic.DAL
                 .HasOne(ms => ms.Specification)
                 .WithMany(ms => ms.Machines)
                 .HasForeignKey(ms => ms.SpecificationId);
+
+            #endregion
+
+            #region User-favoriteMachine
+
+            builder.Entity<User_FavoriteMachine>()
+                .HasKey(ufm => new {ufm.MachineId, ufm.UserId});
+
+            builder.Entity<User_FavoriteMachine>()
+                .HasOne(ufm => ufm.Machine)
+                .WithMany(ufm => ufm.Lovers)
+                .HasForeignKey(ufm => ufm.MachineId);
+
+            builder.Entity<User_FavoriteMachine>()
+                .HasOne(ufm => ufm.User)
+                .WithMany(ufm => ufm.FavoriteMachines)
+                .HasForeignKey(ufm => ufm.UserId);
 
             #endregion
         }

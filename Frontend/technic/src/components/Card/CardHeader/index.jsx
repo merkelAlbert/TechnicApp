@@ -15,7 +15,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    width: '70%'
+    width: '80%'
   },
   title: {
     whiteSpace: 'nowrap',

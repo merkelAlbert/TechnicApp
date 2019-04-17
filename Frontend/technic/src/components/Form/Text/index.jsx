@@ -10,7 +10,7 @@ const styles = theme => ({
   }
 });
 
-const Text = ({ classes, className, multiline, ...restProps }) => (
+const Text = ({ classes, className, multiline, type, ...restProps }) => (
   <Field
     {...restProps}
     render={({ input: { name, ...restInput }, meta, ...rest }) => (
@@ -21,6 +21,7 @@ const Text = ({ classes, className, multiline, ...restProps }) => (
         multiline={multiline}
         InputProps={restInput}
         className={cn(classes.input, className)}
+        type={type || 'text'}
       />
     )}
   />

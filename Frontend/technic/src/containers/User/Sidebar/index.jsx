@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { AccountCircle, Commute, Assignment } from '@material-ui/icons';
+import { AccountCircle, Commute, Assignment, Star } from '@material-ui/icons';
 
 import SideBar from '../../../components/SideBar';
 import Link from '../../../components/Link';
@@ -28,6 +28,15 @@ const UserSideBar = ({ className, user, location }) => (
           icon={Commute}
           caption="Моя техника"
           isSelected={location.pathname === `/user/${user.id}/machines`}
+        />
+      </Link>
+    )}
+    {user.role === userRoles.person.id && (
+      <Link to={`/user/${user.id}/favoritemachines`}>
+        <Item
+          icon={Star}
+          caption="Избранное"
+          isSelected={location.pathname === `/user/${user.id}/favoritemachines`}
         />
       </Link>
     )}

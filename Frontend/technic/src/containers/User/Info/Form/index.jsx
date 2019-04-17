@@ -62,6 +62,7 @@ const UserInfoForm = ({
                 required
                 name="phone"
                 label="Телефон"
+                type="tel"
                 className="user-info-form__field"
               />
             </div>
