@@ -1,5 +1,5 @@
 import { find } from 'lodash-es';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import { Create, Clear } from '@material-ui/icons';
@@ -16,7 +16,6 @@ import orderStatuses from '../../../../constants/orderStatuses';
 import userRoles from '../../../../constants/roles';
 
 import './style.scss';
-//import MachineCard from './MachineCard';
 
 class UserOrdersView extends Component {
   componentDidMount = () => {
@@ -81,7 +80,7 @@ class UserOrdersView extends Component {
                   <th className="user-orders-view__orders-action" />
                 </tr>
                 {orders.map(order => (
-                  <>
+                  <Fragment key={order.id}>
                     <tr className="user-orders-view__orders-row">
                       <td colSpan="100">
                         <Divider className="user-orders-view__divider" />
@@ -132,7 +131,7 @@ class UserOrdersView extends Component {
                         </Link>
                       </td>
                     </tr>
-                  </>
+                  </Fragment>
                 ))}
                 <tr className="user-orders-view__orders-row">
                   <td colSpan="100">

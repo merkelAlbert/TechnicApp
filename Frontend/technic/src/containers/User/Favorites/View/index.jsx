@@ -6,7 +6,7 @@ import { fetchAll } from '../../../../store/actions/machines';
 import Loader from '../../../../components/Loader';
 
 import './style.scss';
-import MachineCard from './MachineCard';
+import MachineCard from './Card';
 
 class UserFavoritesView extends Component {
   componentDidMount = () => {

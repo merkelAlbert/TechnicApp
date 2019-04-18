@@ -15,7 +15,8 @@ namespace Technic
     {
         public MappingProfile()
         {
-            CreateMap<RegistrationInfo, User>();
+            CreateMap<RegistrationInfo, User>()
+                .ForMember(u => u.RegistrationDate, options => options.MapFrom(_ => DateTime.Today));
             CreateMap<LoginInfo, User>();
             CreateMap<User, AuthorizedModel>();
             CreateMap<User, UserModel>();
@@ -23,8 +24,7 @@ namespace Technic
             CreateMap<OrderInfo, Order>()
                 .ForMember(o => o.ToDate, options => options.Condition(src => src.ToDate != DateTime.MinValue))
                 .ForMember(o => o.FromDate, options => options.Condition(src => src.FromDate != DateTime.MinValue))
-                .ForMember(o => o.CreationDate,
-                    options => options.Condition(src => src.CreationDate != DateTime.MinValue))
+                .ForMember(o => o.CreationDate, options => options.MapFrom(_ => DateTime.Today))
                 .ForMember(o => o.MachineId, options => options.Condition(src => src.MachineId != Guid.Empty));
             CreateMap<Order, OrderModel>();
             CreateMap<Order, OrdersModel>();

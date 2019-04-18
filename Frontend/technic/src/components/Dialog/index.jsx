@@ -4,7 +4,6 @@ import {
   Dialog as MuiDialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
   IconButton
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -26,7 +25,6 @@ const Dialog = ({ children, open, onClose, title, classes, ...props }) => (
     onClose={onClose}
     open={open}
     disableBackdropClick
-    // scroll="paper"
   >
     <DialogTitle className={classes.title} disableTypography>
       {title}

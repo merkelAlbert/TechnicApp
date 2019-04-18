@@ -12,6 +12,8 @@ import MenuItem from '../../../../components/Menu/MenuItem';
 
 import { fetchOne } from '../../../../store/actions/user';
 
+import userRoles from '../../../../constants/roles';
+
 import './style.scss';
 import UserCardRow from './UserCardRow';
 
@@ -70,17 +72,26 @@ class UserInfoView extends Component {
               <div className="user-info-view__table">
                 <UserCardRow title="Email" value={user.email} />
                 <Divider />
-                <UserCardRow title="Название" value={user.name} />
+                <UserCardRow
+                  title={user.role === userRoles.person.id ? 'ФИО' : 'Название'}
+                  value={user.name}
+                />
                 <Divider />
                 <UserCardRow title="Телефон" value={user.phone} />
                 <Divider />
-                <UserCardRow title="Описание" value={user.description} />
-                <Divider />
+                {user.role === userRoles.company.id && (
+                  <>
+                    <UserCardRow title="Описание" value={user.description} />
+                    <Divider />
+                  </>
+                )}
                 <UserCardRow title="Адрес" value={user.address} />
                 <Divider />
                 <UserCardRow
                   title="Дата регистрации"
-                  value={new Date(user.registrationDate).toLocaleDateString('ru')}
+                  value={new Date(user.registrationDate).toLocaleDateString(
+                    'ru'
+                  )}
                 />
               </div>
             </CardContent>

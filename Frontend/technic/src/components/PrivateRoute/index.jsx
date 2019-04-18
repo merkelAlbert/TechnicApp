@@ -11,15 +11,15 @@ export const PrivateRoute = ({
     {...props}
     render={renderProps => {
       if (localStorage.getItem('token')) {
-        if (userRole) {
+        if (userRole || userRole === 0) {
           if (userRole === +localStorage.getItem('role')) {
             if (render) {
-              render();
+              return render();
             } else return <Component {...renderProps} />;
           } else return <Redirect to="/" />;
         } else {
           if (render) {
-            render();
+            return render();
           } else return <Component {...renderProps} />;
         }
       } else return <Redirect to="/auth" />;

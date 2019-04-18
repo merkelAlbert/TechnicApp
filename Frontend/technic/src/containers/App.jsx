@@ -23,7 +23,7 @@ const App = () => (
               <Route exact path="/auth" component={Authorization} />
               <PrivateRoute path="/user/:userId" component={User} />
               <Route path="/" component={Home} />
-              </Layout>
+            </Layout>
           </Switch>
         </ThemeProvider>
       </BrowserRouter>

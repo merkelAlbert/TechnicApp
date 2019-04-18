@@ -1,5 +1,4 @@
 import cn from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 import SelectField from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';

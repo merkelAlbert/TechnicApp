@@ -1,5 +1,4 @@
 import React from 'react';
-import cn from 'classnames';
 
 import Item from '../../../../components/SideBar/SideBarItem';
 

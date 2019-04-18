@@ -3,39 +3,48 @@
   flex-direction: column;
   width: 100%;
   align-items: center;
+
   &__title {
     font-weight: 300;
     margin: 30px 0 0;
   }
+
   &__row {
     width: 100%;
     margin-top: 10px;
     display: flex;
     justify-content: center;
   }
+
   &__specifications {
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 100%;
   }
+
   &__specification {
     display: flex;
     margin: 0 10px;
+
     &:nth-child(even) {
       margin-right: 0;
     }
+
     &:nth-child(odd) {
       margin-left: 0;
     }
   }
+
   &__checkbox {
     width: 100%;
     justify-content: flex-start;
   }
+
   &__uploader {
     width: 100%;
     justify-content: flex-start;
   }
+
   &__field {
     width: 100%;
   }

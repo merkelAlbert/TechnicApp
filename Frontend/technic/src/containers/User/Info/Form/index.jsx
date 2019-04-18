@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Form from '../../../../components/Form';
@@ -42,15 +41,6 @@ const UserInfoForm = ({
       >
         {() => (
           <>
-            {/* <div className="user-info-form__row">
-              <Text
-                required
-                name="email"
-                type="email"
-                label="Email"
-                className="user-info-form__field"
-              />
-            </div> */}
             <div className="user-info-form__row">
               <Text
                 required

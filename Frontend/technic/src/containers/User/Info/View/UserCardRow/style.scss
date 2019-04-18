@@ -1,10 +1,13 @@
 .user-card-row {
   display: flex;
+
   &__title {
     color: grey;
-    width: 30%
+    width: 30%;
   }
+
   &__value {
+    white-space: pre-wrap;
     margin-left: 20px;
     flex: 1;
   }

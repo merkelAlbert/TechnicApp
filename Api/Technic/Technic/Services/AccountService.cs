@@ -92,7 +92,6 @@ namespace Technic.Services
             var hash = CreateHash(user.Password, salt);
             user.Password = hash;
             user.Salt = salt;
-            user.RegistrationDate = DateTime.Today;
             await _databaseContext.Users.AddAsync(user);
             await _databaseContext.SaveChangesAsync();
         }

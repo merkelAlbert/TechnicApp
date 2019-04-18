@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import SnackBar from '../../../components/SnackBar';
+import PrivateRoute from '../../../components/PrivateRoute';
+
+import userRoles from '../../../constants/roles';
 
 import View from './View';
 import SingleDialog from './View/SingleDialog';
+import AddOrderDialog from './AddOrderDialog';
 
 class HomeMachines extends Component {
   state = {
@@ -36,6 +40,11 @@ class HomeMachines extends Component {
         />
         <Switch>
           <Route path="/machines/view/:machineId" component={SingleDialog} />
+          <PrivateRoute
+            userRole={userRoles.person.id}
+            path="/machines/addorder/:machineId"
+            render={() => <AddOrderDialog onSuccess={this.onSuccess} />}
+          />
         </Switch>
         <SnackBar open={open} message={message} onClose={this.handleClose} />
       </>

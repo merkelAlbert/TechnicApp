@@ -1,6 +1,5 @@
 import cn from 'classnames';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 import { Field } from 'react-final-form';
 import { OnChange } from 'react-final-form-listeners';
 import SelectField from '@material-ui/core/Select';

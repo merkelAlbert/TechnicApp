@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import SnackBar from '../../../components/SnackBar';
+import PrivateRoute from '../../../components/PrivateRoute';
+
+import userRoles from'../../../constants/roles';
 
 import View from './View';
 import SingleDialog from './View/SingleDialog';
+import AddOrderDialog from './AddOrderDialog';
 
 class UserFavorites extends Component {
   state = {
@@ -38,6 +42,11 @@ class UserFavorites extends Component {
           <Route
             path="/user/:userId/favoritemachines/view/:machineId"
             component={SingleDialog}
+          />
+          <PrivateRoute
+            userRole={userRoles.person.id}
+            path="/user/:userId/favoritemachines/addorder/:machineId"
+            render={() => <AddOrderDialog onSuccess={this.onSuccess} />}
           />
         </Switch>
         <SnackBar open={open} message={message} onClose={this.handleClose} />

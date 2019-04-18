@@ -20,6 +20,13 @@ const Text = ({ classes, className, multiline, type, ...restProps }) => (
         error={meta.error && meta.touched}
         multiline={multiline}
         InputProps={restInput}
+        InputLabelProps={
+          type === 'date'
+            ? {
+                shrink: true
+              }
+            : {}
+        }
         className={cn(classes.input, className)}
         type={type || 'text'}
       />

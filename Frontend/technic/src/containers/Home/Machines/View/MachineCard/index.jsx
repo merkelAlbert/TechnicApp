@@ -60,9 +60,11 @@ const HomeMachineCard = ({
               <Star className="home-machine-card__favorite-icon" />
             )}
           </IconButton>
-          <IconButton>
-            <AssignmentTurnedInOutlined className="home-machine-card__order-icon" />
-          </IconButton>
+          <Link to={`/machines/addorder/${machineId}`}>
+            <IconButton>
+              <AssignmentTurnedInOutlined className="home-machine-card__order-icon" />
+            </IconButton>
+          </Link>
         </CardActions>
       )}
     </Card>

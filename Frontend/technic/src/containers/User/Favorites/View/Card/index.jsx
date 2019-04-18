@@ -1,11 +1,6 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import {
-  AssignmentTurnedInOutlined,
-  Star,
-} from '@material-ui/icons';
+import { AssignmentTurnedInOutlined, Star } from '@material-ui/icons';
 
 import Card from '../../../../../components/Card';
 import CardContent from '../../../../../components/Card/CardContent';
@@ -57,9 +52,11 @@ const UserFavoriteCard = ({
           <IconButton onClick={() => deleteFromFavorite(machineId)}>
             <Star className="user-favorites-card__favorite-icon" />
           </IconButton>
-          <IconButton>
-            <AssignmentTurnedInOutlined className="user-favorites-card__order-icon" />
-          </IconButton>
+          <Link to={`/user/${user.id}/favoritemachines/addorder/${machineId}`}>
+            <IconButton>
+              <AssignmentTurnedInOutlined className="user-favorites-card__order-icon" />
+            </IconButton>
+          </Link>
         </CardActions>
       )}
     </Card>
