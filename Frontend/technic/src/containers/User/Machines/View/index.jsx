@@ -60,6 +60,7 @@ class UserMachinesView extends Component {
                 startUrl={`/user/${userId}/machines`}
                 userId={userId}
                 machine={machine}
+                isPrivateOffice
               />
             ))}
           </div>

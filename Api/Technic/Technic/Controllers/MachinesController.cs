@@ -42,7 +42,6 @@ namespace Technic.Controllers
 
         [HttpGet]
         [Route("{machineId}")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<object> GetMachine([FromRoute] Guid machineId)
         {
             try
@@ -100,20 +99,5 @@ namespace Technic.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-
-        /*[HttpPost]
-        [Route("{machineId}/favorite")]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "User")]
-        public async Task<object> SwitchIsMachineFavorite([FromRoute] Guid machineId)
-        {
-            try
-            {
-                return await _machinesService.SwitchIsFavorite(machineId);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }*/
     }
 }
