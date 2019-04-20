@@ -12,6 +12,8 @@ namespace Technic.QueryFilters
         public decimal? FromPrice { get; set; }
         public decimal? ToPrice { get; set; }
 
-        public Dictionary<Guid, string> Specifications { get; set; } = new Dictionary<Guid, string>();
+        public Dictionary<Guid, int> FromNumberSpecifications { get; set; } = new Dictionary<Guid, int>();
+        public Dictionary<Guid, int> ToNumberSpecifications { get; set; } = new Dictionary<Guid, int>();
+        public Dictionary<Guid, string> StringSpecifications { get; set; } = new Dictionary<Guid, string>();
     }
 }

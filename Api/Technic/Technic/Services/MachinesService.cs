@@ -67,10 +67,21 @@ namespace Technic.Services
                     m => machinesQueryFilter.FromPrice == null || m.Price >= machinesQueryFilter.FromPrice)
                 .Where(m =>
                     machinesQueryFilter.ToPrice == null || m.Price <= machinesQueryFilter.ToPrice)
-                .Where(m => machinesQueryFilter.Specifications.Count == 0 || machinesQueryFilter.Specifications.All(s =>
+                .Where(m => machinesQueryFilter.FromNumberSpecifications.Count == 0 ||
+                            machinesQueryFilter.FromNumberSpecifications.All(s =>
+                                m.Specifications.FirstOrDefault(ms => ms.SpecificationId == s.Key) !=
+                                default(MachineSpecification) && int.Parse(m.Specifications
+                                    .First(ms => ms.SpecificationId == s.Key).Value) >= s.Value))
+                .Where(m => machinesQueryFilter.ToNumberSpecifications.Count == 0 ||
+                            machinesQueryFilter.ToNumberSpecifications.All(s =>
+                                m.Specifications.FirstOrDefault(ms => ms.SpecificationId == s.Key) !=
+                                default(MachineSpecification) && int.Parse(m.Specifications
+                                    .First(ms => ms.SpecificationId == s.Key).Value) <= s.Value))
+                .Where(m => machinesQueryFilter.StringSpecifications.Count == 0 ||
+                            machinesQueryFilter.StringSpecifications.All(s =>
                                 m.Specifications.FirstOrDefault(ms => ms.SpecificationId == s.Key) !=
                                 default(MachineSpecification) && m.Specifications
-                                    .First(ms => ms.SpecificationId == s.Key).Value == s.Value))
+                                    .First(ms => ms.SpecificationId == s.Key).Value.Contains(s.Value)))
                 .ToList();
 
             if (machinesQueryFilter.IsPrivateOffice)
@@ -180,7 +191,7 @@ namespace Technic.Services
                 }
                 else
                 {
-                    if (machineSpecification.Value == null)
+                    if (specificationInfo.Value == null)
                     {
                         machineSpecifications.Remove(machineSpecification);
                     }

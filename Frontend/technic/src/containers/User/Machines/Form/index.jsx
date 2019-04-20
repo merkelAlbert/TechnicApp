@@ -41,11 +41,11 @@ class UserMachinesForm extends Component {
     const { initialValues } = this.props;
     if (
       initialValues &&
-      initialValues.type &&
+      initialValues.specifications &&
       initialValues !== prevProps.initialValues
     ) {
       this.setState({
-        specifications: initialValues.type.allowedSpecifications
+        specifications: initialValues.specifications
       });
     }
   };
@@ -185,8 +185,8 @@ class UserMachinesForm extends Component {
                             {specification.measure ? (
                               <Text
                                 name={`specifications[${index}].value`}
-                                label={`${specifications[index].name} (${
-                                  specifications[index].measure
+                                label={`${specification.name} (${
+                                  specification.measure
                                 })`}
                                 className="machine-form__field"
                                 type="number"
@@ -194,7 +194,7 @@ class UserMachinesForm extends Component {
                             ) : (
                               <Text
                                 name={`specifications[${index}].value`}
-                                label={specifications[index].name}
+                                label={specification.name}
                                 className="machine-form__field"
                               />
                             )}
