@@ -49,7 +49,6 @@ class CommonOrdersForm extends Component {
       onSubmit
     } = this.props;
     const { disabled } = this.state;
-    console.log(initialValues);
 
     return (
       <>
