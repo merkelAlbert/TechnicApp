@@ -7,8 +7,8 @@ import PrivateRoute from '../../../components/PrivateRoute';
 import userRoles from '../../../constants/roles';
 
 import View from './View';
-import SingleDialog from './View/SingleDialog';
-import AddOrderDialog from './AddOrderDialog';
+import SingleDialog from '../../Common/Machines/View/SingleDialog';
+import AddOrderDialog from '../../Common/Orders/AddDialog';
 
 class HomeMachines extends Component {
   state = {

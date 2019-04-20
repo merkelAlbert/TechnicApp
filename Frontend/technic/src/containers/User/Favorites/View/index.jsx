@@ -6,7 +6,7 @@ import { fetchAll } from '../../../../store/actions/machines';
 import Loader from '../../../../components/Loader';
 
 import './style.scss';
-import MachineCard from './Card';
+import MachineCard from '../../../Common/Machines/View/Card';
 
 class UserFavoritesView extends Component {
   componentDidMount = () => {
@@ -33,6 +33,9 @@ class UserFavoritesView extends Component {
 
   render = () => {
     const {
+      match: {
+        params: { userId }
+      },
       data: { machines },
       isFetching,
       error,
@@ -50,6 +53,7 @@ class UserFavoritesView extends Component {
           {machines.map(machine => (
             <MachineCard
               key={machine.id}
+              startUrl={`/user/${userId}/favoritemachines`}
               machine={machine}
               onSuccess={onSuccess}
             />

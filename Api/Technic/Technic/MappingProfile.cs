@@ -50,7 +50,14 @@ namespace Technic
             CreateMap<MachineSpecification, SpecificationInfo>()
                 .ForMember(s => s.Id, o => o.MapFrom(ms => ms.SpecificationId))
                 .ForMember(s => s.Name, o => o.MapFrom(ms => ms.Specification.Name))
-                .ForMember(s => s.Value, o => o.MapFrom(ms => ms.Value));
+                .ForMember(s => s.Value, o => o.MapFrom(ms => ms.Value))
+                .ForMember(s => s.Measure, o => o.MapFrom(ms => ms.Specification.Measure));
+
+            CreateMap<MachineSpecification, SpecificationModel>()
+                .ForMember(s => s.Id, o => o.MapFrom(ms => ms.SpecificationId))
+                .ForMember(s => s.Name, o => o.MapFrom(ms => ms.Specification.Name))
+                .ForMember(s => s.Value, o => o.MapFrom(ms => ms.Value))
+                .ForMember(s => s.Measure, o => o.MapFrom(ms => ms.Specification.Measure));
 
             CreateMap<MachineType, MachineTypeModel>()
                 .ForMember(t => t.AllowedSpecifications,

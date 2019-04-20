@@ -9,7 +9,7 @@ import { FILES } from '../../../../../utils/api';
 
 import './style.scss';
 
-class HomeMachinesSingleDialog extends Component {
+class CommonMachinesSingleDialog extends Component {
   componentDidMount = () => {
     const { loadData } = this.props;
     loadData();
@@ -35,41 +35,46 @@ class HomeMachinesSingleDialog extends Component {
         fullWidth
       >
         <Loader isFetching={isFetching} error={error}>
-          <div className="home-machines-single-dialog-content">
-            <div className="home-machines-single-dialog-content__images">
+          <div className="common-machines-single-dialog-content">
+            <div className="common-machines-single-dialog-content__images">
               {machine.imagesIds &&
                 machine.imagesIds.map(imageId => (
                   <img
                     key={imageId}
-                    className="home-machines-single-dialog-content__image"
+                    className="common-machines-single-dialog-content__image"
                     src={`${FILES}/${imageId}`}
                     alt={machine.name}
                   />
                 ))}
             </div>
             <p>
-              <span className="home-machines-single-dialog-content__section-title">
+              <span className="common-machines-single-dialog-content__section-title">
                 Название:
               </span>{' '}
               {machine.name}
             </p>
             <p>
-              <span className="home-machines-single-dialog-content__section-title">Тип:</span>{' '}
+              <span className="common-machines-single-dialog-content__section-title">
+                Тип:
+              </span>{' '}
               {machine.type && machine.type.name}
             </p>
-            <p className="home-machines-single-dialog-content__section-title">
+            <p className="common-machines-single-dialog-content__section-title">
               Характеристики:{' '}
             </p>
             <ul>
               {machine.specifications &&
                 machine.specifications.map(specification => (
                   <li key={specification.id}>
-                    {specification.name}: {specification.value}
+                    {specification.name}: {specification.value}{' '}
+                    {specification.measure || ''}
                   </li>
                 ))}
             </ul>
-            <p className="home-machines-single-dialog-content__section-title">Описание: </p>
-            <p className="home-machines-single-dialog-content__description">
+            <p className="common-machines-single-dialog-content__section-title">
+              Описание:{' '}
+            </p>
+            <p className="common-machines-single-dialog-content__description">
               {machine.description}
             </p>
           </div>
@@ -106,4 +111,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HomeMachinesSingleDialog);
+)(CommonMachinesSingleDialog);

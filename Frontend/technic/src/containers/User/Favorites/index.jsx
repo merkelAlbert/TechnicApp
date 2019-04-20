@@ -4,10 +4,10 @@ import { Route, Switch } from 'react-router-dom';
 import SnackBar from '../../../components/SnackBar';
 import PrivateRoute from '../../../components/PrivateRoute';
 
-import userRoles from'../../../constants/roles';
+import userRoles from '../../../constants/roles';
 
 import View from './View';
-import SingleDialog from './View/SingleDialog';
+import SingleDialog from '../../Common/Machines/View/SingleDialog';
 import AddOrderDialog from './AddOrderDialog';
 
 class UserFavorites extends Component {
@@ -36,7 +36,7 @@ class UserFavorites extends Component {
       <>
         <Route
           path="/user/:userId/favoritemachines"
-          render={() => <View onSuccess={this.onSuccess} />}
+          component={View}
         />
         <Switch>
           <Route

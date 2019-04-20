@@ -14,7 +14,7 @@ import './style.scss';
 
 import { FILES } from '../../../../utils/api';
 
-class UserFavoritesOrderForm extends Component {
+class CommonOrdersForm extends Component {
   state = {
     disabled: true
   };
@@ -57,13 +57,13 @@ class UserFavoritesOrderForm extends Component {
           validate={this.validate}
           error={error.orders || error.machines}
           initialValues={initialValues}
-          className="home-machines-order-form"
+          className="common-orders-form"
         >
           {() => (
             <>
               <Loader isFetching={isFetching.machines}>
-                <div className="home-machines-order-form__machine-info">
-                  <div className="home-machines-order-form__machine-description">
+                <div className="common-orders-form__machine-info">
+                  <div className="common-orders-form__machine-description">
                     <p>
                       <strong>Название:</strong> {machine.name}
                     </p>
@@ -79,7 +79,8 @@ class UserFavoritesOrderForm extends Component {
                           {machine.specifications &&
                             machine.specifications.map(specification => (
                               <li key={specification.id}>
-                                {specification.name}: {specification.value}
+                                {specification.name}: {specification.value}{' '}
+                                {specification.measure || ''}
                               </li>
                             ))}
                         </ul>
@@ -91,37 +92,37 @@ class UserFavoritesOrderForm extends Component {
                   </div>
                   {!isEmpty(machine.imagesIds) && (
                     <img
-                      className="home-machines-order-form__machine-photo"
+                      className="common-orders-form__machine-photo"
                       src={`${FILES}/${machine.imagesIds[0]}`}
                       alt={machine.name}
                     />
                   )}
                 </div>
               </Loader>
-              <div className="home-machines-order-form__row">
+              <div className="common-orders-form__row">
                 <Text
                   required
                   type="date"
                   name="fromDate"
                   label="Дата начала аренды"
-                  className="home-machines-order-form__field"
+                  className="common-orders-form__field"
                 />
                 <Text
                   required
                   type="date"
                   name="toDate"
                   label="Дата окончания аренды"
-                  className="home-machines-order-form__field"
+                  className="common-orders-form__field"
                 />
               </div>
-              <div className="home-machines-order-form__row">
+              <div className="common-orders-form__row">
                 <Text
                   name="comment"
                   label="Комментарий"
-                  className="home-machines-order-form__field"
+                  className="common-orders-form__field"
                 />
               </div>
-              <div className="home-machines-order-form__row">
+              <div className="common-orders-form__row">
                 <Loader isFetching={isFetching.orders}>
                   <Button type="submit" disabled={disabled}>
                     {submitButtonTitle}
@@ -136,12 +137,12 @@ class UserFavoritesOrderForm extends Component {
   };
 }
 
-UserFavoritesOrderForm.defaultProps = {
+CommonOrdersForm.defaultProps = {
   className: null,
   error: null
 };
 
-UserFavoritesOrderForm.propTypes = {
+CommonOrdersForm.propTypes = {
   className: PropTypes.string,
   error: PropTypes.shape(),
   onSubmit: PropTypes.func.isRequired,
@@ -168,4 +169,4 @@ export default compose(
     mapStateToProps,
     null
   )
-)(UserFavoritesOrderForm);
+)(CommonOrdersForm);

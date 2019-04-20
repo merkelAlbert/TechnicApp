@@ -6,7 +6,7 @@ import { fetchAll } from '../../../../store/actions/machines';
 import Loader from '../../../../components/Loader';
 
 import './style.scss';
-import MachineCard from './MachineCard';
+import MachineCard from '../../../Common/Machines/View/Card';
 
 class HomeMachinesView extends Component {
   componentDidMount = () => {
@@ -45,6 +45,7 @@ class HomeMachinesView extends Component {
           <div className="home-machines-view__container">
             {machines.map(machine => (
               <MachineCard
+                startUrl="/machines"
                 key={machine.id}
                 machine={machine}
                 onSuccess={onSuccess}
@@ -68,7 +69,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loadData: async () => {
       try {
-        await dispatch(fetchAll({ isPrivateOffice: false }));
+        await dispatch(
+          fetchAll({
+            isPrivateOffice: false,
+            specifications: {
+              '232267af-86f0-468c-b148-b98f362f792c': '5'
+            },
+            fromPrice: 1500,
+            toPrice: 3000
+          })
+        );
       } catch (err) {
         console.log(err);
       }

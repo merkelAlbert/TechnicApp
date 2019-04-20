@@ -182,11 +182,22 @@ class UserMachinesForm extends Component {
                             key={specification.name}
                             className="machine-form__specification"
                           >
-                            <Text
-                              name={`specifications[${index}].value`}
-                              label={specifications[index].name}
-                              className="machine-form__field"
-                            />
+                            {specification.measure ? (
+                              <Text
+                                name={`specifications[${index}].value`}
+                                label={`${specifications[index].name} (${
+                                  specifications[index].measure
+                                })`}
+                                className="machine-form__field"
+                                type="number"
+                              />
+                            ) : (
+                              <Text
+                                name={`specifications[${index}].value`}
+                                label={specifications[index].name}
+                                className="machine-form__field"
+                              />
+                            )}
                           </div>
                         );
                       })}

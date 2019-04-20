@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 
 const BASE_URL = 'http://localhost:5000';
 
@@ -63,7 +64,10 @@ export const get = async (url, param, params) => {
   if (token) {
     options = {
       headers: { Authorization: `Bearer ${token}` },
-      params
+      params,
+      paramsSerializer: params => {
+        return qs.stringify(params);
+      }
     };
   }
 

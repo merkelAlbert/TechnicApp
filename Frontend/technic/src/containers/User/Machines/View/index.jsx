@@ -10,7 +10,7 @@ import Loader from '../../../../components/Loader';
 import Link from '../../../../components/Link';
 
 import './style.scss';
-import MachineCard from './MachineCard';
+import MachineCard from '../../../Common/Machines/View/Card';
 
 class UserMachinesView extends Component {
   componentDidMount = () => {
@@ -55,7 +55,12 @@ class UserMachinesView extends Component {
           )}
           <div className="user-machines-view__container">
             {machines.map(machine => (
-              <MachineCard key={machine.id} userId={userId} machine={machine} />
+              <MachineCard
+                key={machine.id}
+                startUrl={`/user/${userId}/machines`}
+                userId={userId}
+                machine={machine}
+              />
             ))}
           </div>
         </Loader>

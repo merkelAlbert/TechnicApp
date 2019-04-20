@@ -13,6 +13,7 @@ using Technic.DTO;
 using Technic.DTO.Machines;
 using Technic.Extensions;
 using Technic.Interfaces;
+using Technic.QueryFilters;
 
 namespace Technic.Controllers
 {
@@ -27,11 +28,11 @@ namespace Technic.Controllers
         }
 
         [HttpGet]
-        public async Task<object> GetMachines([FromQuery] bool isPrivateOffice)
+        public async Task<object> GetMachines([FromQuery] MachinesQueryFilter machinesQueryFilter)
         {
             try
             {
-                return await _machinesService.GetMachines(isPrivateOffice);
+                return await _machinesService.GetMachines(machinesQueryFilter);
             }
             catch (InvalidOperationException e)
             {
@@ -84,7 +85,7 @@ namespace Technic.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-        
+
         [HttpDelete]
         [Route("{machineId}")]
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "Company")]
@@ -99,7 +100,7 @@ namespace Technic.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-        
+
         /*[HttpPost]
         [Route("{machineId}/favorite")]
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "User")]

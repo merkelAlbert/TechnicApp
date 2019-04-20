@@ -17,6 +17,6 @@ namespace Technic.DTO.Machines
         public string Description { get; set; }
         public decimal Price { get; set; }
         public MachineStatus Status { get; set; }
-        public List<SpecificationInfo> Specifications { get; set; } = new List<SpecificationInfo>();
+        public List<SpecificationModel> Specifications { get; set; } = new List<SpecificationModel>();
     }
 }

@@ -1,6 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { AssignmentTurnedInOutlined, Star } from '@material-ui/icons';
+import {
+  AssignmentTurnedInOutlined,
+  Star,
+  StarBorder
+} from '@material-ui/icons';
 
 import Card from '../../../../../components/Card';
 import CardContent from '../../../../../components/Card/CardContent';
@@ -19,42 +23,47 @@ import userRoles from '../../../../../constants/roles';
 import './style.scss';
 import Image from './technic.png';
 
-const UserFavoriteCard = ({
-  machine: { id: machineId, name, price, type, imageId },
+const CommonMachinesCard = ({
+  machine: { id: machineId, name, price, type, imageId, isFavorite },
+  startUrl,
   user,
-  deleteFromFavorite
+  switchIsFavorite
 }) => {
   return (
-    <Card className="user-favorites-card">
+    <Card className="common-machines-card">
       <CardHeader title={name} titleSize="medium" subTitle={type} />
-      <Link to={`/user/${user.id}/favoritemachines/view/${machineId}`}>
+      <Link to={`${startUrl}/view/${machineId}`}>
         {imageId ? (
           <CardImage
             image={`${FILES}/${imageId}`}
             title={name}
-            className="user-favorites-card__image"
+            className="common-machines-card__image"
           />
         ) : (
           <CardImage
             image={Image}
             title={name}
-            className="user-favorites-card__image"
+            className="common-machines-card__image"
           />
         )}
         <CardContentArea>
           <CardContent>
-            <div className="user-favorites-card__price">{price} ₽</div>
+            <div className="common-machines-card__price">{price} ₽</div>
           </CardContent>
         </CardContentArea>
       </Link>
       {user.role === userRoles.person.id && (
-        <CardActions className="user-favorites-card__actions">
-          <IconButton onClick={() => deleteFromFavorite(machineId)}>
-            <Star className="user-favorites-card__favorite-icon" />
+        <CardActions className="common-machines-card__actions">
+          <IconButton onClick={() => switchIsFavorite(machineId, isFavorite)}>
+            {!isFavorite ? (
+              <StarBorder className="common-machines-card__favorite-icon" />
+            ) : (
+              <Star className="common-machines-card__favorite-icon" />
+            )}
           </IconButton>
-          <Link to={`/user/${user.id}/favoritemachines/addorder/${machineId}`}>
+          <Link to={`${startUrl}/addorder/${machineId}`}>
             <IconButton>
-              <AssignmentTurnedInOutlined className="user-favorites-card__order-icon" />
+              <AssignmentTurnedInOutlined className="common-machines-card__order-icon" />
             </IconButton>
           </Link>
         </CardActions>
@@ -71,10 +80,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const { onSuccess } = ownProps;
 
   return {
-    deleteFromFavorite: async machineId => {
+    switchIsFavorite: async (machineId, isFavorite) => {
       try {
-        await dispatch(update(machineId, { isFavorite: false }));
-        onSuccess('Удалено из избранного');
+        await dispatch(update(machineId, { isFavorite: !isFavorite }));
+        !isFavorite
+          ? onSuccess('Добавлено в избранное')
+          : onSuccess('Удалено из избранного');
       } catch (err) {
         console.log(err);
       }
@@ -85,4 +96,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserFavoriteCard);
+)(CommonMachinesCard);

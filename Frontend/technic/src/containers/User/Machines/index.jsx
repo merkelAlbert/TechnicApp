@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import SnackBar from '../../../components/SnackBar';
 
 import View from './View';
-import SingleDialog from './View/SingleDialog';
+import SingleDialog from '../../Common/Machines/View/SingleDialog';
 import AddDialog from './AddDialod';
 import EditDialog from './EditDialog';
 import RemoveDialog from './RemoveDialog';

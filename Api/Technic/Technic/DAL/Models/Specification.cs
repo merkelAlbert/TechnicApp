@@ -9,6 +9,7 @@ namespace Technic.DAL.Models
         public Guid Id { get; set; }
         
         public string Name { get; set; }
+        public string Measure { get; set; }
         public ICollection<MachineType_Specification> MachineTypes { get; set; }
         public ICollection<MachineSpecification> Machines { get; set; }
     }

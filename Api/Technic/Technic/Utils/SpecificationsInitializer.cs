@@ -28,11 +28,13 @@ namespace Technic.Utils
 
                 //высота подъема
                 spec.Name = MachineSpecifications.LoadCapacity;
+                spec.Measure = Measures.M;
                 specs.Add(spec);
 
                 //грузоподъемность
                 spec = new Specification();
                 spec.Name = MachineSpecifications.LiftHeight;
+                spec.Measure = Measures.T;
                 specs.Add(spec);
 
                 //Тип топлива
@@ -40,7 +42,7 @@ namespace Technic.Utils
                 spec.Name = MachineSpecifications.FuelType;
                 specs.Add(spec);
 
-                //Тпи погрузки
+                //Тии погрузки
                 spec = new Specification();
                 spec.Name = MachineSpecifications.LoadingType;
                 specs.Add(spec);

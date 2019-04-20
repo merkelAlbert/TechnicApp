@@ -10,6 +10,7 @@ using Technic.DAL.Models.Enums;
 using Technic.DAL.Models.IntermediateModels;
 using Technic.DTO.Machines;
 using Technic.Interfaces;
+using Technic.QueryFilters;
 
 namespace Technic.Services
 {
@@ -48,17 +49,31 @@ namespace Technic.Services
             return machinesModel;
         }
 
-        public async Task<List<MachinesModel>> GetMachines(bool isPrivateOffice)
+        public async Task<List<MachinesModel>> GetMachines(MachinesQueryFilter machinesQueryFilter)
         {
             var userId = _userRepository.GetCurrentUserId();
             var user = await _databaseContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
-            var machines = await _databaseContext.Machines
+            var machines = _databaseContext.Machines
                 .Include(m => m.Specifications)
                 .ThenInclude(s => s.Specification)
                 .Include(m => m.Lovers)
-                .ThenInclude(l => l.User)
-                .ToListAsync();
-            if (isPrivateOffice)
+                .ThenInclude(l => l.User).ToList();
+
+            machines = machines
+                .Where(
+                    m => machinesQueryFilter.MachineTypeId == null ||
+                         m.MachineTypeId == machinesQueryFilter.MachineTypeId)
+                .Where(
+                    m => machinesQueryFilter.FromPrice == null || m.Price >= machinesQueryFilter.FromPrice)
+                .Where(m =>
+                    machinesQueryFilter.ToPrice == null || m.Price <= machinesQueryFilter.ToPrice)
+                .Where(m => machinesQueryFilter.Specifications.Count == 0 || machinesQueryFilter.Specifications.All(s =>
+                                m.Specifications.FirstOrDefault(ms => ms.SpecificationId == s.Key) !=
+                                default(MachineSpecification) && m.Specifications
+                                    .First(ms => ms.SpecificationId == s.Key).Value == s.Value))
+                .ToList();
+
+            if (machinesQueryFilter.IsPrivateOffice)
             {
                 if (user.Role == UserRole.Company)
                 {
@@ -146,27 +161,31 @@ namespace Technic.Services
         {
             var specifications = _databaseContext.Specifications.ToList();
             var machineSpecifications = machine.Specifications;
-            foreach (var specificationModel in machineInfo.Specifications)
+            foreach (var specificationInfo in machineInfo.Specifications)
             {
                 //in db
-                var specification = specifications.FirstOrDefault(s => s.Id == specificationModel.Id);
+                var specification = specifications.FirstOrDefault(s => s.Id == specificationInfo.Id);
                 if (specification == null) continue;
+
+                //in machine
+                var machineSpecification =
+                    machineSpecifications.FirstOrDefault(s => s.Specification?.Id == specificationInfo.Id);
+                if (machineSpecification == null)
                 {
-                    //in machine
-                    var machineSpecification =
-                        machineSpecifications.FirstOrDefault(s => s.Specification?.Id == specificationModel.Id);
-                    if (machineSpecification == null)
+                    machineSpecifications.Add(new MachineSpecification()
                     {
-                        machineSpecifications.Add(new MachineSpecification()
-                        {
-                            Value = specificationModel.Value,
-                            SpecificationId = specification.Id,
-                        });
-                    }
-                    else
+                        Value = specificationInfo.Value,
+                        SpecificationId = specification.Id,
+                    });
+                }
+                else
+                {
+                    if (machineSpecification.Value == null)
                     {
-                        machineSpecification.Value = specificationModel.Value;
+                        machineSpecifications.Remove(machineSpecification);
                     }
+
+                    machineSpecification.Value = specificationInfo.Value;
                 }
             }
         }

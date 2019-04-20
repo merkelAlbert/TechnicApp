@@ -7,9 +7,9 @@ import { add } from '../../../../store/actions/orders';
 import { fetchOne } from '../../../../store/actions/machines';
 
 import Dialog from '../../../../components/Dialog';
-import Form from '../OrderForm';
+import Form from '../Form';
 
-class HomeMachinesAddOrderDialog extends Component {
+class CommonOrdersAddDialog extends Component {
   componentDidMount = () => {
     const { loadData } = this.props;
     loadData();
@@ -82,4 +82,4 @@ export default compose(
     null,
     mapDispatchToProps
   )
-)(HomeMachinesAddOrderDialog);
+)(CommonOrdersAddDialog);
