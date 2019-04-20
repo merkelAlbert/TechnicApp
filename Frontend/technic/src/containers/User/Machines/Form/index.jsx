@@ -20,9 +20,9 @@ import { fetchAll } from '../../../../store/actions/machineTypes';
 import { add } from '../../../../store/actions/files';
 import machineStatuses from '../../../../constants/machineStatuses';
 
-const statuses = Object.keys(machineStatuses).map(
-  machineStatus => machineStatuses[machineStatus]
-);
+const statuses = Object.values(machineStatuses)
+  .filter(machineStatus => machineStatus.id !== machineStatuses.busy.id)
+  .map(machineStatus => machineStatus);
 
 class UserMachinesForm extends Component {
   uploader = null;
@@ -213,15 +213,19 @@ class UserMachinesForm extends Component {
                     type="number"
                   />
                 </div>
-                <div className="machine-form__row">
-                  <Select
-                    required
-                    name="status"
-                    label="Статус техники"
-                    items={statuses}
-                    className="machine-form__field"
-                  />
-                </div>
+                {(!initialValues ||
+                  (initialValues.status &&
+                    initialValues.status !== machineStatuses.busy.id)) && (
+                  <div className="machine-form__row">
+                    <Select
+                      required
+                      name="status"
+                      label="Статус техники"
+                      items={statuses}
+                      className="machine-form__field"
+                    />
+                  </div>
+                )}
                 <div className="machine-form__checkbox">
                   <Checkbox
                     label="Без фотографий"

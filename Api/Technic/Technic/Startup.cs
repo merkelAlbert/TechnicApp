@@ -16,6 +16,8 @@ using Technic.DAL;
 using Technic.Interfaces;
 using Technic.Services;
 using Technic.Utils;
+using Technic.Workers;
+using Technic.Workers.Tasks;
 
 namespace Technic
 {
@@ -100,9 +102,11 @@ namespace Technic
             services.AddScoped<IFilesService, FilesService>();
             services.AddScoped<IOrdersService, OrdersService>();
             services.AddScoped<ISpecificationsService, SpecificationsService>();
+            services.AddScoped<IScheduledTask, ChangeStatusesTask>();
             services.AddScoped<SpecificationsInitializer>();
             services.AddScoped<MachineTypesInitializer>();
             services.AddScoped<UserRepository>();
+            services.AddHostedService<SchedulerHostedService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

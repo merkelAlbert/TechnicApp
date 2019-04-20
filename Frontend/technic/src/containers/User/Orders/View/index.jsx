@@ -2,7 +2,7 @@ import { find } from 'lodash-es';
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { Create, Clear } from '@material-ui/icons';
+import { Create, Clear, RemoveRedEye } from '@material-ui/icons';
 
 import { fetchAll, update } from '../../../../store/actions/orders';
 
@@ -107,7 +107,9 @@ class UserOrdersView extends Component {
                         {new Date(order.creationDate).toLocaleDateString('ru')}
                       </td>
                       <td className="user-orders-view__orders-cell">
-                        {user.role === userRoles.company.id ? (
+                        {user.role === userRoles.company.id &&
+                        order.status !== orderStatuses.performing.id &&
+                        order.status !== orderStatuses.performed.id ? (
                           <Select
                             required
                             value={order.status}
@@ -118,18 +120,34 @@ class UserOrdersView extends Component {
                           find(statuses, { id: order.status }).title
                         )}
                       </td>
-                      <td className="user-orders-view__orders-action">
-                        <IconButton>
-                          <Create color="primary" />
-                        </IconButton>
-                      </td>
-                      <td className="user-orders-view__orders-action">
-                        <Link to={`/user/${userId}/orders/remove/${order.id}`}>
-                          <IconButton>
-                            <Clear color="error" />
-                          </IconButton>
-                        </Link>
-                      </td>
+                      {user.role === userRoles.person.id ? (
+                        <>
+                          <td className="user-orders-view__orders-action">
+                            <IconButton>
+                              <Create color="primary" />
+                            </IconButton>
+                          </td>
+                          <td className="user-orders-view__orders-action">
+                            <Link
+                              to={`/user/${userId}/orders/remove/${order.id}`}
+                            >
+                              <IconButton>
+                                <Clear color="error" />
+                              </IconButton>
+                            </Link>
+                          </td>
+                        </>
+                      ) : (
+                        <td className="user-orders-view__orders-action">
+                          <Link
+                            to={`/user/${userId}/orders/remove/${order.id}`}
+                          >
+                            <IconButton>
+                              <RemoveRedEye color="primary" />
+                            </IconButton>
+                          </Link>
+                        </td>
+                      )}
                     </tr>
                   </Fragment>
                 ))}
@@ -154,6 +172,8 @@ const mapStateToProps = state => {
   const statuses = { ...orderStatuses };
   if (user.role === userRoles.company.id) {
     statuses.created.disabled = true;
+    statuses.performed.disabled = true;
+    statuses.performing.disabled = true;
   }
 
   return {

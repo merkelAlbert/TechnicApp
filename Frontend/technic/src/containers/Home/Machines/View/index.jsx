@@ -75,8 +75,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             // specifications: {
             //   '232267af-86f0-468c-b148-b98f362f792c': '5'
             // },
-            fromPrice: 1500,
-            toPrice: 3000
+            //fromPrice: 1500,
+            //toPrice: 3000
           })
         );
       } catch (err) {

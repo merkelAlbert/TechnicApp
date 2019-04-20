@@ -93,23 +93,28 @@ class CommonMachinesCard extends Component {
           titleSize="medium"
           subTitle={type}
           onActionClick={
-            user.role === userRoles.company.id && this.onCardActionClick
+            isPrivateOffice &&
+            user.role === userRoles.company.id &&
+            status !== machineStatuses.busy.id &&
+            this.onCardActionClick
           }
         />
-        {user.role === userRoles.company.id && (
-          <Menu
-            anchorEl={anchorEl}
-            open={isMenuOpen}
-            onClose={this.handleCardMenuClose}
-          >
-            <Link to={`${startUrl}/edit/${machineId}`}>
-              <MenuItem>Изменить</MenuItem>
-            </Link>
-            <Link to={`${startUrl}/remove/${machineId}`}>
-              <MenuItem>Удалить</MenuItem>
-            </Link>
-          </Menu>
-        )}
+        {isPrivateOffice &&
+          user.role === userRoles.company.id &&
+          status !== machineStatuses.busy.id && (
+            <Menu
+              anchorEl={anchorEl}
+              open={isMenuOpen}
+              onClose={this.handleCardMenuClose}
+            >
+              <Link to={`${startUrl}/edit/${machineId}`}>
+                <MenuItem>Изменить</MenuItem>
+              </Link>
+              <Link to={`${startUrl}/remove/${machineId}`}>
+                <MenuItem>Удалить</MenuItem>
+              </Link>
+            </Menu>
+          )}
         <Link to={`${startUrl}/view/${machineId}`}>
           {imageId ? (
             <CardImage
