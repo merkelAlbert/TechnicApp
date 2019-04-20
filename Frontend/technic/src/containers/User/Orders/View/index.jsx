@@ -71,13 +71,18 @@ class UserOrdersView extends Component {
                   </th>
                   <th className="user-orders-view__orders-cell">Телефон</th>
                   <th className="user-orders-view__orders-cell">Машина</th>
-                  <th className="user-orders-view__orders-cell">Цена</th>
+                  <th className="user-orders-view__orders-cell">Сумма</th>
                   <th className="user-orders-view__orders-cell">
                     Дата создания
                   </th>
                   <th className="user-orders-view__orders-cell">Статус</th>
                   <th className="user-orders-view__orders-action" />
-                  <th className="user-orders-view__orders-action" />
+                  {user.role === userRoles.person.id && (
+                    <>
+                      <th className="user-orders-view__orders-action" />
+                      <th className="user-orders-view__orders-action" />
+                    </>
+                  )}
                 </tr>
                 {orders.map(order => (
                   <Fragment key={order.id}>
@@ -101,7 +106,7 @@ class UserOrdersView extends Component {
                         {order.machine.name}
                       </td>
                       <td className="user-orders-view__orders-cell">
-                        {order.machine.price}
+                        {order.machine.price}₽
                       </td>
                       <td className="user-orders-view__orders-cell">
                         {new Date(order.creationDate).toLocaleDateString('ru')}
@@ -120,12 +125,23 @@ class UserOrdersView extends Component {
                           find(statuses, { id: order.status }).title
                         )}
                       </td>
-                      {user.role === userRoles.person.id ? (
+                      <td className="user-orders-view__orders-action">
+                        <Link to={`/user/${userId}/orders/view/${order.id}`}>
+                          <IconButton>
+                            <RemoveRedEye color="primary" />
+                          </IconButton>
+                        </Link>
+                      </td>
+                      {user.role === userRoles.person.id && (
                         <>
                           <td className="user-orders-view__orders-action">
-                            <IconButton>
-                              <Create color="primary" />
-                            </IconButton>
+                            <Link
+                              to={`/user/${userId}/orders/edit/${order.id}`}
+                            >
+                              <IconButton>
+                                <Create color="primary" />
+                              </IconButton>
+                            </Link>
                           </td>
                           <td className="user-orders-view__orders-action">
                             <Link
@@ -137,16 +153,6 @@ class UserOrdersView extends Component {
                             </Link>
                           </td>
                         </>
-                      ) : (
-                        <td className="user-orders-view__orders-action">
-                          <Link
-                            to={`/user/${userId}/orders/remove/${order.id}`}
-                          >
-                            <IconButton>
-                              <RemoveRedEye color="primary" />
-                            </IconButton>
-                          </Link>
-                        </td>
                       )}
                     </tr>
                   </Fragment>

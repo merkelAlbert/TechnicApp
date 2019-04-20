@@ -8,7 +8,7 @@ import userRoles from '../../../constants/roles';
 
 import View from './View';
 import SingleDialog from '../../Common/Machines/View/SingleDialog';
-import AddOrderDialog from './AddOrderDialog';
+import AddOrderDialog from '../../Common/Orders/AddDialog';
 
 class UserFavorites extends Component {
   state = {

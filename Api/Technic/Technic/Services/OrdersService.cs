@@ -14,19 +14,22 @@ namespace Technic.Services
     public class OrdersService : IOrdersService
     {
         private readonly IAccountService _accountService;
+        private readonly IMachineTypesService _machineTypesService;
         private readonly DatabaseContext _databaseContext;
         private readonly IMachinesService _machinesService;
         private readonly IMapper _mapper;
         private readonly UserRepository _userRepository;
 
-        public OrdersService(DatabaseContext databaseContext, IMapper mapper, UserRepository userRepository,
-            IAccountService accountService, IMachinesService machinesService)
+        public OrdersService(IAccountService accountService, IMachineTypesService machineTypesService,
+            DatabaseContext databaseContext, IMachinesService machinesService, IMapper mapper,
+            UserRepository userRepository)
         {
+            _accountService = accountService;
+            _machineTypesService = machineTypesService;
             _databaseContext = databaseContext;
+            _machinesService = machinesService;
             _mapper = mapper;
             _userRepository = userRepository;
-            _accountService = accountService;
-            _machinesService = machinesService;
         }
 
 
@@ -73,9 +76,11 @@ namespace Technic.Services
                 .Include(o => o.Person)
                 .Include(o => o.Company)
                 .Include(o => o.Machine)
+                .ThenInclude(m => m.Specifications).ThenInclude(s => s.Specification)
                 .FirstOrDefaultAsync(o => o.Id == orderId);
             if (order == null) throw new InvalidOperationException("Неверный id");
             var orderModel = _mapper.Map<Order, OrderModel>(order);
+            orderModel.Machine.Type = await _machineTypesService.GetMachineType(order.Machine.MachineTypeId);
 
             return orderModel;
         }

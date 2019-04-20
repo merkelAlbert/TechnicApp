@@ -31,10 +31,10 @@ class UserOrders extends Component {
       <>
         <Route path="/user/:userId/orders" component={View} />
         <Switch>
-          {/* <Route
+          <Route
             path="/user/:userId/orders/view/:orderId"
             component={SingleDialog}
-          /> */}
+          />
           <Route
             path="/user/:userId/orders/edit/:orderId"
             render={() => <EditDialog onSuccess={this.onSuccess} />}

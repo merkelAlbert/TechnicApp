@@ -35,31 +35,31 @@ class CommonMachinesSingleDialog extends Component {
         fullWidth
       >
         <Loader isFetching={isFetching} error={error}>
-          <div className="common-machines-single-dialog-content">
-            <div className="common-machines-single-dialog-content__images">
+          <div className="common-machines-single-dialog">
+            <div className="common-machines-single-dialog__images">
               {machine.imagesIds &&
                 machine.imagesIds.map(imageId => (
                   <img
                     key={imageId}
-                    className="common-machines-single-dialog-content__image"
+                    className="common-machines-single-dialog__image"
                     src={`${FILES}/${imageId}`}
                     alt={machine.name}
                   />
                 ))}
             </div>
             <p>
-              <span className="common-machines-single-dialog-content__section-title">
+              <span className="common-machines-single-dialog__section-title">
                 Название:
               </span>{' '}
               {machine.name}
             </p>
             <p>
-              <span className="common-machines-single-dialog-content__section-title">
+              <span className="common-machines-single-dialog__section-title">
                 Тип:
               </span>{' '}
               {machine.type && machine.type.name}
             </p>
-            <p className="common-machines-single-dialog-content__section-title">
+            <p className="common-machines-single-dialog__section-title">
               Характеристики:{' '}
             </p>
             <ul>
@@ -71,10 +71,10 @@ class CommonMachinesSingleDialog extends Component {
                   </li>
                 ))}
             </ul>
-            <p className="common-machines-single-dialog-content__section-title">
+            <p className="common-machines-single-dialog__section-title">
               Описание:{' '}
             </p>
-            <p className="common-machines-single-dialog-content__description">
+            <p className="common-machines-single-dialog__description">
               {machine.description}
             </p>
           </div>

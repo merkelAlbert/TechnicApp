@@ -49,6 +49,7 @@ class CommonOrdersForm extends Component {
       onSubmit
     } = this.props;
     const { disabled } = this.state;
+    console.log(initialValues);
 
     return (
       <>
@@ -73,8 +74,10 @@ class CommonOrdersForm extends Component {
                       </p>
                     )}
                     {!isEmpty(machine.specifications) && (
-                      <p>
-                        <strong>Характеристики:</strong>
+                      <>
+                        <p>
+                          <strong>Характеристики:</strong>
+                        </p>
                         <ul>
                           {machine.specifications &&
                             machine.specifications.map(specification => (
@@ -84,7 +87,7 @@ class CommonOrdersForm extends Component {
                               </li>
                             ))}
                         </ul>
-                      </p>
+                      </>
                     )}
                     <p>
                       <strong>Сумма заказа:</strong> {machine.price}₽
@@ -149,9 +152,9 @@ CommonOrdersForm.propTypes = {
   isFetching: PropTypes.shape({}).isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   data: {
-    machine: state.machines.active
+    machine: (ownProps.data || {}).machine || state.machines.active
   },
   isFetching: {
     machines: state.common.machines.isFetching,

@@ -16,14 +16,15 @@ namespace Technic.Workers.Tasks
             var orders = databaseContext.Orders.Include(o => o.Machine);
             foreach (var order in orders)
             {
-                if (order.FromDate >= DateTime.Today && order.ToDate >= DateTime.Today)
+                if (order.Status == OrderStatus.Confirmed && order.FromDate >= DateTime.Today &&
+                    order.ToDate >= DateTime.Today)
                 {
                     if (order.Machine.Status != MachineStatus.Busy)
                         order.Machine.Status = MachineStatus.Busy;
                     if (order.Status != OrderStatus.Performing)
                         order.Status = OrderStatus.Performing;
                 }
-                else if (order.ToDate <= DateTime.Today)
+                else if (order.Status == OrderStatus.Performing && order.ToDate <= DateTime.Today)
                 {
                     if (order.Machine.Status != MachineStatus.Active)
                         order.Machine.Status = MachineStatus.Active;

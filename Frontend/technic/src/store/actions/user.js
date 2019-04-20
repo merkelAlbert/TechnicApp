@@ -39,9 +39,9 @@ export const login = user => async dispatch => {
   }
 };
 
-export const FETCH_ONE_REQUEST = 'FETCH_ONE_REQUEST';
-export const FETCH_ONE_SUCCESS = 'FETCH_ONE_SUCCESS';
-export const FETCH_ONE_ERROR = 'FETCH_ONE_ERROR';
+export const FETCH_ONE_REQUEST = 'user/FETCH_ONE_REQUEST';
+export const FETCH_ONE_SUCCESS = 'user/FETCH_ONE_SUCCESS';
+export const FETCH_ONE_ERROR = 'user/FETCH_ONE_ERROR';
 
 export const fetchOne = userId => async dispatch => {
   dispatch({ type: FETCH_ONE_REQUEST });

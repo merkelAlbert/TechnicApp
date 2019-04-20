@@ -63,7 +63,7 @@ namespace Technic.Controllers
 
         [HttpPut]
         [Route("{orderId}")]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Company")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<object> UpdateOrder([FromRoute] Guid orderId, [FromBody] OrderInfo orderInfo)
         {
             try

@@ -1,0 +1,19 @@
+.user-orders-single-dialog {
+  &__section-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  &__images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+  }
+
+  &__image {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    object-fit: contain;
+  }
+}
