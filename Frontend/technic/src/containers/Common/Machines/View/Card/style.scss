@@ -26,6 +26,11 @@ $cardWidth: 240px;
     font-weight: 500;
   }
 
+  &__company {
+    font-size: 14px;
+    color: grey;
+  }
+
   &__status {
     display: flex;
     justify-content: space-between;

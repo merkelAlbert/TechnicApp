@@ -11,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using Technic.DAL;
 using Technic.Interfaces;
 using Technic.Services;
@@ -98,6 +97,7 @@ namespace Technic
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IMachinesService, MachinesService>();
+            services.AddScoped<ICompaniesService, CompaniesService>();
             services.AddScoped<IMachineTypesService, MachineTypesService>();
             services.AddScoped<IFilesService, FilesService>();
             services.AddScoped<IOrdersService, OrdersService>();

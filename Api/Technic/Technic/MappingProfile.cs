@@ -4,6 +4,7 @@ using AutoMapper;
 using Technic.DAL.Models;
 using Technic.DAL.Models.IntermediateModels;
 using Technic.DTO.Account;
+using Technic.DTO.Companies;
 using Technic.DTO.Machines;
 using Technic.DTO.MachineTypes;
 using Technic.DTO.Orders;
@@ -19,6 +20,9 @@ namespace Technic
                 .ForMember(u => u.RegistrationDate, options => options.MapFrom(_ => DateTime.Today));
             CreateMap<LoginInfo, User>();
             CreateMap<User, AuthorizedModel>();
+            CreateMap<User, UserModel>();
+            CreateMap<User, CompaniesModel>()
+                .ForMember(c => c.MachinesCount, options => options.MapFrom(u => u.Machines.Count));
             CreateMap<User, UserModel>();
             CreateMap<UserInfo, User>();
             CreateMap<OrderInfo, Order>()

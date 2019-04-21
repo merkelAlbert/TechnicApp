@@ -1,22 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Technic.DAL;
 using Technic.DAL.Models;
-using Technic.DAL.Models.Enums;
 using Technic.DTO.Account;
 using Technic.Interfaces;
 
@@ -115,8 +110,8 @@ namespace Technic.Services
         public async Task<UserModel> GetUserById(Guid userId)
         {
             var user = await _databaseContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
-            var authorizedModel = _mapper.Map<User, UserModel>(user);
-            return authorizedModel ?? throw new InvalidOperationException("Неверный id");
+            var userModel = _mapper.Map<User, UserModel>(user);
+            return userModel ?? throw new InvalidOperationException("Неверный id");
         }
 
         public async Task<AuthorizedModel> GetUserByEmail(string email)

@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using Technic.DAL.Models;
-
 namespace Technic.InitialValues
 {
     public static class MachineSpecifications

@@ -1,9 +1,14 @@
 import React from 'react';
 import MuiIconButton from '@material-ui/core/IconButton';
 
-const IconButton = ({ color, className, children, onClick }) => {
+const IconButton = ({ color, className, children, onClick, disabled }) => {
   return (
-    <MuiIconButton className={className} color={color} onClick={onClick}>
+    <MuiIconButton
+      disabled={disabled}
+      className={className}
+      color={color}
+      onClick={onClick}
+    >
       {children}
     </MuiIconButton>
   );

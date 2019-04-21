@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using Technic.DAL.Models;
 
 namespace Technic.QueryFilters
 {

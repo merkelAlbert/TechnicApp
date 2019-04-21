@@ -4,6 +4,8 @@ import initialState from '../initialState';
 
 const machines = (state = initialState.machines, action) => {
   switch (action.type) {
+    case machinesActions.FETCH_ALL_REQUEST:
+      return { ...state, list: [] };
     case machinesActions.ADD_MACHINE_SUCCESS:
       return action.payload
         ? { ...state, list: [action.payload, ...state.list] }

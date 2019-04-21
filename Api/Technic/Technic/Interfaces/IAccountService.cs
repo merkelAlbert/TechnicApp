@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Technic.DAL.Models;
 using Technic.DTO.Account;
 
 namespace Technic.Interfaces

@@ -1,17 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Technic.DAL.Models;
-using Technic.DTO;
 using Technic.DTO.Machines;
-using Technic.Extensions;
 using Technic.Interfaces;
 using Technic.QueryFilters;
 

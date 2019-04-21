@@ -4,6 +4,8 @@ import initialState from '../initialState';
 
 const orders = (state = initialState.orders, action) => {
   switch (action.type) {
+    case ordersActions.FETCH_ALL_REQUEST:
+      return { ...state, list: [] };
     case ordersActions.ADD_ORDER_SUCCESS:
       return action.payload
         ? { ...state, list: [action.payload, ...state.list] }

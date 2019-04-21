@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Technic.InitialValues
 {
     public static class MachineTypes

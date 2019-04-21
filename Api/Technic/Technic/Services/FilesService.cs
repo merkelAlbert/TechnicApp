@@ -1,18 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Technic.DAL;
-using Technic.DAL.Models;
-using Technic.DAL.Models.IntermediateModels;
-using Technic.DTO;
-using Technic.DTO.Machines;
 using Technic.Interfaces;
 
 namespace Technic.Services

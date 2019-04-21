@@ -1,13 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Technic.DAL.Models;
-using Technic.DAL.Models.Enums;
-using Technic.DTO;
 using Technic.DTO.Account;
-using Technic.Extensions;
 using Technic.Interfaces;
 
 namespace Technic.Controllers

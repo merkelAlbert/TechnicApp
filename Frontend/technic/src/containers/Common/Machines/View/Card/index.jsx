@@ -54,6 +54,7 @@ class CommonMachinesCard extends Component {
         type,
         imageId,
         status,
+        user: { name: company } = {},
         isFavorite
       },
       startUrl,
@@ -132,6 +133,7 @@ class CommonMachinesCard extends Component {
           <CardContentArea>
             <CardContent>
               <div className="common-machines-card__price">{price} ₽</div>
+              <p className="common-machines-card__company">{company}</p>
             </CardContent>
           </CardContentArea>
         </Link>

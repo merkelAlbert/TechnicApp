@@ -135,13 +135,20 @@ class UserOrdersView extends Component {
                       {user.role === userRoles.person.id && (
                         <>
                           <td className="user-orders-view__orders-action">
-                            <Link
-                              to={`/user/${userId}/orders/edit/${order.id}`}
-                            >
-                              <IconButton>
-                                <Create color="primary" />
+                            {order.status !== orderStatuses.performed.id &&
+                            order.status !== orderStatuses.performing.id ? (
+                              <Link
+                                to={`/user/${userId}/orders/edit/${order.id}`}
+                              >
+                                <IconButton>
+                                  <Create color="primary" />
+                                </IconButton>
+                              </Link>
+                            ) : (
+                              <IconButton disabled>
+                                <Create />
                               </IconButton>
-                            </Link>
+                            )}
                           </td>
                           <td className="user-orders-view__orders-action">
                             <Link

@@ -55,7 +55,9 @@ class Header extends Component {
         <Link to="/machines" className="header__item">
           <HeaderItem>Техника</HeaderItem>
         </Link>
-        <HeaderItem>Компании</HeaderItem>
+        <Link to="/companies" className="header__item">
+          <HeaderItem>Компании</HeaderItem>
+        </Link>
         <HeaderItem>О нас</HeaderItem>
 
         {!user || isEmpty(user) ? (
@@ -64,7 +66,7 @@ class Header extends Component {
           </div>
         ) : (
           <div className="header__auth">
-            {user.email}
+            {user.name}
             <IconButton color="primary" onClick={this.onAccountIconClick}>
               <AccountIcon className="header__auth-icon" />
             </IconButton>

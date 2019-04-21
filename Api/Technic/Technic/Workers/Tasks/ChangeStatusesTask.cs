@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Technic.DAL;
@@ -24,7 +22,7 @@ namespace Technic.Workers.Tasks
                     if (order.Status != OrderStatus.Performing)
                         order.Status = OrderStatus.Performing;
                 }
-                else if (order.Status == OrderStatus.Performing && order.ToDate <= DateTime.Today)
+                else if (order.Status == OrderStatus.Performing && order.ToDate < DateTime.Today)
                 {
                     if (order.Machine.Status != MachineStatus.Active)
                         order.Machine.Status = MachineStatus.Active;

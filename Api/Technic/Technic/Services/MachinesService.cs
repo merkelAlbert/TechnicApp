@@ -54,6 +54,8 @@ namespace Technic.Services
             var userId = _userRepository.GetCurrentUserId();
             var user = await _databaseContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
             var machines = _databaseContext.Machines
+                .Where(m => machinesQueryFilter.IsPrivateOffice || m.Status != MachineStatus.Hidden)
+                .Include(m => m.User)
                 .Include(m => m.Specifications)
                 .ThenInclude(s => s.Specification)
                 .Include(m => m.Lovers)
