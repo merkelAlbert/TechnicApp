@@ -132,8 +132,10 @@ class CommonMachinesCard extends Component {
           )}
           <CardContentArea>
             <CardContent>
+              {!isPrivateOffice && (
+                <p className="common-machines-card__company">{company}</p>
+              )}
               <div className="common-machines-card__price">{price} ₽</div>
-              <p className="common-machines-card__company">{company}</p>
             </CardContent>
           </CardContentArea>
         </Link>
@@ -146,7 +148,7 @@ class CommonMachinesCard extends Component {
                 <Star className="common-machines-card__favorite-icon" />
               )}
             </IconButton>
-            <Link to={`${startUrl}/addorder/${machineId}`}>
+            <Link to={`${startUrl}/toorder/${machineId}`}>
               <IconButton>
                 <AssignmentTurnedInOutlined className="common-machines-card__order-icon" />
               </IconButton>

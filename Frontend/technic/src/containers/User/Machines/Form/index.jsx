@@ -130,6 +130,7 @@ class UserMachinesForm extends Component {
       submitButtonTitle
     } = this.props;
     const { specifications, disabled, checked } = this.state;
+    console.log(initialValues);
 
     return (
       <>
@@ -213,19 +214,15 @@ class UserMachinesForm extends Component {
                     type="number"
                   />
                 </div>
-                {(!initialValues ||
-                  (initialValues.status &&
-                    initialValues.status !== machineStatuses.busy.id)) && (
-                  <div className="machine-form__row">
-                    <Select
-                      required
-                      name="status"
-                      label="Статус техники"
-                      items={statuses}
-                      className="machine-form__field"
-                    />
-                  </div>
-                )}
+                <div className="machine-form__row">
+                  <Select
+                    required
+                    name="status"
+                    label="Статус техники"
+                    items={statuses}
+                    className="machine-form__field"
+                  />
+                </div>
                 <div className="machine-form__checkbox">
                   <Checkbox
                     label="Без фотографий"

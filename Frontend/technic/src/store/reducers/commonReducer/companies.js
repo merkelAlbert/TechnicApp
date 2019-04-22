@@ -6,7 +6,7 @@ import {
   FETCH_ONE_ERROR,
   FETCH_ONE_REQUEST,
   FETCH_ONE_SUCCESS,
-} from '../../actions/machines';
+} from '../../actions/companies';
 
 export default common({
   request: [

@@ -42,7 +42,7 @@ class HomeMachines extends Component {
           <Route path="/machines/view/:machineId" component={SingleDialog} />
           <PrivateRoute
             userRole={userRoles.person.id}
-            path="/machines/addorder/:machineId"
+            path="/machines/toorder/:machineId"
             render={() => <AddOrderDialog onSuccess={this.onSuccess} />}
           />
         </Switch>

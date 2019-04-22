@@ -45,7 +45,7 @@ class UserFavorites extends Component {
           />
           <PrivateRoute
             userRole={userRoles.person.id}
-            path="/user/:userId/favoritemachines/addorder/:machineId"
+            path="/user/:userId/favoritemachines/toorder/:machineId"
             render={() => <AddOrderDialog onSuccess={this.onSuccess} />}
           />
         </Switch>

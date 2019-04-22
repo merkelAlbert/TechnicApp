@@ -1,4 +1,4 @@
-$cardWidth: 240px;
+$cardWidth: 245px;
 
 .common-machines-card {
   margin: 15px;
@@ -22,7 +22,7 @@ $cardWidth: 240px;
   }
 
   &__price {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
   }
 
@@ -42,14 +42,14 @@ $cardWidth: 240px;
   }
 
   &__favorite-icon {
-    width: 30px !important;
-    height: 30px !important;
+    width: 25px !important;
+    height: 25px !important;
     color: #ffb300;
   }
 
   &__order-icon {
-    width: 30px !important;
-    height: 30px !important;
+    width: 25px !important;
+    height: 25px !important;
     color: #4caf50;
   }
 }

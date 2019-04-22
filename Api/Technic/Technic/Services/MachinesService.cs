@@ -42,7 +42,9 @@ namespace Technic.Services
             AddSpecificationsToMachine(machineInfo, ref machine);
             await _databaseContext.Machines.AddAsync(machine);
             await _databaseContext.SaveChangesAsync();
-            var machinesModel = _mapper.Map<Machine, MachinesModel>(machine);
+            var addedMachine = await _databaseContext.Machines.Include(m => m.User)
+                .FirstOrDefaultAsync(m => m.Id == machine.Id);
+            var machinesModel = _mapper.Map<Machine, MachinesModel>(addedMachine);
             machinesModel.Type = _databaseContext.MachineTypes.FirstOrDefault(t => t.Id == machine.MachineTypeId)
                 ?.Name;
 
@@ -128,7 +130,10 @@ namespace Technic.Services
         {
             var userId = _userRepository.GetCurrentUserId();
             var user = await _databaseContext.Users.FirstAsync(u => u.Id == userId);
-            var machine = _databaseContext.Machines.Include(m => m.Specifications).ThenInclude(s => s.Specification)
+            var machine = _databaseContext.Machines
+                .Include(m => m.User)
+                .Include(m => m.Specifications)
+                .ThenInclude(s => s.Specification)
                 .FirstOrDefault(m => m.Id == machineId);
             if (machine == null) throw new InvalidOperationException("Неверный id");
             if (user.Role == UserRole.Company)

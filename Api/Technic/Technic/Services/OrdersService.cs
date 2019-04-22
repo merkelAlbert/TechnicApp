@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Technic.DAL;
 using Technic.DAL.Models;
+using Technic.DAL.Models.Enums;
 using Technic.DTO.Orders;
 using Technic.Interfaces;
 
@@ -101,9 +102,12 @@ namespace Technic.Services
 
         public async Task<Guid> DeleteOrder(Guid orderId)
         {
-            var order = await _databaseContext.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+            var order = await _databaseContext.Orders
+                .Include(o => o.Machine)
+                .FirstOrDefaultAsync(o => o.Id == orderId);
             if (order == null) throw new InvalidOperationException("Неверный id");
             var guid = order.Id;
+            order.Machine.Status = MachineStatus.Active;
             _databaseContext.Remove(order);
             _databaseContext.SaveChanges();
 
