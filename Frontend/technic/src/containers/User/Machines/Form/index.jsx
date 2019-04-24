@@ -97,12 +97,15 @@ class UserMachinesForm extends Component {
     }
 
     if (!isEmpty(machine.specifications)) {
-      machineCopy.specifications = machine.specifications.map((spec, index) => {
-        const { value } = spec;
-        const id = specifications[index].id;
-
-        return { id, value };
-      });
+      machineCopy.specifications = machine.specifications
+        .map((spec, index) => {
+          const { value } = spec;
+          if (specifications[index]) {
+            const id = specifications[index].id;
+            return { id, value };
+          }
+        })
+        .filter(spec => spec);
     }
     onSubmit(machineCopy);
   };
@@ -130,7 +133,6 @@ class UserMachinesForm extends Component {
       submitButtonTitle
     } = this.props;
     const { specifications, disabled, checked } = this.state;
-    console.log(initialValues);
 
     return (
       <>

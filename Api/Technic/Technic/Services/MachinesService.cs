@@ -9,6 +9,7 @@ using Technic.DAL.Models;
 using Technic.DAL.Models.Enums;
 using Technic.DAL.Models.IntermediateModels;
 using Technic.DTO.Machines;
+using Technic.DTO.Specifications;
 using Technic.Interfaces;
 using Technic.QueryFilters;
 
@@ -204,6 +205,15 @@ namespace Technic.Services
                     }
 
                     machineSpecification.Value = specificationInfo.Value;
+                }
+            }
+
+            foreach (var machineSpecification in machineSpecifications.ToList())
+            {
+                if (machineInfo.Specifications.FirstOrDefault(m => m.Id == machineSpecification.SpecificationId) ==
+                    default(SpecificationInfo))
+                {
+                    machineSpecifications.Remove(machineSpecification);
                 }
             }
         }
