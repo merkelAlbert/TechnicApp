@@ -1,0 +1,22 @@
+.filters-form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 80%;
+
+  &__row {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__field {
+    width: 100%;
+  }
+
+  &__reset-button {
+    background-color: #d50000 !important;
+    color: white !important;
+  }
+}

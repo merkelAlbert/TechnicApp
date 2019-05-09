@@ -1,11 +1,22 @@
-.home-machines-view {
+.home-machines {
   display: flex;
-  flex: 1;
+  flex-direction: column;
   background-color: #fafafa;
   padding: 30px 0;
   justify-content: center;
   min-height: 100%;
+}
 
+.home-machines-view {
+  display: flex;
+  flex: 1;
+
+  &__empty-message {
+    width: 100%;
+    text-align: center;
+    align-self: center;
+  }
+  
   &__container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

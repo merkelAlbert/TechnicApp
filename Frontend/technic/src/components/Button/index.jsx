@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -13,6 +14,7 @@ const ContainedButton = ({
   children,
   type,
   classes,
+  className,
   color,
   disabled,
   ...props
@@ -24,7 +26,7 @@ const ContainedButton = ({
       disabled={disabled}
       color={color}
       variant="contained"
-      className={classes.button}
+      className={cn( classes.button, className)}
     >
       {children}
     </Button>
@@ -34,12 +36,14 @@ const ContainedButton = ({
 ContainedButton.defaultProps = {
   type: 'button',
   color: 'primary',
-  disabled: false
+  disabled: false,
+  className: null
 };
 
 ContainedButton.propTypes = {
   type: PropTypes.string,
   color: PropTypes.string,
+  className: PropTypes.string,
   disabled: PropTypes.bool,
   children: PropTypes.node.isRequired
 };

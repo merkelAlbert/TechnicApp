@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash-es';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -7,6 +8,7 @@ import Loader from '../../../../components/Loader';
 
 import './style.scss';
 import MachineCard from '../../../Common/Machines/View/Card';
+import Filters from './Filters';
 
 class HomeMachinesView extends Component {
   componentDidMount = () => {
@@ -33,26 +35,35 @@ class HomeMachinesView extends Component {
 
   render = () => {
     const {
-      data: { machines },
+      loadData,
+      data: { machines, user },
       isFetching,
       error,
       onSuccess
     } = this.props;
 
     return (
-      <div className="home-machines-view">
-        <Loader isFetching={isFetching} error={error}>
-          <div className="home-machines-view__container">
-            {machines.map(machine => (
-              <MachineCard
-                startUrl="/machines"
-                key={machine.id}
-                machine={machine}
-                onSuccess={onSuccess}
-              />
-            ))}
-          </div>
-        </Loader>
+      <div className="home-machines">
+        {!isEmpty(user) && <Filters onSubmit={values => loadData(values)} />}
+        <div className="home-machines-view">
+          <Loader isFetching={isFetching} error={error}>
+            {!machines.length && !error && (
+              <div className="home-machines-view__empty-message">
+                Ничего не найдено!!!
+              </div>
+            )}
+            <div className="home-machines-view__container">
+              {machines.map(machine => (
+                <MachineCard
+                  startUrl="/machines"
+                  key={machine.id}
+                  machine={machine}
+                  onSuccess={onSuccess}
+                />
+              ))}
+            </div>
+          </Loader>
+        </div>
       </div>
     );
   };
@@ -62,21 +73,17 @@ const mapStateToProps = state => {
   const { list: machines = [] } = state.machines;
   const { isFetching, error } = state.common.machines;
 
-  return { data: { machines }, isFetching, error };
+  return { data: { machines, user: state.user }, isFetching, error };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    loadData: async () => {
+    loadData: async values => {
       try {
         await dispatch(
           fetchAll({
             isPrivateOffice: false,
-            // specifications: {
-            //   '232267af-86f0-468c-b148-b98f362f792c': '5'
-            // },
-            //fromPrice: 1500,
-            //toPrice: 3000
+            ...values
           })
         );
       } catch (err) {
