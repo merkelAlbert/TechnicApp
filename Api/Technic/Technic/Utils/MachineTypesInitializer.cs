@@ -22,10 +22,14 @@ namespace Technic.Utils
             if (_databaseContext.MachineTypes.ToList().Count == 0)
             {
                 var types = new List<MachineType>();
-                var specs = _databaseContext.Specifications.Where(s =>
-                        s.Name == MachineSpecifications.LiftHeight || s.Name == MachineSpecifications.LoadCapacity)
+                var commonSpecs = _databaseContext.Specifications.Where(s =>
+                        s.Name == MachineSpecifications.LiftHeight || s.Name == MachineSpecifications.LoadCapacity ||
+                        s.Name == MachineSpecifications.FuelType)
                     .ToList();
                 var type = new MachineType();
+
+                var machineSpecs = new List<MachineType_Specification>();
+                var specifications = new List<Specification>();
 
                 //погрузчик вилочный
                 type.Name = MachineTypes.ForkliftTruck;
@@ -34,21 +38,93 @@ namespace Technic.Utils
                 //погрузчик фронтальный
                 type = new MachineType();
                 type.Name = MachineTypes.FrontTruck;
+                machineSpecs = new List<MachineType_Specification>();
+                specifications = _databaseContext.Specifications.Where(s =>
+                        s.Name == MachineSpecifications.TankVolume ||
+                        s.Name == MachineSpecifications.FuelConsumption || s.Name == MachineSpecifications.BucketWidth)
+                    .ToList();
+                foreach (var spec in specifications)
+                {
+                    machineSpecs.Add(new MachineType_Specification()
+                    {
+                        Specification = spec
+                    });
+                }
+
+                foreach (var ms in machineSpecs)
+                {
+                    type.AllowedSpecifications.Add(ms);
+                }
+
                 types.Add(type);
 
                 //погрузчик телескопический
                 type = new MachineType();
                 type.Name = MachineTypes.TelescopicTruck;
+                machineSpecs = new List<MachineType_Specification>();
+                specifications = _databaseContext.Specifications.Where(s =>
+                        s.Name == MachineSpecifications.TankVolume ||
+                        s.Name == MachineSpecifications.FuelConsumption || s.Name == MachineSpecifications.BucketWidth)
+                    .ToList();
+                foreach (var spec in specifications)
+                {
+                    machineSpecs.Add(new MachineType_Specification()
+                    {
+                        Specification = spec
+                    });
+                }
+
+                foreach (var ms in machineSpecs)
+                {
+                    type.AllowedSpecifications.Add(ms);
+                }
+
                 types.Add(type);
 
                 //экскаватор-погрузчик
                 type = new MachineType();
                 type.Name = MachineTypes.ExcavatorTruck;
+                machineSpecs = new List<MachineType_Specification>();
+                specifications = _databaseContext.Specifications.Where(s =>
+                        s.Name == MachineSpecifications.TankVolume ||
+                        s.Name == MachineSpecifications.FuelConsumption || s.Name == MachineSpecifications.BucketWidth)
+                    .ToList();
+                foreach (var spec in specifications)
+                {
+                    machineSpecs.Add(new MachineType_Specification()
+                    {
+                        Specification = spec
+                    });
+                }
+
+                foreach (var ms in machineSpecs)
+                {
+                    type.AllowedSpecifications.Add(ms);
+                }
+
                 types.Add(type);
 
                 //мини-погрузчик
                 type = new MachineType();
                 type.Name = MachineTypes.MiniTruck;
+                machineSpecs = new List<MachineType_Specification>();
+                specifications = _databaseContext.Specifications.Where(s =>
+                        s.Name == MachineSpecifications.TankVolume ||
+                        s.Name == MachineSpecifications.FuelConsumption || s.Name == MachineSpecifications.BucketWidth)
+                    .ToList();
+                foreach (var spec in specifications)
+                {
+                    machineSpecs.Add(new MachineType_Specification()
+                    {
+                        Specification = spec
+                    });
+                }
+
+                foreach (var ms in machineSpecs)
+                {
+                    type.AllowedSpecifications.Add(ms);
+                }
+
                 types.Add(type);
 
                 //подъемник коленчатый
@@ -74,16 +150,31 @@ namespace Technic.Utils
                 //эвакуатор
                 type = new MachineType();
                 type.Name = MachineTypes.TowTruck;
-                var typeSpecification = new MachineType_Specification();
-                typeSpecification.Specification =
-                    _databaseContext.Specifications.FirstOrDefault(s => s.Name == MachineSpecifications.FuelType);
-                type.AllowedSpecifications.Add(typeSpecification);
+                machineSpecs = new List<MachineType_Specification>();
+                specifications = _databaseContext.Specifications.Where(s =>
+                        s.Name == MachineSpecifications.MaxSpeed || s.Name == MachineSpecifications.TankVolume ||
+                        s.Name == MachineSpecifications.FuelConsumption ||
+                        s.Name == MachineSpecifications.CableLength || s.Name == MachineSpecifications.TractionWinch)
+                    .ToList();
+                foreach (var spec in specifications)
+                {
+                    machineSpecs.Add(new MachineType_Specification()
+                    {
+                        Specification = spec
+                    });
+                }
+
+                foreach (var ms in machineSpecs)
+                {
+                    type.AllowedSpecifications.Add(ms);
+                }
+
                 types.Add(type);
 
                 //тип-характеристика
                 foreach (var machineType in types)
                 {
-                    foreach (var spec in specs)
+                    foreach (var spec in commonSpecs)
                     {
                         var typeSpec = new MachineType_Specification();
                         typeSpec.Specification = spec;

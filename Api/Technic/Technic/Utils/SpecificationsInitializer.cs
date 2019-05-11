@@ -39,11 +39,46 @@ namespace Technic.Utils
                 spec.Name = MachineSpecifications.FuelType;
                 specs.Add(spec);
 
-                //Тии погрузки
+                //Тип погрузки
                 spec = new Specification();
                 spec.Name = MachineSpecifications.LoadingType;
                 specs.Add(spec);
-
+                
+                //тяговое усилие лебедки
+                spec = new Specification();
+                spec.Name = MachineSpecifications.TractionWinch;
+                spec.Measure = Measures.Kg;
+                specs.Add(spec);
+                
+                //длина троса
+                spec = new Specification();
+                spec.Name = MachineSpecifications.CableLength;
+                spec.Measure = Measures.M;
+                specs.Add(spec);
+                
+                //максимальная скорость
+                spec = new Specification();
+                spec.Name = MachineSpecifications.MaxSpeed;
+                spec.Measure = Measures.KmH;
+                specs.Add(spec);
+                
+                //ширина ковша
+                spec = new Specification();
+                spec.Name = MachineSpecifications.BucketWidth;
+                spec.Measure = Measures.M;
+                specs.Add(spec);
+                
+                //расход топлива
+                spec = new Specification();
+                spec.Name = MachineSpecifications.FuelConsumption;
+                spec.Measure = Measures.L;
+                specs.Add(spec);
+                
+                //объем бака
+                spec = new Specification();
+                spec.Name = MachineSpecifications.TankVolume;
+                spec.Measure = Measures.L;
+                specs.Add(spec);
 
                 _databaseContext.Specifications.AddRange(specs);
                 await _databaseContext.SaveChangesAsync();
