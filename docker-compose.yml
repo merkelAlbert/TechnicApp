@@ -1,0 +1,45 @@
+version: '3.4'
+
+networks:
+  technicapp-dev:
+    driver: bridge 
+
+services:
+  technicapp:
+    image: technicapp:latest
+    depends_on:
+      - "postgres_image"
+    build:
+      context: ./Api/Technic/Technic
+      dockerfile: Dockerfile
+    ports:
+      - 5000:80
+    networks:
+      - technicapp-dev
+  
+  technicapp_frontend:
+    image: technicapp_frontend:latest
+    build:
+      context: ./Frontend/technic
+      dockerfile: Dockerfile
+    ports:
+      - 8080:80
+    networks:
+      - technicapp-dev
+  
+  postgres_image:
+    image: postgres:latest
+    restart: always
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "Technic"
+    networks:
+      - technicapp-dev
+volumes:
+  db_volume:
+         
+    
+      
