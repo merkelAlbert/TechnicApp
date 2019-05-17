@@ -115,7 +115,7 @@ namespace Technic
             app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/api/swagger/v1.0/swagger.json", "Versioned API v1.0");
+                    c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Versioned API v1.0");
                     c.DocumentTitle = "Title Documentation";
                     c.DocExpansion(DocExpansion.None);
                 });
