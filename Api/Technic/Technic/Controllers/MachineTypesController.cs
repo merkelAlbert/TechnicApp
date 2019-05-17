@@ -5,7 +5,7 @@ using Technic.Interfaces;
 
 namespace Technic.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class MachineTypesController : Controller
     {
         private readonly IMachineTypesService _machineTypesService;

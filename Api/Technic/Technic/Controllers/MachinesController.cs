@@ -8,7 +8,7 @@ using Technic.QueryFilters;
 
 namespace Technic.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class MachinesController : Controller
     {
         private readonly IMachinesService _machinesService;

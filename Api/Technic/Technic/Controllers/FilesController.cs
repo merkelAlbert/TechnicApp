@@ -8,7 +8,7 @@ using Technic.Interfaces;
 
 namespace Technic.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class FilesController : Controller
     {
         private readonly IFilesService _filesService;

@@ -7,7 +7,7 @@ using Technic.Interfaces;
 
 namespace Technic.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;

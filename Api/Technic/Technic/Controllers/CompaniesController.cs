@@ -6,7 +6,7 @@ using Technic.Interfaces;
 
 namespace Technic.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CompaniesController : Controller
     {
         private readonly ICompaniesService _companiesService;

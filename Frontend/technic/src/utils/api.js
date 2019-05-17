@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-const BASE_URL = 'http://localhost:5000';
+const BASE_URL = 'http://localhost:5000/api';
 
 export const REGISTER = BASE_URL + '/account/register';
 export const LOGIN = BASE_URL + '/account/login';
