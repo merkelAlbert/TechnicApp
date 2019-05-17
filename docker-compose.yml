@@ -13,7 +13,7 @@ services:
       context: ./Api/Technic/Technic
       dockerfile: Dockerfile
     ports:
-      - 5000:80
+      - 5555:80
     networks:
       - technicapp-dev
   
