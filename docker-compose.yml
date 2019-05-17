@@ -23,7 +23,7 @@ services:
       context: ./Frontend/technic
       dockerfile: Dockerfile
     ports:
-      - 8080:80
+      - 3000:80
     networks:
       - technicapp-dev
   
