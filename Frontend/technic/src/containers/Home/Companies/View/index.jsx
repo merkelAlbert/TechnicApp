@@ -10,7 +10,7 @@ import './style.scss';
 const HomeCompaniesView = ({ isFetching, error, loadData }) => {
   useEffect(() => {
     loadData();
-  });
+  }, []);
   return <Loader isFetching={isFetching} error={error} />;
 };
 
