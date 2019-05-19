@@ -106,7 +106,7 @@ class UserOrdersView extends Component {
                         {order.machine.name}
                       </td>
                       <td className="user-orders-view__orders-cell">
-                        {order.machine.price}₽
+                        {order.machine.price}₽/ч
                       </td>
                       <td className="user-orders-view__orders-cell">
                         {new Date(order.creationDate).toLocaleDateString('ru')}

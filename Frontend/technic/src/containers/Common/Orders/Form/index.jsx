@@ -89,7 +89,7 @@ class CommonOrdersForm extends Component {
                       </>
                     )}
                     <p>
-                      <strong>Сумма заказа:</strong> {machine.price}₽
+                      <strong>Сумма заказа:</strong> {machine.price}₽/ч
                     </p>
                   </div>
                   {!isEmpty(machine.imagesIds) && (

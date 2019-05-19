@@ -89,7 +89,7 @@ class UserOrdersSingleDialog extends Component {
                   <span className="user-orders-single-dialog__section-title">
                     Сумма заказа:
                   </span>{' '}
-                  {order.machine.price}₽
+                  {order.machine.price}₽/ч
                 </p>
                 <br />
                 <p>

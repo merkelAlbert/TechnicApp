@@ -135,7 +135,7 @@ class CommonMachinesCard extends Component {
               {!isPrivateOffice && (
                 <p className="common-machines-card__company">{company}</p>
               )}
-              <div className="common-machines-card__price">{price} ₽</div>
+              <div className="common-machines-card__price">{price} ₽/ч</div>
             </CardContent>
           </CardContentArea>
         </Link>

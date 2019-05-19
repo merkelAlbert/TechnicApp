@@ -89,13 +89,13 @@ const HomeMachinesViewFilters = ({
             <Text
               type="number"
               className="filters-form__field"
-              label="Цена (₽) от"
+              label="Цена (₽/ч) от"
               name="fromPrice"
             />
             <Text
               type="number"
               className="filters-form__field"
-              label="Цена (₽) до"
+              label="Цена (₽/ч) до"
               name="toPrice"
             />
           </div>
