@@ -16,6 +16,8 @@ services:
       - 5555:80
     networks:
       - technicapp-dev
+    volumes:
+      - /root/Images:/app/wwwroot/Images
   
   technicapp_frontend:
     image: technicapp_frontend:latest
