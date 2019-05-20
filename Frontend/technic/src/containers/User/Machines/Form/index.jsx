@@ -211,7 +211,7 @@ class UserMachinesForm extends Component {
                   <Text
                     required
                     name="price"
-                    label="Цена"
+                    label="Цена (₽/ч)"
                     className="machine-form__field"
                     type="number"
                   />
