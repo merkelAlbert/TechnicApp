@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 
 import Checkbox from '../../../../components/Checkbox';
@@ -21,15 +22,15 @@ import { add } from '../../../../store/actions/files';
 import machineStatuses from '../../../../constants/machineStatuses';
 
 const statuses = Object.values(machineStatuses)
-  .filter(machineStatus => machineStatus.id !== machineStatuses.busy.id)
-  .map(machineStatus => machineStatus);
+  .filter((machineStatus) => machineStatus.id !== machineStatuses.busy.id)
+  .map((machineStatus) => machineStatus);
 
 class UserMachinesForm extends Component {
   uploader = null;
   state = {
     disabled: true,
     checked: false,
-    specifications: []
+    specifications: [],
   };
 
   componentDidMount = () => {
@@ -37,7 +38,7 @@ class UserMachinesForm extends Component {
     loadData();
   };
 
-  componentDidUpdate = prevProps => {
+  componentDidUpdate = (prevProps) => {
     const { initialValues } = this.props;
     if (
       initialValues &&
@@ -45,12 +46,12 @@ class UserMachinesForm extends Component {
       initialValues !== prevProps.initialValues
     ) {
       this.setState({
-        specifications: initialValues.specifications
+        specifications: initialValues.specifications,
       });
     }
   };
 
-  validate = values => {
+  validate = (values) => {
     const errors = {};
     if (!values.name) {
       errors.name = 'Required';
@@ -69,16 +70,16 @@ class UserMachinesForm extends Component {
     }
     Object.keys(errors).length === 0
       ? this.setState({
-          disabled: false
+          disabled: false,
         })
       : this.setState({
-          disabled: true
+          disabled: true,
         });
 
     return errors;
   };
 
-  onSubmit = async machine => {
+  onSubmit = async (machine) => {
     const { onSubmit, uploadFiles } = this.props;
     const { specifications, checked } = this.state;
     const machineCopy = { ...machine };
@@ -105,22 +106,22 @@ class UserMachinesForm extends Component {
             return { id, value };
           }
         })
-        .filter(spec => spec);
+        .filter((spec) => spec);
     }
     onSubmit(machineCopy);
   };
 
-  handleMachineTypeChange = id => {
+  handleMachineTypeChange = (id) => {
     const { machineTypes } = this.props;
-    const selectedType = find(machineTypes, type => type.id === id);
+    const selectedType = find(machineTypes, (type) => type.id === id);
     this.setState({
-      specifications: selectedType.specifications
+      specifications: selectedType.specifications,
     });
   };
 
   handleCkeckboxClick = () => {
-    this.setState(prevState => ({
-      checked: !prevState.checked
+    this.setState((prevState) => ({
+      checked: !prevState.checked,
     }));
   };
 
@@ -130,7 +131,7 @@ class UserMachinesForm extends Component {
       isFetching,
       machineTypes,
       initialValues,
-      submitButtonTitle
+      submitButtonTitle,
     } = this.props;
     const { specifications, disabled, checked } = this.state;
 
@@ -142,6 +143,7 @@ class UserMachinesForm extends Component {
           error={error.machines}
           initialValues={initialValues}
           className="machine-form"
+          mutators={arrayMutators}
         >
           {() => (
             <>
@@ -188,9 +190,7 @@ class UserMachinesForm extends Component {
                             {specification.measure ? (
                               <Text
                                 name={`specifications[${index}].value`}
-                                label={`${specification.name} (${
-                                  specification.measure
-                                })`}
+                                label={`${specification.name} (${specification.measure})`}
                                 className="machine-form__field"
                                 type="number"
                               />
@@ -234,7 +234,7 @@ class UserMachinesForm extends Component {
                 <div className="machine-form__uploader">
                   {!checked && (
                     <Uploader
-                      innerRef={child => {
+                      innerRef={(child) => {
                         if (child) this.uploader = child.ref;
                       }}
                       name="images"
@@ -260,24 +260,24 @@ class UserMachinesForm extends Component {
 
 UserMachinesForm.defaultProps = {
   className: null,
-  error: null
+  error: null,
 };
 
 UserMachinesForm.propTypes = {
   className: PropTypes.string,
   error: PropTypes.shape(),
   onSubmit: PropTypes.func.isRequired,
-  isFetching: PropTypes.shape({}).isRequired
+  isFetching: PropTypes.shape({}).isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { machineTypes: types } = state;
   let machineTypes = [];
   if (!isEmpty(types)) {
-    machineTypes = types.map(type => ({
+    machineTypes = types.map((type) => ({
       id: type.id,
       title: type.name,
-      specifications: type.allowedSpecifications
+      specifications: type.allowedSpecifications,
     }));
   }
 
@@ -285,20 +285,20 @@ const mapStateToProps = state => {
     error: {
       machines: state.common.machines.error,
       files: state.common.files.error,
-      machineTypes: state.common.machineTypes.error
+      machineTypes: state.common.machineTypes.error,
     },
     success: {
       machines: state.common.machines.success,
       files: state.common.files.success,
-      machineTypes: state.common.machineTypes.success
+      machineTypes: state.common.machineTypes.success,
     },
     isFetching: {
       machines: state.common.machines.isFetching,
       files: state.common.files.isFetching,
-      machineTypes: state.common.machineTypes.isFetching
+      machineTypes: state.common.machineTypes.isFetching,
     },
     machineTypes,
-    files: state.files
+    files: state.files,
   };
 };
 
@@ -311,20 +311,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         console.log(err);
       }
     },
-    uploadFiles: async formData => {
+    uploadFiles: async (formData) => {
       try {
         return await dispatch(add(formData));
       } catch (err) {
         console.log(err);
       }
-    }
+    },
   };
 };
 
 export default compose(
   withRouter,
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+  connect(mapStateToProps, mapDispatchToProps)
 )(UserMachinesForm);
